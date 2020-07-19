@@ -1,0 +1,87 @@
+nav {
+  height: 60px;
+  width: 100vw;
+  background-color: rgb(28, 30, 32);
+  position: relative;
+}
+
+@mixin navFeatures {
+  position: absolute;
+  height: 100%;
+  border: white 1px solid;
+}
+
+.logo {
+  @include navFeatures;
+
+  color: white;
+  left: 0;
+  top: 0;
+  width: 25%;
+}
+
+.smallPanel {
+  @include navFeatures;
+
+  left: 25%;
+  top: 0;
+  width: 50%;
+}
+
+.accountPanel {
+  @include navFeatures;
+
+  left: 75%;
+  top: 0;
+  width: 10%;
+  text-align: center;
+}
+.optionsPanel {
+  @include navFeatures;
+
+  left: 85%;
+  top: 0;
+  width: 15%;
+  text-align: right;
+}
+
+// account Panel settings
+
+.pictureButton {
+  display: inline-block;
+  border: red 1px solid;
+  border-radius: 20px;
+  padding-left: 3px;
+  padding-right: 10px;
+  margin: 15px 5px;
+  text-align: left;
+  color: white;
+  line-height: 60px;
+  .accountImage {
+    height: 28px;
+    width: 28px;
+    float: left;
+    border-radius: 50%;
+    background-color: red;
+  }
+
+  .accountName {
+    line-height: 28px;
+    margin-left: 35px;
+  }
+}
+
+// options panel settings
+
+.newsOptions, .messageOptions {
+  display: inline-block;
+  line-height: 40px;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  margin: 10px 10px;
+  color: white;
+  border-radius: 50%;
+  border: 1px solid white;
+
+}
