@@ -1,8 +1,13 @@
 <nav>
   <div class="logo">
-    <img class="logo_img" src="assets/logo/aa.png" alt="logo">
+    <img class="logo_img" (mouseenter)="rotateImage = true" (mouseout)="rotateImage = false"
+         [ngClass]="{'rotateImage': rotateImage}" src="assets/logo/aa.png" alt="logo">
+    <div class="logo_txt"><span (mouseenter)="rotateImage = true" (mouseout)="rotateImage = false">NFL Center</span>
+    </div>
   </div>
   <div class="smallPanel">
+    <!-- TODO:
+    Panel wyszukiwania - informacje-->
   </div>
   <div class="accountPanel">
     <div class="pictureButton">
@@ -16,10 +21,10 @@
   <div class="options optionsPanel">
     <div (click)="sidebarLock = !sidebarLock" class="sidebarOptions">
       <span style="visibility: hidden">s</span>
-        <div [ngClass]="{'hamburger-top--open': !sidebarLock}" class="hamburger-top"></div>
-        <div [ngClass]="{'hamburger-middle--open': !sidebarLock}" class="hamburger-middle"></div>
-        <div [ngClass]="{'hamburger-bottom--open': !sidebarLock}" class="hamburger-bottom"></div>
-      </div>
+      <div [ngClass]="{'hamburger-top--open': !sidebarLock}" class="hamburger-top"></div>
+      <div [ngClass]="{'hamburger-middle--open': !sidebarLock}" class="hamburger-middle"></div>
+      <div [ngClass]="{'hamburger-bottom--open': !sidebarLock}" class="hamburger-bottom"></div>
+    </div>
     <div class="newsOptions">
       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
            width="23" height="25"

@@ -8,7 +8,8 @@ nav {
 @mixin navFeatures {
   position: absolute;
   height: 100%;
-  border: white 1px solid;
+  top: 0;
+  //border: white 1px solid;
 }
 
 .logo {
@@ -16,7 +17,6 @@ nav {
 
   color: white;
   left: 0;
-  top: 0;
   width: 25%;
 }
 
@@ -24,7 +24,6 @@ nav {
   @include navFeatures;
 
   left: 25%;
-  top: 0;
   width: 40%;
 }
 
@@ -32,7 +31,6 @@ nav {
   @include navFeatures;
 
   left: 65%;
-  top: 0;
   width: 20%;
   text-align: center;
 }
@@ -41,11 +39,96 @@ nav {
   @include navFeatures;
 
   left: 85%;
-  top: 0;
   width: 15%;
   text-align: right;
 }
 
+// size settings
+
+@media(max-width: 1550px){
+  .smallPanel {
+    width: 30%;
+  }
+
+  .accountPanel {
+    left: 55%;
+    width: 20%;
+  }
+
+  .optionsPanel {
+    left: 75%;
+    width: 25%;
+  }
+}
+
+@media(max-width: 1000px){
+  .smallPanel {
+    width: 20%;
+  }
+
+  .accountPanel {
+    left: 45%;
+    width: 20%;
+  }
+
+  .optionsPanel {
+    left: 65%;
+    width: 35%;
+  }
+  .logo_txt {
+    font-size: 20px !important;
+  }
+}
+@media(max-width: 800px){
+  .smallPanel {
+    width: 0;
+  }
+
+  .accountPanel {
+    left: 25%;
+    width: 30%;
+  }
+
+  .optionsPanel {
+    left: 55%;
+    width: 45%;
+  }
+  .logo_txt {
+    visibility: hidden;
+  }
+}
+
+@media(max-width: 530px){
+  .logo {
+    color: white;
+    left: 0;
+    width: 25%;
+  }
+  .smallPanel {
+    visibility: hidden;
+  }
+  .accountPanel {
+    left: 25%;
+    width: 60%;
+  }
+  .optionsPanel {
+    left: 85%;
+    width: 15%;
+  }
+  .newsOptions, .messageOptions, .settingOptions {
+    display: none !important;
+  }
+  .sidebarOptions {
+    position: absolute;
+    right: 20px;
+    margin: 0!important;
+    top: 15px!important;
+  }
+  .logo_img{
+    margin-left: 20px!important;
+  }
+
+}
 // logo settings
 
 .logo_img {
@@ -55,12 +138,28 @@ nav {
   margin-left: 20px;
   border-radius: 50%;
   cursor: pointer;
+  float: left;
 
-  &:hover {
-    transition: all .3s linear;
-    transform: rotate(360deg);
+}
+.rotateImage {
+  transition: all .3s linear;
+  transform: rotate(360deg);
+}
+.logo_txt {
+  font-family: 'Rowdies', cursive;
+  color: white;
+  margin-left: 10px;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 60px;
+  & span {
+    cursor: pointer;
   }
 }
+
+// small panel
+
+
 
 // account Panel settings
 
@@ -80,7 +179,6 @@ nav {
   background-color: rgb(70, 72, 73);
 
   .accountImage {
-    left: 20px;
     height: 28px;
     width: 28px;
     float: left;
@@ -98,7 +196,7 @@ nav {
   .text-profil {
     visibility: hidden;
     line-height: 28px;
-    left: 10px;
+    left: 50%;
     opacity: 0;
     position: absolute;
   }
@@ -106,8 +204,7 @@ nav {
 
 .pictureButton:hover .accountImage {
   transition: linear all 0.3s, opacity linear .2s;
-  position: absolute;
-  left: 160px;
+  transform: translateX(150px);
   opacity: 0;
 }
 

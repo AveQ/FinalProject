@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-nav',
@@ -6,6 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  name = 'Sebastiadsaasddsadasdassdan';
+  rotateImage = false;
+  name = 'asdddddddddddddddddddddddddddddddddddddddddddd';
   sidebarLock = true;
+
+  focusonEmail: boolean = false;
+  focusonPassword: boolean = false;
+  dataInvalid: boolean = false;
+  signup: boolean = false;
+  authFailed = false;
+
 }
