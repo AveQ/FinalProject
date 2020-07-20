@@ -5,18 +5,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {LazyLoadingComponent} from '../components/lazy-loading/lazyloading.component';
 import {NavbarComponent} from '../components/navbar/navbar.component';
+import {SidebarComponent} from '../components/sidebar/sidebar.component';
+import {UserService} from '../components/services/user.service';
+import {NavigationService} from '../components/services/navigation.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LazyLoadingComponent,
-    NavbarComponent
+    NavbarComponent,
+    SidebarComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [UserService, NavigationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

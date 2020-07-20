@@ -11,7 +11,7 @@
   </div>
   <div class="accountPanel">
     <div class="pictureButton">
-      <div class="text-profil">Account</div>
+      <div class="text-profil">{{account}}</div>
       <div class="accountImage">
         <img class="basic-img-user" src="assets/account/icons8-male-user-28.png" alt="">
       </div>
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="options optionsPanel">
-    <div (click)="sidebarLock = !sidebarLock" class="sidebarOptions">
+    <div (click)="changeSidebar()" class="sidebarOptions">
       <span style="visibility: hidden">s</span>
       <div [ngClass]="{'hamburger-top--open': !sidebarLock}" class="hamburger-top"></div>
       <div [ngClass]="{'hamburger-middle--open': !sidebarLock}" class="hamburger-middle"></div>

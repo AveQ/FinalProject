@@ -43,92 +43,6 @@ nav {
   text-align: right;
 }
 
-// size settings
-
-@media(max-width: 1550px){
-  .smallPanel {
-    width: 30%;
-  }
-
-  .accountPanel {
-    left: 55%;
-    width: 20%;
-  }
-
-  .optionsPanel {
-    left: 75%;
-    width: 25%;
-  }
-}
-
-@media(max-width: 1000px){
-  .smallPanel {
-    width: 20%;
-  }
-
-  .accountPanel {
-    left: 45%;
-    width: 20%;
-  }
-
-  .optionsPanel {
-    left: 65%;
-    width: 35%;
-  }
-  .logo_txt {
-    font-size: 20px !important;
-  }
-}
-@media(max-width: 800px){
-  .smallPanel {
-    width: 0;
-  }
-
-  .accountPanel {
-    left: 25%;
-    width: 30%;
-  }
-
-  .optionsPanel {
-    left: 55%;
-    width: 45%;
-  }
-  .logo_txt {
-    visibility: hidden;
-  }
-}
-
-@media(max-width: 530px){
-  .logo {
-    color: white;
-    left: 0;
-    width: 25%;
-  }
-  .smallPanel {
-    visibility: hidden;
-  }
-  .accountPanel {
-    left: 25%;
-    width: 60%;
-  }
-  .optionsPanel {
-    left: 85%;
-    width: 15%;
-  }
-  .newsOptions, .messageOptions, .settingOptions {
-    display: none !important;
-  }
-  .sidebarOptions {
-    position: absolute;
-    right: 20px;
-    margin: 0!important;
-    top: 15px!important;
-  }
-  .logo_img{
-    margin-left: 20px!important;
-  }
-
-}
 // logo settings
 
 .logo_img {
@@ -141,10 +55,12 @@ nav {
   float: left;
 
 }
+
 .rotateImage {
   transition: all .3s linear;
   transform: rotate(360deg);
 }
+
 .logo_txt {
   font-family: 'Rowdies', cursive;
   color: white;
@@ -152,13 +68,13 @@ nav {
   font-size: 24px;
   display: inline-block;
   line-height: 60px;
+
   & span {
     cursor: pointer;
   }
 }
 
 // small panel
-
 
 
 // account Panel settings
@@ -308,14 +224,17 @@ nav {
   transform: translate(-50%, 11px) rotate(45deg);
   background-color: white;
 }
+
 .hamburger-bottom--open {
   transform: translate(-50%, -10px) rotate(-45deg);
   background-color: white;
 }
+
 .hamburger-middle--open {
   visibility: hidden;
   opacity: 0;
 }
+
 // animations - features options
 
 @keyframes settingsMove {
@@ -337,4 +256,93 @@ nav {
   80% {
     transform: scale(1);
   }
+}
+
+
+// size settings
+
+@media(max-width: 1550px) {
+  .smallPanel {
+    width: 30%;
+  }
+
+  .accountPanel {
+    left: 55%;
+    width: 20%;
+  }
+
+  .optionsPanel {
+    left: 75%;
+    width: 25%;
+  }
+}
+
+@media(max-width: 1000px) {
+  .smallPanel {
+    width: 20%;
+  }
+
+  .accountPanel {
+    left: 45%;
+    width: 20%;
+  }
+
+  .optionsPanel {
+    left: 65%;
+    width: 35%;
+  }
+  .logo_txt {
+    font-size: 20px !important;
+  }
+}
+
+@media(max-width: 800px) {
+  .smallPanel {
+    width: 0;
+  }
+
+  .accountPanel {
+    left: 25%;
+    width: 30%;
+  }
+
+  .optionsPanel {
+    left: 55%;
+    width: 45%;
+  }
+  .logo_txt {
+    visibility: hidden;
+  }
+}
+
+@media(max-width: 530px) {
+  .logo {
+    color: white;
+    left: 0;
+    width: 25%;
+  }
+  .smallPanel {
+    visibility: hidden;
+  }
+  .accountPanel {
+    left: 25%;
+    width: 50%;
+  }
+  .optionsPanel {
+    left: 75%;
+    width: 25%;
+  }
+  .newsOptions, .messageOptions, .settingOptions {
+    display: none !important;
+  }
+  .sidebarOptions {
+    position: absolute;
+    right: 20px;
+    margin: 0 !important;
+    top: 15px !important;
+  }
+  .logo_img {
+    margin-left: 20px !important;
+  }
+
 }

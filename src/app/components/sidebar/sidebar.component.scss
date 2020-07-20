@@ -1,0 +1,11 @@
+// 4A4A4A
+.sidebar {
+  height: calc(100vh - 60px);
+  width: 100%;
+  background-color: #373737;
+  overflow-y: auto;
+  transition: transform linear .4s;
+}
+.sidebar--close {
+  transform: translateX(-100%);
+}
