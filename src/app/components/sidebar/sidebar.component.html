@@ -1,17 +1,33 @@
 <div [ngClass]="{'sidebar--close' : isOpenSidebar}" class="sidebar">
-  <div class="account-text">
-    <span>Account settings</span>
+  <!--isOpenSidebar-->
+  <div class="account-info">
+    <img class="user-image" src="assets/account/icons8-male-user-40.png" alt="img">
+    <span class="user-name">{{userName}}</span>
   </div>
-  <ul class="list-account">
-    <li class="account-point"></li>
-    <li class="account-point"></li>
-    <li class="account-point"></li>
-    <li class="account-point"></li>
-    <li class="account-point"></li>
+  <hr>
+  <div class="headline">
+    <h4>Nawigacja</h4>
+  </div>
+  <ul class="list">
+    <li class="point">Panel odżywiania</li>
+    <li class="point">Dziennik aktywności</li>
+    <li class="point">Kalkulator BMI</li>
+    <li class="point">Atlas ćwiczeń</li>
+    <li class="point">Zapytaj eksperta - forum</li>
+    <li class="point">Sklep</li>
   </ul>
-</div>
+  <hr>
+  <div class="headline">
+    <h4>Panel użytkownika</h4>
+  </div>
+  <ul class="list">
+    <li class="point">Postępy użytkownika</li>
+    <li class="point">Odznaczenia</li>
+    <li class="point">Wiadomości</li>
+    <li class="point">Ustawienia alertów</li>
+    <li class="point">Ustawienia konta</li>
+  </ul>
+  <div class="basic-options">
 
-<!--
-  Todo:
-  -otwieranie sidebar i zamykanie,
--->
+  </div>
+</div>

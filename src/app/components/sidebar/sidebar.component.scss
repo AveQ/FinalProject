@@ -5,7 +5,61 @@
   background-color: #373737;
   overflow-y: auto;
   transition: transform linear .4s;
+  padding: 15px;
+  color: white;
 }
 .sidebar--close {
   transform: translateX(-100%);
+}
+
+// account-info
+
+@mixin basicSetting {
+  height: 50px;
+  line-height: 50px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.account-info {
+  @include basicSetting;
+
+  margin-top: 5px;
+  &:hover {
+    background-color: #4A4A4A;
+  }
+}
+.user-image {
+  margin: 5px 5px;
+  background-color: white;
+  border-radius: 50%;
+  float: left;
+}
+.user-name {
+  display: inline-block;
+}
+
+hr {
+  background-color: #606060;
+}
+
+// headline -nav -account
+
+.headline {
+  height: 50px;
+  line-height: 50px;
+}
+
+// list
+.list {
+  list-style-type: none;
+  padding:0;
+}
+.point {
+  @include basicSetting;
+
+  padding-left: 5px;
+  &:hover {
+    background-color: #606060;
+  }
 }

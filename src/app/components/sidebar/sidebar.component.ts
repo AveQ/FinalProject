@@ -8,7 +8,7 @@ import {NavigationService} from '../services/navigation.service';
 })
 export class SidebarComponent implements OnInit {
   isOpenSidebar = true;
-
+  userName = "User";
   constructor(private navigationService: NavigationService) {
   }
 
