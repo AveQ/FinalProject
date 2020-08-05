@@ -8,6 +8,8 @@ import {NavbarComponent} from '../components/navbar/navbar.component';
 import {SidebarComponent} from '../components/sidebar/sidebar.component';
 import {UserService} from '../components/services/user.service';
 import {NavigationService} from '../components/services/navigation.service';
+import {FoodPanelComponent} from '../components/food-panel/food-panel.component';
+import {DailyStatisticsComponent} from '../components/food-panel/daily-statistics/daily-statistics.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,8 @@ import {NavigationService} from '../components/services/navigation.service';
     LazyLoadingComponent,
     NavbarComponent,
     SidebarComponent,
-
+    FoodPanelComponent,
+    DailyStatisticsComponent
   ],
   imports: [
     BrowserModule,

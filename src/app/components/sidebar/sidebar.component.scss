@@ -1,5 +1,7 @@
 // 4A4A4A
 .sidebar {
+  position: relative;
+  z-index: 1;
   height: calc(100vh - 60px);
   width: 100%;
   background-color: #373737;
