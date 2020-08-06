@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {Meals} from '../models/meals.model';
 import {MealMOK} from '../MOK/mealMOK.services';
 
@@ -14,6 +14,28 @@ export class FoodPanelComponent implements OnInit {
   maxDate;
   minDate;
   meals = [];
+  bars = [
+    {
+      name: 'Kcal',
+      current: 1245,
+      max: 2222
+    },
+    {
+      name: 'Białko',
+      current: 1245,
+      max: 2222
+    },
+    {
+      name: 'Tłuszcze',
+      current: 1245,
+      max: 2222
+    },
+    {
+      name: 'Węglowodany',
+      current: 1245,
+      max: 2222
+    }
+  ];
 
   constructor(private mealMOK: MealMOK) {
   }
@@ -31,6 +53,7 @@ export class FoodPanelComponent implements OnInit {
   addNewMeal() {
     this.mealMOK.addNewMeal();
   }
+
   dailyStatistics() {
 
   }

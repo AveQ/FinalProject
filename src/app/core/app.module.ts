@@ -10,6 +10,8 @@ import {UserService} from '../components/services/user.service';
 import {NavigationService} from '../components/services/navigation.service';
 import {FoodPanelComponent} from '../components/food-panel/food-panel.component';
 import {DailyStatisticsComponent} from '../components/food-panel/daily-statistics/daily-statistics.component';
+import {ChartsModule} from 'ng2-charts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import {DailyStatisticsComponent} from '../components/food-panel/daily-statistic
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ChartsModule,
+    NgbModule
   ],
   providers: [UserService, NavigationService],
   bootstrap: [AppComponent]

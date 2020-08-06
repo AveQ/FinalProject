@@ -1,0 +1,96 @@
+<div class="containerChart">
+  <div class="welcomeText">
+    <span class="text-statistics h-text mt-3">Twoje statystyki</span>
+    <span class="text-statistics d-text mb-5">05.08.2020</span>
+  </div>
+  <div class="chart">
+    <canvas baseChart
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"
+            [options]="pieChartOptions"
+            [colors]="pieChartColors"
+            [legend]="pieChartLegend">
+    </canvas>
+    <div class="macro">
+      <h5 class="text-center mt-5 font-weight-bold pb-2">Podsumowanie:</h5>
+      <button class="btn btn-dark pdf">PDF</button>
+      <!--kcal-->
+      <div class="macro">
+        <div class="kcal">
+          <h5 class="text-center ">Kalorie (kcal)</h5>
+          <div class="kcal">
+            <h5>Kalorie:</h5>
+            <p>
+              <ngb-progressbar type="secondary" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- water -->
+      <div class="macro">
+        <div class="water">
+          <h5 class="text-center ">Nawodnienie (ml)</h5>
+          <div class="water">
+            <h5>Nawodnienie:</h5>
+            <p>
+              <ngb-progressbar type="primary" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--proteins-->
+      <div class="macro ">
+        <h5 class="text-center ">Białka (g)</h5>
+        <div class="">
+          <h5>Białka roślinne:</h5>
+          <p>
+            <ngb-progressbar type="success" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+          </p>
+          <h5>Białka zwierzęce:</h5>
+          <p>
+            <ngb-progressbar type="success" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+          </p>
+        </div>
+      </div>
+      <div class="macro">
+        <!--fats-->
+        <div class="fats">
+          <h5 class="text-center ">Tłuszcze (g)</h5>
+          <div class="animal-fats">
+            <h5>Tłuszcze nasycone:</h5>
+            <p>
+              <ngb-progressbar type="danger" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+            </p>
+            <h5>Tłuszcze jendonienasycone:</h5>
+            <p>
+              <ngb-progressbar type="danger" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+            </p>
+            <h5>Tłuszcze wielonienasycone:</h5>
+            <p>
+              <ngb-progressbar type="danger" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="macro">
+        <!--carbs-->
+        <div class="carbs">
+          <h5 class="text-center ">Węglowodany (g)</h5>
+          <div class="carbs">
+            <h5>Cukry:</h5>
+            <p>
+              <ngb-progressbar type="dark" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="options d-flex justify-content-around m-2 mt-4">
+        <button class="btn btn-outline-dark">Poprzedni</button>
+        <button class="btn btn-outline-dark">Powrót</button>
+        <button class="btn btn-outline-dark">Następny</button>
+      </div>
+    </div>
+
+  </div>
+</div>

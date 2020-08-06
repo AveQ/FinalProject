@@ -4,10 +4,13 @@
   left:0;
   top: 60px;
   right: 0;
-  bottom: 0;
+  overflow: auto;
+  bottom: 70px;
 }
 .row {
   margin: 0;
+}
+.contForMeal {
 }
 .col-12 {
   position: relative;
@@ -45,7 +48,7 @@
   padding: 0;
 }
 .meal {
-  margin:10px;
+  margin:30px 20px;
   border: 1px solid black;
   padding: 5px;
   border-radius: 5px;
@@ -67,42 +70,40 @@
 .macronutrients {
   font-size: 20px;
 }
-//
-//// meals
-//
-//.boxForMeals {
-//  //border: 1px solid black;
-//  max-height: calc(100vh - 214px);
-//  overflow: auto;
-//}
-//.mainMealInfo{
-//  line-height: 30px;
-//}
-//.meal {
-//  margin: 10px;
-//}
-//.mealType {
-//  font-size: 24px;
-//  padding-left: 10px;
-//  font-weight: bold;
-//}
-//.mainInfo {
-//  padding-right: 10px;
-//}
-//
-//// food
-//.food {
-//  border-bottom: 1px solid black;
-//  position: relative;
-//}
-//.foodOption {
-//}
-//.deleteFood, .infoFood {
-//  height: 20px;
-//  width: 20px;
-//  font-size: 10px;
-//  padding: 0;
-//  line-height: 19px;
-//  text-align: center;
-//  border-radius: 100%;
-//}
+.basicStat {
+  background-color: white;
+  border: 1px solid black;
+  position: fixed;
+  bottom: 0;
+  height: 70px;
+  width: 100%;
+}
+.part {
+  width: 25%;
+  height: 100%;
+  display: inline-block;
+  padding: 0 10px;
+}
+.barName {
+  font-weight: bold;
+}
+.barValue {
+
+  font-size: 14px;
+}
+@media(max-width: 500px) {
+  .part {
+    padding: 0 5px;
+  }
+  .barName {
+    font-size: 12px;
+  }
+}
+@media(max-width: 400px) {
+  .part {
+    padding: 0 5px;
+  }
+  .barName {
+    font-size: 10px;
+  }
+}

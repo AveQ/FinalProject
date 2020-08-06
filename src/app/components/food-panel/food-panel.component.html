@@ -14,7 +14,7 @@
 
     </div>
   </div>
-  <div class="row">
+  <div class="row contForMeal">
     <div *ngFor="let meal of meals" class="col-lg-4 col-sm-6 col-12 ">
       <div class="meal">
         <div class="basicInfo-meal mb-3 d-flex justify-content-between">
@@ -40,45 +40,15 @@
   </div>
   <div class="row m-0 p-0">
     <div class="col-12 m-0 p-0 mt-2 text-center">
-      <button class="btn btn-success mr-2" (click)="addNewMeal()">Dodaj Następny Posiłek</button>
+      <button class="btn btn-success mr-2" (click)="addNewMeal()">Nowy Posiłek</button>
       <button class="btn btn-secondary" (click)="dailyStatistics()">Statystyki</button>
     </div>
   </div>
 </div>
-
-<!--  <div class="boxForMeals">-->
-<!--    &lt;!&ndash;        meals&ndash;&gt;-->
-<!--    <div class="meal card" *ngFor="let meal of meals; let i = index">-->
-<!--      <div class="mainMealInfo d-flex justify-content-between">-->
-<!--        <span class="mealType">{{meal.type}}</span>-->
-<!--        <span class="mainInfo">Total: {{meal.kcal}} kcal</span>-->
-<!--      </div>-->
-<!--      <div class="contFoodList">-->
-<!--        <ul class="foodList m-0 p-0">-->
-<!--          <li class = "food d-flex justify-content-between m-1" *ngFor="let food of meal.food;">-->
-<!--            <span class="foodName p-1">{{food.name}}</span>-->
-<!--            <span class="foodInfo p-1">-->
-<!--                  <button class="btn btn-outline-dark foodOption infoFood mr-1">i</button>-->
-<!--                  <button class="btn btn-outline-dark foodOption deleteFood">X</button>-->
-<!--              {{food.kcal}} kcal-->
-<!--                </span>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--      <div class="additionalOptions d-flex justify-content-between">-->
-<!--        <button class="btn btn-danger m-2">Usuń posiłek</button>-->
-<!--        <button class="btn btn-dark m-2">Dane</button>-->
-<!--        <button class="btn btn-success m-2">Dodaj składnik</button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <button class="btn btn-outline-success m-2">Dodaj posiłek</button>-->
-<!--  </div>-->
-<!--  &lt;!&ndash;      <button class="btn btn-success">Dodaj</button>&ndash;&gt;-->
-<!--</div>-->
-<!--<div class="col-12 col-lg-6 text-center">-->
-<!--  <div class="col-12 chart">-->
-<!--    <h5>Podsumowanie</h5>-->
-<!--  </div>-->
-<!--  <div class="col-12">s</div>-->
-<!--</div>-->
-<!--</div>-->
+<div  class="basicStat text-center">
+  <div *ngFor="let bar of bars" class="part ">
+    <span class="barName">{{bar.name}}</span>
+    <ngb-progressbar class="bar kcal" type="success" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+    <span class="barValue"><em>{{bar.current}}/{{bar.max}}</em></span>
+  </div>
+</div>
