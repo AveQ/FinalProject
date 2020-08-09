@@ -1,0 +1,58 @@
+<div class="food-modal">
+  <div class="row contModal">
+    <div class="col-12 text-center p-2" style="position: relative">
+      <span class="bigText">Śniadanie 09.08.2020</span>
+      <button class="btn cross">X</button>
+    </div>
+    <div class="col-lg-6 col-12 text-center">
+      <span class="bigText">Posiłek</span>
+      <div class="meals">
+        <ul class="foodList foodListUser">
+          <li class="d-flex justify-content-between" *ngFor="let foodUser of foodsUser">
+            <span><em>{{foodUser.kcal}}kcal</em></span>
+            <span>{{foodUser.name}}</span>
+            <button class="btn">X</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-6 col-12 text-center ">
+      <span class="bigText">Szukaj</span>
+      <div class="type">
+        baza/wlase
+      </div>
+      <input type="text" class="form-control mb-3 mt-1">
+      <div class="meals">
+        <ul class="foodList foodListDb ">
+          <li *ngFor="let foodDb of foodsDb" class="d-flex justify-content-between">
+            <span>{{foodDb.name}}</span>
+            <button class="btn">+</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-12 text-center">
+      <span class="bigText">
+        1113 kcal
+      </span>
+    </div>
+    <div class="col-12 chart">
+      <canvas baseChart height="100px" width="200px" style="margin: 0 auto"
+              [data]="pieChartData"
+              [labels]="pieChartLabels"
+              [chartType]="pieChartType"
+              [options]="pieChartOptions"
+              [colors]="pieChartColors"
+              [legend]="pieChartLegend">
+      </canvas>
+    </div>
+    <div class="buttons text-right">
+      <button class="btn btn-outline-dark m-2">Szczegóły</button>
+    </div>
+  </div>
+<!--  <div class="moreInfo">-->
+<!--    <p>-->
+<!--      <ngb-progressbar type="secondary" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>-->
+<!--    </p>-->
+<!--  </div>-->
+</div>

@@ -14,8 +14,8 @@
 
     </div>
   </div>
-  <div class="row contForMeal">
-    <div *ngFor="let meal of meals" class="col-lg-4 col-sm-6 col-12 ">
+  <div class="row contForMeal ">
+    <div *ngFor="let meal of meals" class="col-lg-4 col-sm-6 col-12 test">
       <div class="meal">
         <div class="basicInfo-meal mb-3 d-flex justify-content-between">
           <span class="mealName">{{meal.name}}</span>
@@ -31,9 +31,8 @@
           Tłuszcze - 0g
         </div>
         <div class="button-group text-right mt-3 d-flex justify-content-between">
-          <button class="btn btn-dark">Szczegóły</button>
           <button *ngIf="meal.delete" class="btn btn-danger">Usuń</button>
-          <button class="btn btn-dark">Edytuj</button>
+          <button class="btn btn-dark">Personalizuj</button>
         </div>
       </div>
     </div>
@@ -51,4 +50,6 @@
     <ngb-progressbar class="bar kcal" type="success" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
     <span class="barValue"><em>{{bar.current}}/{{bar.max}}</em></span>
   </div>
+
 </div>
+<app-add-food-panel></app-add-food-panel>

@@ -12,6 +12,7 @@ import {FoodPanelComponent} from '../components/food-panel/food-panel.component'
 import {DailyStatisticsComponent} from '../components/food-panel/daily-statistics/daily-statistics.component';
 import {ChartsModule} from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {AddFoodPanelComponent} from '../components/food-panel/add-food-modal/add-food-panel.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NavbarComponent,
     SidebarComponent,
     FoodPanelComponent,
-    DailyStatisticsComponent
+    DailyStatisticsComponent,
+    AddFoodPanelComponent
   ],
   imports: [
     BrowserModule,
