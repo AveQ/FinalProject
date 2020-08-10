@@ -1,6 +1,7 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {Meals} from '../models/meals.model';
 import {MealMOK} from '../MOK/mealMOK.services';
+import {MealsService} from '../services/meals.service';
 
 @Component({
   selector: 'app-food-panel',
@@ -8,7 +9,6 @@ import {MealMOK} from '../MOK/mealMOK.services';
   styleUrls: ['./food-panel.component.scss']
 })
 export class FoodPanelComponent implements OnInit {
-
   currentDate = '27.07.20 - wtorek';
   date = new Date().toISOString().substr(0, 10);
   maxDate;
@@ -37,7 +37,7 @@ export class FoodPanelComponent implements OnInit {
     }
   ];
 
-  constructor(private mealMOK: MealMOK) {
+  constructor(private mealMOK: MealMOK, private mealsService: MealsService) {
   }
 
   ngOnInit(): void {
@@ -57,4 +57,8 @@ export class FoodPanelComponent implements OnInit {
   dailyStatistics() {
 
   }
+  openConfiguration() {
+    this.mealsService.changeSidebar(false);
+  }
+
 }

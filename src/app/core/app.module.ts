@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 import {LazyLoadingComponent} from '../components/lazy-loading/lazyloading.component';
 import {NavbarComponent} from '../components/navbar/navbar.component';
 import {SidebarComponent} from '../components/sidebar/sidebar.component';
@@ -11,8 +11,9 @@ import {NavigationService} from '../components/services/navigation.service';
 import {FoodPanelComponent} from '../components/food-panel/food-panel.component';
 import {DailyStatisticsComponent} from '../components/food-panel/daily-statistics/daily-statistics.component';
 import {ChartsModule} from 'ng2-charts';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AddFoodPanelComponent} from '../components/food-panel/add-food-modal/add-food-panel.component';
+import {MealsService} from '../components/services/meals.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {AddFoodPanelComponent} from '../components/food-panel/add-food-modal/add
     ChartsModule,
     NgbModule
   ],
-  providers: [UserService, NavigationService],
+  providers: [UserService, NavigationService, MealsService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -6,6 +6,12 @@
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.25);
   z-index: 1;
+  opacity: 1;
+}
+.food-modal-deactivate {
+  opacity: 0;
+  visibility: hidden;
+  display: none;
 }
 .contModal, .moreInfo {
   position: absolute;
@@ -21,7 +27,14 @@
   min-width: 300px;
   visibility: visible;
   opacity: 1;
-  transition: 1s all linear;
+  transition: .2s all linear;
+}
+.moreInfo {
+  padding: 20px;
+}
+.moreInfo-close {
+  opacity: 0;
+  visibility: hidden;
 }
 .contModal-close {
   opacity: 0;
@@ -70,5 +83,11 @@
 @media(max-width: 992px) {
   .contModal {
   max-height: 500px;
+  }
+}
+
+@media(max-width: 800px) {
+  .bigText {
+    font-size: 22px;
   }
 }

@@ -1,13 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {ChartOptions, ChartType} from 'chart.js';
 import {Label} from 'ng2-charts';
+import {MealsService} from '../../services/meals.service';
 
 @Component({
   selector: 'app-add-food-panel',
   templateUrl: './add-food-panel.component.html',
   styleUrls: ['./add-food-panel.component.scss']
 })
-export class AddFoodPanelComponent {
+export class AddFoodPanelComponent implements OnInit {
+  stat: boolean = false;
+  isOpen = false;
+  constructor(private mealsService: MealsService) {
+  }
+
   foodsDb = [
     {
       name: 'kaszanka',
@@ -107,4 +113,16 @@ export class AddFoodPanelComponent {
       backgroundColor: ['rgba(5,0,37,0.3)', 'rgba(0,255,19,0.58)', 'rgba(255,0,8,0.58)'],
     },
   ];
+
+  ngOnInit(): void {
+    this.mealsService.isMealOpen.subscribe(
+      value => {
+        this.isOpen = value;
+        console.log(value);
+      }
+    );
+  }
+  closeModal() {
+    this.mealsService.changeSidebar(true);
+  }
 }

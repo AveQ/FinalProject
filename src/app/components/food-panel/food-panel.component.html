@@ -32,7 +32,7 @@
         </div>
         <div class="button-group text-right mt-3 d-flex justify-content-between">
           <button *ngIf="meal.delete" class="btn btn-danger">Usuń</button>
-          <button class="btn btn-dark">Personalizuj</button>
+          <button (click)="openConfiguration()" class="btn btn-dark">Personalizuj</button>
         </div>
       </div>
     </div>

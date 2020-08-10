@@ -1,8 +1,8 @@
-<div class="food-modal">
-  <div class="row contModal">
+<div class="food-modal " [ngClass]="{'food-modal-deactivate': isOpen === true}">
+  <div [ngClass]="{'contModal-close': stat === true}" class="row contModal">
     <div class="col-12 text-center p-2" style="position: relative">
       <span class="bigText">Śniadanie 09.08.2020</span>
-      <button class="btn cross">X</button>
+      <button (click)="closeModal()" class="btn cross">X</button>
     </div>
     <div class="col-lg-6 col-12 text-center">
       <span class="bigText">Posiłek</span>
@@ -47,12 +47,29 @@
       </canvas>
     </div>
     <div class="buttons text-right">
-      <button class="btn btn-outline-dark m-2">Szczegóły</button>
+      <button (click)="stat = !stat" class="btn btn-outline-dark m-2">Szczegóły</button>
     </div>
   </div>
-<!--  <div class="moreInfo">-->
-<!--    <p>-->
-<!--      <ngb-progressbar type="secondary" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>-->
-<!--    </p>-->
-<!--  </div>-->
+  <div [ngClass]="{'moreInfo-close': stat === false}" class="moreInfo text-center">
+    <span class="bigText">Śniadanie 09.08.2020</span>
+    <p>
+      <span>Kcal</span>
+      <ngb-progressbar type="secondary" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+    </p>
+    <p>
+      <span>węglowodany</span>
+      <ngb-progressbar type="secondary" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+    </p>
+    <p>
+      <span>białko</span>
+      <ngb-progressbar type="secondary" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+    </p>
+    <p>
+      <span>tłuszcze</span>
+      <ngb-progressbar type="secondary" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
+    </p>
+    <div class="buttons text-right">
+      <button (click)="stat = !stat" class="btn btn-outline-dark m-2">Powrót</button>
+    </div>
+  </div>
 </div>
