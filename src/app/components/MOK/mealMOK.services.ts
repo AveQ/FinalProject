@@ -15,10 +15,19 @@ export class MealMOK {
       fullFats: 432,
       fullProteins: 32,
       delete: false,
+      isIngedientsOpen: false,
       ingredients: [
         {
           name: 'Jajecznica',
           portion: 'pieces', // grams, pieces, glasses,
+          howMany: 2,
+          proteins: 345,
+          fats: 322,
+          carb: 111
+        },
+        {
+          name: 'Jajecznica',
+          portion: 'grams', // grams, pieces, glasses,
           howMany: 2,
           proteins: 345,
           fats: 322,
@@ -34,6 +43,7 @@ export class MealMOK {
       fullFats: 432,
       fullProteins: 32,
       delete: false,
+      isIngedientsOpen: false,
       ingredients: [
         {
           name: 'Jajecznica',
@@ -53,7 +63,16 @@ export class MealMOK {
       fullFats: 432,
       fullProteins: 32,
       delete: false,
+      isIngedientsOpen: false,
       ingredients: [
+        {
+          name: 'Jajecznica',
+          portion: 'pieces', // grams, pieces, glasses,
+          howMany: 2,
+          proteins: 345,
+          fats: 322,
+          carb: 111
+        },
         {
           name: 'Jajecznica',
           portion: 'pieces', // grams, pieces, glasses,
@@ -72,6 +91,7 @@ export class MealMOK {
       fullFats: 432,
       fullProteins: 32,
       delete: false,
+      isIngedientsOpen: false,
       ingredients: [
         {
           name: 'Jajecznica',
@@ -91,7 +111,16 @@ export class MealMOK {
       fullFats: 432,
       fullProteins: 32,
       delete: false,
+      isIngedientsOpen: false,
       ingredients: [
+        {
+          name: 'Jajecznica',
+          portion: 'pieces', // grams, pieces, glasses,
+          howMany: 2,
+          proteins: 345,
+          fats: 322,
+          carb: 111
+        },
         {
           name: 'Jajecznica',
           portion: 'pieces', // grams, pieces, glasses,
@@ -110,6 +139,7 @@ export class MealMOK {
       fullFats: 432,
       fullProteins: 32,
       delete: false,
+      isIngedientsOpen: false,
       ingredients: [
         {
           name: 'Jajecznica',
@@ -132,6 +162,7 @@ export class MealMOK {
       fullFats: 432,
       fullProteins: 32,
       delete: true,
+      isIngedientsOpen: false,
       ingredients: [
         {
           name: 'Jajecznica',

@@ -1,75 +1,87 @@
-<div class="food-modal " [ngClass]="{'food-modal-deactivate': isOpen === true}">
-  <div [ngClass]="{'contModal-close': stat === true}" class="row contModal">
-    <div class="col-12 text-center p-2" style="position: relative">
-      <span class="bigText">Śniadanie 09.08.2020</span>
-      <button (click)="closeModal()" class="btn cross">X</button>
+<div [ngClass]="{'containerAddFood--close': isOpen === false}" class="containerAddFood containerAddFood--close">
+  <div [ngClass]="{'containerAddFood--close': isOpen === false}" class="panel containerAddFood--close">
+    <button (click)="closeModal()" type="button" class="close cross" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="title">
+      <h3>Dodaj produkt</h3>
+
     </div>
-    <div class="col-lg-6 col-12 text-center">
-      <span class="bigText">Posiłek</span>
+    <div class="underLine"></div>
+    <div *ngIf="productProp" class="contForSearch">
+      <div class="search">
+        <input type="text" class="form-control search-input" placeholder="wyszukaj...">
+      </div>
       <div class="meals">
-        <ul class="foodList foodListUser">
-          <li class="d-flex justify-content-between" *ngFor="let foodUser of foodsUser">
-            <span><em>{{foodUser.kcal}}kcal</em></span>
-            <span>{{foodUser.name}}</span>
-            <button class="btn">X</button>
+        <ul class="listOfMeals">
+          <li class="prod" *ngFor="let prod of products">
+            <span class="nameOfProd">{{prod.name}}</span>
+            <div class="options d-flex justify-content-between">
+              <div class="left">
+                <span class="infoProd">{{prod.kcal}}kcal/100g</span>
+                <span class="macroProd">{{prod.macro.carb}}g {{prod.macro.fats}}g {{prod.macro.prot}}g</span>
+              </div>
+              <div class="right">
+                <span (click)="productProp = !productProp" class="add-product">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#dd0101" width="25px" height="25px"><path
+                  d="M0 0h24v24H0z" fill="none"/><path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                </span>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
-    </div>
-    <div class="col-lg-6 col-12 text-center ">
-      <span class="bigText">Szukaj</span>
-      <div class="type">
-        baza/wlase
-      </div>
-      <input type="text" class="form-control mb-3 mt-1">
-      <div class="meals">
-        <ul class="foodList foodListDb ">
-          <li *ngFor="let foodDb of foodsDb" class="d-flex justify-content-between">
-            <span>{{foodDb.name}}</span>
-            <button class="btn">+</button>
-          </li>
-        </ul>
+      <div class="pagination">
+        <ngb-pagination [collectionSize]="120" [maxSize]="1" [rotate]="true" [(page)]="page"
+                        aria-label="Default pagination"></ngb-pagination>
       </div>
     </div>
-    <div class="col-12 text-center">
-      <span class="bigText">
-        1113 kcal
-      </span>
+    <div *ngIf="!productProp" class="productConf">
+      <div class="mealName">
+        Jajecznica
+      </div>
+      <div class="portion">
+        <div class="form-group">
+          <label for="measures"><em>Miara:</em></label>
+          <select class="form-control" id="measures">
+            <option>Porcja</option>
+            <option>Gram</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="userInp"><em>Liczba:</em></label>
+          <input type="number" class="form-control userInp" id="userInp" placeholder="Wpisz liczbę...">
+        </div>
+        <div class="form-group">
+          <div class="productKcal text-center mb-2">123kcal</div>
+          <div class="productMacro text-center">432g 1234g 543g</div>
+        </div>
+      </div>
     </div>
-    <div class="col-12 chart">
-      <canvas baseChart height="100px" width="200px" style="margin: 0 auto"
-              [data]="pieChartData"
-              [labels]="pieChartLabels"
-              [chartType]="pieChartType"
-              [options]="pieChartOptions"
-              [colors]="pieChartColors"
-              [legend]="pieChartLegend">
-      </canvas>
-    </div>
-    <div class="buttons text-right">
-      <button (click)="stat = !stat" class="btn btn-outline-dark m-2">Szczegóły</button>
-    </div>
-  </div>
-  <div [ngClass]="{'moreInfo-close': stat === false}" class="moreInfo text-center">
-    <span class="bigText">Śniadanie 09.08.2020</span>
-    <p>
-      <span>Kcal</span>
-      <ngb-progressbar type="secondary" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
-    </p>
-    <p>
-      <span>węglowodany</span>
-      <ngb-progressbar type="secondary" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
-    </p>
-    <p>
-      <span>białko</span>
-      <ngb-progressbar type="secondary" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
-    </p>
-    <p>
-      <span>tłuszcze</span>
-      <ngb-progressbar type="secondary" textType="white" [value]="25" [showValue]="true"></ngb-progressbar>
-    </p>
-    <div class="buttons text-right">
-      <button (click)="stat = !stat" class="btn btn-outline-dark m-2">Powrót</button>
+    <div *ngIf="!productProp" class="productProp d-flex justify-content-around">
+      <div class="back">
+        <div class="arrow">
+          <svg (click)="productProp = !productProp" xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 0 24 24" width="30">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M12 8V4l8 8-8 8v-4H4V8z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="add">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#dd0101" width="30px" height="30px"><path
+          d="M0 0h24v24H0z" fill="none"/><path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+      </div>
+      <div class="info" [ngbPopover]="popContent" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="green" width="30px" height="30px"><path
+          d="M0 0h24v24H0z" fill="none"/><path d="M10 20h4V4h-4v16zm-6 0h4v-8H4v8zM16 9v11h4V9h-4z"/></svg>
+      </div>
+      <ng-template #popContent >Na 100g produktu:<br>
+        Białka: <b>20g</b>,<br>
+        Tłuszcze: <b>20g</b>,<br>
+        Węglowodany: <b>20g</b><br>
+      </ng-template>
     </div>
   </div>
 </div>

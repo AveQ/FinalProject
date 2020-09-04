@@ -7,6 +7,7 @@ export class Meals {
   public fullCarb: number;
   public fullFats: number;
   public fullProteins: number;
+  public isIngedientsOpen: boolean;
   public ingredients: Food[];
   public delete: boolean;
 }

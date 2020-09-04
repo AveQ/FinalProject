@@ -14,6 +14,8 @@ import {ChartsModule} from 'ng2-charts';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AddFoodPanelComponent} from '../components/food-panel/add-food-modal/add-food-panel.component';
 import {MealsService} from '../components/services/meals.service';
+import {SportPanelComponent} from '../components/sport-panel/sport-panel.component';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import {MealsService} from '../components/services/meals.service';
     SidebarComponent,
     FoodPanelComponent,
     DailyStatisticsComponent,
-    AddFoodPanelComponent
+    AddFoodPanelComponent,
+    SportPanelComponent
   ],
   imports: [
     BrowserModule,

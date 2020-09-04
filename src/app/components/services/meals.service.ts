@@ -3,10 +3,10 @@ import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
 export class MealsService {
-  isMealOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  isMealOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   changeSidebar(value) {
     this.isMealOpen.next(value);
-
   }
+
 }

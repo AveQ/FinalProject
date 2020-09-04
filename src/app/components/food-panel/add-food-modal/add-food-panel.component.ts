@@ -9,48 +9,58 @@ import {MealsService} from '../../services/meals.service';
   styleUrls: ['./add-food-panel.component.scss']
 })
 export class AddFoodPanelComponent implements OnInit {
-  stat: boolean = false;
-  isOpen = false;
+  page = 1;
+  stat: boolean = true;
+  isOpen = true;
+  productProp = true;
   constructor(private mealsService: MealsService) {
   }
 
-  foodsDb = [
+  products = [
     {
-      name: 'kaszanka',
+      name: 'Jajcznica',
       kcal: 123,
-      macro: [
+      macro:
         {
           id: 12234,
           carb: 32,
           fats: 22,
           prot: 123
         }
-      ]
     },
     {
-      name: 'kaszanka',
+      name: 'Kaszanka',
       kcal: 123,
-      macro: [
+      macro:
         {
           id: 12234,
           carb: 32,
           fats: 22,
           prot: 123
         }
-      ]
     },
     {
-      name: 'kaszanka',
+      name: 'Szynka',
       kcal: 123,
-      macro: [
+      macro:
         {
           id: 12234,
           carb: 32,
           fats: 22,
           prot: 123
         }
-      ]
     },
+    {
+      name: 'Filet z Kurczaka',
+      kcal: 123,
+      macro:
+        {
+          id: 12234,
+          carb: 32,
+          fats: 22,
+          prot: 123
+        }
+    }
   ];
   foodsUser = [
     {
@@ -123,6 +133,7 @@ export class AddFoodPanelComponent implements OnInit {
     );
   }
   closeModal() {
-    this.mealsService.changeSidebar(true);
+    this.mealsService.changeSidebar(false);
+    this.productProp = true;
   }
 }
