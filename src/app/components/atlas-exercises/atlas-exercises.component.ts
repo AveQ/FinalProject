@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-food-panel',
-  templateUrl: './sport-panel.component.html',
-  styleUrls: ['./sport-panel.component.scss']
+  templateUrl: './atlas-exercises.component.html',
+  styleUrls: ['./atlas-exercises.component.scss']
 })
-export class SportPanelComponent implements OnInit {
+export class AtlasExercisesComponent implements OnInit {
   filtersHidden = true;
   page = 1;
   partOfBody = 'Wybierz partię';
@@ -16,11 +16,11 @@ export class SportPanelComponent implements OnInit {
   basicSportMenu = [
     {
       name: 'Wiedza podstawowa',
-      on: false
+      on: true
     },
     {
       name: 'Ćwiczenia',
-      on: true
+      on: false
     },
     {
       name: 'Rozgrzewka',

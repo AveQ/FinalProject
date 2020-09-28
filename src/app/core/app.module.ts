@@ -14,7 +14,9 @@ import {ChartsModule} from 'ng2-charts';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AddFoodPanelComponent} from '../components/food-panel/add-food-modal/add-food-panel.component';
 import {MealsService} from '../components/services/meals.service';
-import {SportPanelComponent} from '../components/sport-panel/sport-panel.component';
+import {AtlasExercisesComponent} from '../components/atlas-exercises/atlas-exercises.component';
+import {AuthComponent} from '../components/auth/auth.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -26,13 +28,15 @@ import {SportPanelComponent} from '../components/sport-panel/sport-panel.compone
     FoodPanelComponent,
     DailyStatisticsComponent,
     AddFoodPanelComponent,
-    SportPanelComponent
+    AtlasExercisesComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ChartsModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [UserService, NavigationService, MealsService],
   bootstrap: [AppComponent]

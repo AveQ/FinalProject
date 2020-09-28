@@ -1,0 +1,65 @@
+<div class="boxForAuth">
+  <div class="auth-cont">
+    <div class="title">
+      <h2 class="title-text">Panel <img height="42px" src="assets/logo/aa.png" alt=" "> logowania</h2>
+    </div>
+    <div class="change__mode">
+      <span
+        (click)="signup = false"
+        [ngStyle]="{'color' : !signup ? '#9c0000' : 'white'}"
+        class="change__mode-login">LOGOWANIE</span>/<span
+      (click)="signup = true"
+      [ngStyle]="{'color' : signup ? '#9c0000' : 'white'}"
+      class="change__mode-reg">REJESTRACJA</span>
+    </div>
+    <form autocomplete="off" [formGroup]='signinForm' (ngSubmit)="onSubmit()" class="auth__box">
+      <div class="form-group">
+        <label
+          #emailLabel
+          for="email"
+          class="form__label"
+          [ngClass]="onFocus('email')">Email</label>
+        <input
+          (focus)="focusonEmail = true"
+          (blur)="focusonEmail = false"
+          type="text"
+          class="form__control form__input"
+          id="email"
+          formControlName="email">
+      </div>
+      <div class="form-group">
+        <label
+          #passwordLabel
+          for="password"
+          class="form__label"
+          [ngClass]="onFocus('password')">Password</label>
+        <input
+          (focus)="focusonPassword = true"
+          (blur)="focusonPassword = false"
+          type="password"
+          id="password"
+          class="form__control form__input"
+          formControlName="password">
+      </div>
+      <div *ngIf="!signup" class="form-check rememberMe">
+        <div (click)="rememberMe = !rememberMe" class="checkbox-style" id="rememberMe">
+          <div *ngIf="rememberMe" class="checkbox-mark-one"></div>
+          <div *ngIf="rememberMe" class="checkbox-mark-two"></div>
+        </div>
+        <label class="form-check-label label-remember-me" for="rememberMe">Zapamiętaj mnie</label>
+      </div>
+      <div class="button-gr d-flex justify-content-between">
+        <button
+          type="submit"
+          class="btn btn-light login"
+          [disabled]="signinForm.invalid"
+        >{{signup ? 'Zarejestruj' : 'Zaloguj'}}</button>
+        <button class="btn btn-outline-light btn-fb">Fb</button>
+        <button class="btn btn-outline-light btn-gpls">G+</button>
+      </div>
+    </form>
+    <div class="info">
+      Pietras Marcin &copy;, Inżynieria Oprogramowania 2021
+    </div>
+  </div>
+</div>
