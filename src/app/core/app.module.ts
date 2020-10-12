@@ -17,6 +17,7 @@ import {MealsService} from '../components/services/meals.service';
 import {AtlasExercisesComponent} from '../components/atlas-exercises/atlas-exercises.component';
 import {AuthComponent} from '../components/auth/auth.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {ExerciseComponent} from '../components/atlas-exercises/exercise/exercise.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     DailyStatisticsComponent,
     AddFoodPanelComponent,
     AtlasExercisesComponent,
-    AuthComponent
+    AuthComponent,
+    ExerciseComponent
   ],
   imports: [
     BrowserModule,
