@@ -18,6 +18,8 @@ import {AtlasExercisesComponent} from '../components/atlas-exercises/atlas-exerc
 import {AuthComponent} from '../components/auth/auth.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ExerciseComponent} from '../components/atlas-exercises/exercise/exercise.component';
+import {WelcomePageComponent} from '../components/welcome-page/welcome-page.component';
+import {NavComponent} from '../components/nav/nav.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import {ExerciseComponent} from '../components/atlas-exercises/exercise/exercise
     AddFoodPanelComponent,
     AtlasExercisesComponent,
     AuthComponent,
-    ExerciseComponent
+    ExerciseComponent,
+    WelcomePageComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,

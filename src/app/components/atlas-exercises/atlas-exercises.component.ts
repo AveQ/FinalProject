@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-food-panel',
+  selector: 'app-atlas-exercises',
   templateUrl: './atlas-exercises.component.html',
   styleUrls: ['./atlas-exercises.component.scss']
 })

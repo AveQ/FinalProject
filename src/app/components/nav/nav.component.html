@@ -1,0 +1,36 @@
+<nav class="d-flex align-content-center flex-wrap">
+  <div class="row contForAll d-flex justify-content-between">
+    <div class="logo-wrapper">
+      <div class="image-wrapper">
+        <img class="image d-flex align-content-center flex-wrap" src="assets/logo/aa.png" alt="NFC"
+             (mouseenter)="rotateImage = true" (mouseout)="rotateImage = false"
+             [ngClass]="{'rotateImage': rotateImage}">
+        <div class="logo_txt d-flex align-content-center flex-wrap"><span (mouseenter)="rotateImage = true"
+                                                                          (mouseout)="rotateImage = false">NFL Center</span>
+        </div>
+      </div>
+
+    </div>
+    <div [ngClass]="{'menu--open' : menuOpen === 1, 'menu--close' : menuOpen === 2}" class="contForMenu">
+      <ul class="menu ">
+        <li class="list"><a href="" class="link-list"
+                            [ngStyle]="{'color' : selectRoute === 0 ? 'red' : 'white'}">HOME</a></li>
+        <li class="list"><a href="" class="link-list">PANEL ODŻYWIANIA</a></li>
+        <li class="list"><a href="" class="link-list">DZIENNIK AKTYWNOŚCI</a></li>
+        <li class="list"><a href="" class="link-list">ATLAS</a></li>
+        <li class="list"><a href="" class="link-list">BMI</a></li>
+        <li class="list"><a href="" class="link-list">USTAWIENIA</a></li>
+        <li class="list"><a href="" class="link-list joinToUs">DOŁĄCZ</a></li>
+        <li class="list list-hamburger" (click)="menuOpen = 2"><a href="#" class="link-list link-list-hamburger">ZWIŃ</a>
+        </li>
+      </ul>
+    </div>
+    <div class="contForHamb" (click)="menuOpen = 1">
+      <div class="box" >
+      <div class="firstHamb"></div>
+      <div class="secHamb"></div>
+      <div class="centerHamb"></div>
+      </div>
+    </div>
+  </div>
+</nav>

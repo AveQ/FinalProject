@@ -1,0 +1,319 @@
+.container-fluid {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  background-color: rgb(28, 30, 32);
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.col-12 {
+  padding: 0;
+}
+
+.containerForImage {
+  position: relative;
+  height: 100vh;
+}
+
+@mixin imageProp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.image-welcome-1 {
+  @include imageProp();
+
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.25),
+      rgba(0, 0, 0, 0.25)
+  ), url("src/assets/welcome-page/bg4.jpg") no-repeat center center fixed;
+  background-size: cover;
+  animation: ease-in-out .6s forwards welcomeImageEnter;
+}
+.image-welcome-2 {
+  @include imageProp();
+
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.25),
+      rgba(0, 0, 0, 0.25)
+  ), url("src/assets/welcome-page/bg3.jpg") no-repeat center center fixed;
+  background-size: cover;
+  animation: ease-in-out .6s forwards welcomeImageEnter;
+}
+.image-welcome-3 {
+  @include imageProp();
+
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.25),
+      rgba(0, 0, 0, 0.25)
+  ), url("src/assets/welcome-page/bg2.jpg") no-repeat center center fixed;
+  background-size: cover;
+  animation: ease-in-out .6s forwards welcomeImageEnter;
+}
+// rotated text - left
+.rotatedText {
+  position: absolute;
+  z-index: 1;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  left: -140px;
+  top: 200px;
+  transform: rotate(90deg);
+  animation: linear .4s .4s forwards rotateTextEnter;
+  & span {
+    display: block;
+  }
+}
+
+// MAIN TEXT
+
+.mainText {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  text-align: center;
+
+
+  & .mainText-heading{
+    font-size: 36px;
+    font-weight: bold;
+    color: #dd0101;
+    opacity: 0;
+    animation: linear .4s .5s forwards mainText-h-a;
+  }
+  & .mainText-firstText, & .mainText-secondText {
+    position: relative;
+    font-size: 90px;
+    color: white;
+    font-weight: bold;
+    overflow: hidden;
+  }
+}
+.mainText-firstText {
+  animation: linear .2s .9s forwards mainText-f-a;
+  white-space: nowrap;
+  width: 0;
+}
+.mainText-secondText {
+  animation: ease .4s 1.1s forwards mainText-s-a;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.beam {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 100%;
+  height: 30%;
+  background-color: white;
+  animation: linear .2s 1.1s forwards deleteBeam;
+}
+
+// counters
+
+.counterContainer {
+  position: absolute;
+  bottom: 30px;
+  left: -50px;
+  animation: linear .4s .4s forwards counterEnter;
+}
+.counterMenu {
+  padding: 0;
+  margin: 0;
+}
+.counter {
+  list-style-type: none;
+  font-weight: bold;
+  color: #606060;
+  height: 50px;
+  width: 40px;
+  position: relative;
+
+}
+.counter-number {
+  cursor: pointer;
+  font-size: 20px;
+}
+.counter-beam {
+  height: 30px;
+  width: 4px;
+  background-color: #dd0101;
+  position: absolute;
+  right: 0;
+  top: 0px;
+}
+.counter-beam-current {
+
+}
+// progress bar
+
+.progressAnimationBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5px;
+  background-color: #9c0000;
+  z-index: 1;
+  animation: progressbarAnimation ease-in-out 5s infinite;
+}
+
+// animations
+
+@keyframes progressbarAnimation {
+  0%{
+    right: 100%;
+  }
+  100% {
+    right: 0;
+  }
+}
+@keyframes mainText-f-a {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes mainText-s-a {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes deleteBeam {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes enterBeam {
+
+}
+@keyframes deleteBeam2 {
+  0% {
+    right: 100%;
+    left: 0;
+  }
+  100% {
+    right: 0;
+    left: 0;
+  }
+}
+@keyframes mainText-s-a {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes mainText-h-a {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes rotateTextEnter {
+  0% {
+    left: -140px;
+  }
+  100% {
+    left: -4px;
+  }
+}
+
+@keyframes counterEnter {
+  0% {
+    left: -50px;
+  }
+  100% {
+    left: 35px;
+  }
+}
+
+@keyframes welcomeImageEnter {
+  0% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1.0);
+    overflow-y: auto;
+  }
+}
+
+@media all and (max-width: 1250px) {
+  .mainText {
+    & .mainText-heading{
+      font-size: 26px;
+    }
+    & .mainText-firstText, & .mainText-secondText {
+      font-size: 50px;
+    }
+  }
+  .counter {
+    width: 25px;
+  }
+  .counter-number {
+    font-size: 15px;
+  }
+  .counter-beam {
+    height: 18px;
+    width: 4px;
+    background-color: #dd0101;
+    position: absolute;
+    right: 0;
+    top: 4px;
+  }
+}
+
+@media all and (max-width: 700px) {
+  .mainText {
+    & .mainText-heading{
+      font-size: 26px;
+    }
+    & .mainText-firstText, & .mainText-secondText {
+      font-size: 35px;
+    }
+  }
+  .rotatedText {
+    font-size: 15px;
+  }
+}
+@media all and (max-width: 550px) {
+  .mainText {
+    & .mainText-heading{
+      font-size: 20px;
+    }
+    & .mainText-firstText, & .mainText-secondText {
+      font-size: 30px;
+    }
+  }
+
+  .rotatedText {
+    display: none;
+  }
+  .counterContainer {
+    display: none;
+  }
+}

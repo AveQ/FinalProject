@@ -1,0 +1,75 @@
+<!--<app-nav></app-nav>-->
+<app-navb></app-navb>
+<app-sidebar></app-sidebar>
+<div class="container-fluid">
+
+  <div class="row containerForImage">
+    <div class="rotatedText">
+      <span>NFL</span>
+      <span>FIT APPLICATION</span>
+    </div>
+    <div *ngIf="activePage === 0" class="col-12 image-welcome-1">
+    </div>
+    <div *ngIf="activePage === 1" class="col-12 image-welcome-2">
+    </div>
+    <div *ngIf="activePage === 2" class="col-12 image-welcome-3">
+    </div>
+    <div *ngIf="activePage === 0" class="mainText">
+      <div class="mainText-heading">CZAS NA ZMIANE</div>
+      <div class="mainText-firstText">
+        ZMIEŃ SWOJE ŻYCIE
+        <div class="beam">
+
+        </div>
+      </div>
+      <div class="mainText-secondText">
+        NA LEPSZE
+      </div>
+    </div>
+    <div *ngIf="activePage === 1" class="mainText">
+      <div class="mainText-heading">CZAS NA ĆWICZENIA</div>
+      <div class="mainText-firstText">
+        ĆWICZ REGULARNIE Z
+        <div class="beam">
+        </div>
+      </div>
+      <div class="mainText-secondText">
+        ATLASEM NFL
+      </div>
+    </div>
+    <div *ngIf="activePage === 2" class="mainText">
+      <<div class="mainText-heading">CZAS NA DIETĘ</div>
+      <div class="mainText-firstText">
+        JEDZ REGULARNIE Z
+        <div class="beam">
+        </div>
+      </div>
+      <div class="mainText-secondText">
+        NFL CENTER
+      </div>
+    </div>
+
+    <div class="counterContainer">
+      <ul class="counterMenu">
+        <li class="counter">
+          <span (click)="setManuallyNewBackground(0)" [ngStyle]="{'color' : activePage === 0 ? 'white' : 'grey'}"
+                class="counter-number">01</span>
+          <div class="counter-beam counter-beam-current"></div>
+        </li>
+        <li class="counter">
+          <span (click)="setManuallyNewBackground(1)" [ngStyle]="{'color' : activePage === 1 ? 'white' : 'grey'}"
+                class="counter-number">02</span>
+          <div class="counter-beam"></div>
+        </li>
+        <li class="counter">
+          <span (click)="setManuallyNewBackground(2)" [ngStyle]="{'color' : activePage === 2 ? 'white' : 'grey'}"
+                class="counter-number">03</span>
+          <div class="counter-beam"></div>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="activePage === 0" class="progressAnimationBar"></div>
+    <div *ngIf="activePage === 1" class="progressAnimationBar"></div>
+    <div *ngIf="activePage === 2" class="progressAnimationBar"></div>
+  </div>
+</div>
