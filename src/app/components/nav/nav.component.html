@@ -13,15 +13,15 @@
     </div>
     <div [ngClass]="{'menu--open' : menuOpen === 1, 'menu--close' : menuOpen === 2}" class="contForMenu">
       <ul class="menu ">
-        <li class="list"><a href="" class="link-list"
+        <li class="list"><a routerLink="/" class="link-list"
                             [ngStyle]="{'color' : selectRoute === 0 ? 'red' : 'white'}">HOME</a></li>
-        <li class="list"><a href="" class="link-list">PANEL ODŻYWIANIA</a></li>
+        <li class="list"><a routerLink="/food-panel" class="link-list">PANEL ODŻYWIANIA</a></li>
         <li class="list"><a href="" class="link-list">DZIENNIK AKTYWNOŚCI</a></li>
         <li class="list"><a href="" class="link-list">ATLAS</a></li>
         <li class="list"><a href="" class="link-list">BMI</a></li>
         <li class="list"><a href="" class="link-list">USTAWIENIA</a></li>
-        <li class="list"><a href="" class="link-list joinToUs">DOŁĄCZ</a></li>
-        <li class="list list-hamburger" (click)="menuOpen = 2"><a href="#" class="link-list link-list-hamburger">ZWIŃ</a>
+        <li class="list"><a routerLink="/authorisation" class="link-list joinToUs">DOŁĄCZ</a></li>
+        <li class="list list-hamburger" (click)="menuOpen = 2"><a class="link-list link-list-hamburger">ZWIŃ</a>
         </li>
       </ul>
     </div>

@@ -20,6 +20,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ExerciseComponent} from '../components/atlas-exercises/exercise/exercise.component';
 import {WelcomePageComponent} from '../components/welcome-page/welcome-page.component';
 import {NavComponent} from '../components/nav/nav.component';
+import {FoodPanelNewComponent} from '../components/food--panel/food-panel.component';
+import {WChartComponent} from '../components/food--panel/wChart/wChart.component';
+import {TrainingComponent} from '../components/food--panel/training/training.component';
+import {
+  NgbdTableBasic
+} from '../components/food--panel/training/table/table.component';
+import {StatsComponent} from '../components/food--panel/stats/stats.component';
+import {MealComponent} from '../components/food--panel/meal/meal.component';
 
 
 @NgModule({
@@ -35,7 +43,13 @@ import {NavComponent} from '../components/nav/nav.component';
     AuthComponent,
     ExerciseComponent,
     WelcomePageComponent,
-    NavComponent
+    NavComponent,
+    FoodPanelNewComponent,
+    WChartComponent,
+    TrainingComponent,
+    NgbdTableBasic,
+    StatsComponent,
+    MealComponent
   ],
   imports: [
     BrowserModule,

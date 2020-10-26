@@ -1,0 +1,105 @@
+<div class="container">
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{nameOfProduct}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p class="text-center"><b>
+        <span style="color: red">400g</span> <br>
+        Węglowodany: 300g <br>
+        Białko: 240g <br>
+        Tłuszcze: 430g <br></b>
+      </p>
+
+    </div>
+  </ng-template>
+  <!--
+    TABLE
+  -->
+  <div class="row">
+    <div class="col-12">
+      <h3 class="header">Spersonalizuj {{nameOfMeal}}</h3>
+      <p class="text-center">Kalorie łącznie: 400 kcal</p>
+    </div>
+    <div class="col-12 p-0">
+      <p class="textTable text-center mt-4 mb-4">Dodane posiłki</p>
+
+      <table class="table table-striped text-center">
+        <thead>
+        <tr>
+          <th scope="col">Ilość</th>
+          <th scope="col">Nazwa</th>
+          <th scope="col">Kalorie</th>
+          <th scope="col">Szczegóły</th>
+          <th scope="col">Opcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let myMeal of meal; index as i">
+          <th scope="row">{{ myMeal.howMany }}</th>
+          <td>
+            <p><b>
+              {{myMeal.name}}
+            </b></p>
+          </td>
+          <td>
+            <p>
+              <b>
+                {{myMeal.properties[0]}} kcal
+              </b>
+            </p>
+
+          </td>
+          <td>
+            <b style="cursor: pointer;" (click)="openSm(content, myMeal.name)">Wyświetl</b>
+          </td>
+          <td>
+            <b style="cursor: pointer;">Usuń</b>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-12 text-center">
+    <button class="btn btn-outline-dark mr-1 btnFir">Posiłek z <b>bazy</b></button>
+    <button class="btn btn-outline-dark ml-1 btnFir">Posiłek <b>własny</b></button>
+  </div>
+  <div class="col-12 foodDBContainer p-0 mt-5">
+    <div class="searchProduct d-flex justify-content-around">
+      <input class="form-control inputFood" type="text">
+      <button class="btn btn-dark btnSec">Szukaj</button>
+    </div>
+    <div class="col-12 p-0 mt-5 containerForDB">
+      <table class="table table-striped text-center">
+        <thead>
+        <tr>
+          <th scope="col">Nazwa</th>
+          <th scope="col">Kalorie na 100g</th>
+          <th scope="col">Opcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let myMealDB of mealDB; index as i">
+          <th scope="row">
+            {{myMealDB.name}}
+          </th>
+          <td>
+            <b>{{myMealDB.properties[0]}} kcal</b>
+          </td>
+          <td>
+            <b style="cursor: pointer;">Dodaj</b>
+            <b style="cursor: pointer; margin-left: 5px;">Szczegóły</b>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="pagination d-flex justify-content-center">
+        <ngb-pagination class="" [collectionSize]="50" [(page)]="page" [maxSize]="3" [rotate]="true" [ellipses]="false"
+                        [boundaryLinks]="false"></ngb-pagination>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,43 @@
+.forecast {
+  box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.75);
+  font-family: 'Roboto Condensed', sans-serif;
+  margin-top: 30px;
+  display: inline-block;
+  padding: 10px;
+  padding-bottom: 0;
+  & .progressIcon{
+    display: block;
+    height: 50px;
+    width: 50px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    text-align: center;
+    line-height: 42px;
+    border-radius: 50%;
+    border: 3px solid black;
+    & svg {
+    }
+  }
+}
+.part {
+  font-weight: bold;
+  font-family: 'Roboto Condensed', sans-serif;
+  padding-bottom: 20px;
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+  cursor: pointer;
+}
+.dataInfo {
+  padding-top: 30px;
+}
+.optionStats {
+  width: 80%;
+  text-align: center;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+@media all and (max-width: 1000px){
+  .part, .optionStats {
+    width: 100%;
+  }
+}

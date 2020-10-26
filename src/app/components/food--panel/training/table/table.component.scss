@@ -1,0 +1,10 @@
+
+.textTable, table {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+@media all and (max-width: 600px){
+  tr{
+    font-size: 12px;
+  }
+}

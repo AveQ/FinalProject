@@ -1,0 +1,57 @@
+.myChart {
+  position: relative;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+.modal-header {}
+.score {
+  position: absolute;
+  left:50.5%;
+  top:53%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: 36px;
+}
+.configWater {
+  margin-bottom: 30px;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+.button-water {
+  display: inline-block;
+  //background-color: rgb(44, 169, 255);
+  border: 2px solid black;
+  padding: 13px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all linear .2s;
+  &:hover {
+    background-color: rgb(44, 169, 255);
+  }
+  &:hover svg{
+    animation: linear forwards droplet .5s;
+  }
+}
+.increment, .decrease, .windowWater {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+}
+.increment, .decrease {
+  cursor: pointer;
+}
+.boxForWindowWater {
+}
+.windowWater {
+  width: 100px;
+  text-align: center;
+}
+@keyframes droplet {
+  0% {
+    transform: scale(1) rotate(0);
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    transform: scale(1.4) rotate(360deg);
+  }
+}
