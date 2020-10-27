@@ -1,12 +1,6 @@
 import {Component, ElementRef, HostListener, OnInit, Renderer2} from '@angular/core';
-import {Meals} from '../models/meals.model';
-import {MealMOK} from '../MOK/mealMOK.services';
-import {MealsService} from '../services/meals.service';
-import {ChartOptions, ChartType} from 'chart.js';
-import {Label} from 'ng2-charts';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-auth',

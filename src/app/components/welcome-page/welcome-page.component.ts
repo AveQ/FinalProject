@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NavigationService} from '../services/navigation.service';
 
 @Component({
   selector: 'app-welcome-page',
@@ -11,7 +10,7 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
   idInterval;
   progressBarActive = false;
 
-  constructor(private navigationService: NavigationService) {
+  constructor() {
   }
 
   ngOnInit(): void {

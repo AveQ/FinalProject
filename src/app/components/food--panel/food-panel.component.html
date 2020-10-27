@@ -74,7 +74,7 @@
 
     -->
     <div class="row  justify-content-center" [ngClass]="{'containerForMeals--open' : activeMenuCategory === 0, 'containerForMeals' : activeMenuCategory != 0 }">
-      <div (click)="updateMeal = true" *ngFor="let meal of meals; let i = index;" class="col-md-3 col-12 boxForMeal">
+      <div (click)="changeMealStatus(true)" *ngFor="let meal of meals; let i = index;" class="col-md-3 col-12 boxForMeal">
         <div class="{{meal.classForMeal}} imageMeal-zoom"></div>
         <div class="beam"></div>
         <div class="infoMeal">

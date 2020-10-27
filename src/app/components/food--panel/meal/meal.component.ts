@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NavigationService} from '../../../services/navigation.service';
 
 interface Meal {
   id: number;
@@ -77,14 +78,24 @@ export class MealComponent implements OnInit {
   meal = Meal;
   mealDB = MealDB;
   page = 1;
+  typeOfDB = null;
+
   showMoreInfo(data) {
     console.log(data);
   }
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal, private navigateService: NavigationService) {
   }
 
   ngOnInit(): void {
+  }
+
+  changeTypeOfDataBase(value) {
+    this.typeOfDB = value;
+  }
+
+  navigate() {
+    this.navigateService.changeSubject(false);
   }
 
   openSm(content, value) {

@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../services/user.service';
-import {NavigationService} from '../services/navigation.service';
 
 @Component({
   selector: 'app-navb',
@@ -20,18 +18,15 @@ export class NavComponent implements OnInit {
   authFailed = false;
   menuOpen = 0;
 
-  constructor(private userService: UserService,
-              private navigationService: NavigationService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.name = this.userService.getUserName();
     this.name === 'Sign up' ? this.account = 'Sign up' : this.account = 'Account';
   }
 
   changeSidebar() {
     this.sidebarLock = !this.sidebarLock;
-    this.navigationService.changeSidebar(this.sidebarLock);
   }
 
 }

@@ -1,9 +1,8 @@
-import {Component, HostListener, OnInit} from '@angular/core';
-import {Meals} from '../models/meals.model';
-import {MealMOK} from '../MOK/mealMOK.services';
-import {MealsService} from '../services/meals.service';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ChartOptions, ChartType} from 'chart.js';
 import {Label} from 'ng2-charts';
+import {NavigationService} from '../../services/navigation.service';
+import {Subscription} from 'rxjs';
 
 class Day {
   name: string;
@@ -26,11 +25,10 @@ enum Days {
   templateUrl: './food-panel.component.html',
   styleUrls: ['./food-panel.component.scss']
 })
-export class FoodPanelNewComponent implements OnInit {
+export class FoodPanelNewComponent implements OnInit, OnDestroy {
   activeMenuCategory = 0;
-  updateMeal = true;
-  test = 'imageMeal';
-
+  updateMeal = false;
+  myNavSubject: Subscription;
   meals = [
     {
       name: 'śniadnie',
@@ -136,14 +134,21 @@ export class FoodPanelNewComponent implements OnInit {
   stat: boolean = false;
   isOpen = false;
 
-  constructor(private mealMOK: MealMOK, private mealsService: MealsService) {
+  constructor(private navigateService: NavigationService) {
   }
 
   ngOnInit(): void {
     this.setMaxAndMinDate();
     this.setDate(new Date().getTime());
+    this.myNavSubject  = this.navigateService.returnSubject().subscribe(
+      value => {
+        this.updateMeal = value;
+      }
+    );
   }
-
+  changeMealStatus(value) {
+    this.navigateService.changeSubject(value);
+  }
   setMaxAndMinDate() {
     this.minDate = new Date(new Date().getTime() - 86400000 * 30).toISOString().substr(0, 10);
     this.maxDate = new Date(new Date().getTime() + 86400000 * 30).toISOString().substr(0, 10);
@@ -185,7 +190,9 @@ export class FoodPanelNewComponent implements OnInit {
     }
   }
 
-  stats() {
-    console.log('x');
+
+  ngOnDestroy(): void {
+    this.changeMealStatus(false);
+    this.myNavSubject.unsubscribe();
   }
 }

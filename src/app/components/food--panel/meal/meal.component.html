@@ -65,10 +65,15 @@
     </div>
   </div>
   <div class="col-12 text-center">
-    <button class="btn btn-outline-dark mr-1 btnFir">Posiłek z <b>bazy</b></button>
-    <button class="btn btn-outline-dark ml-1 btnFir">Posiłek <b>własny</b></button>
+    <button (click)="changeTypeOfDataBase('application')" class="btn btn-outline-dark mr-1 btnFir">Posiłek z <b>bazy</b></button>
+    <button (click)="navigate()" class="btn btn-outline-dark ml-1 btnFir"><b>Powrót</b></button>
+    <button (click)="changeTypeOfDataBase('user')" class="btn btn-outline-dark ml-1 btnFir">Posiłek <b>własny</b></button>
   </div>
-  <div class="col-12 foodDBContainer p-0 mt-5">
+  <div *ngIf="typeOfDB!=null" class="col-12 foodDBContainer p-0 mt-5">
+    <p class="text-center">
+      <b *ngIf="typeOfDB==='user'">Szukaj z bazy użytkownika</b>
+      <b *ngIf="typeOfDB==='application'">Szukaj z bazy aplikacji</b>
+    </p>
     <div class="searchProduct d-flex justify-content-around">
       <input class="form-control inputFood" type="text">
       <button class="btn btn-dark btnSec">Szukaj</button>
