@@ -95,7 +95,7 @@ export class MealComponent implements OnInit {
   }
 
   navigate() {
-    this.navigateService.changeSubject(false);
+    this.navigateService.changeMealSubject(false);
   }
 
   openSm(content, value) {

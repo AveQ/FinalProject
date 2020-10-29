@@ -21,6 +21,8 @@ import {
 import {StatsComponent} from '../components/food--panel/stats/stats.component';
 import {MealComponent} from '../components/food--panel/meal/meal.component';
 import {NavigationService} from '../services/navigation.service';
+import {BMIComponent} from '../components/BMI/bmi.component';
+import {TimelineExeComponent} from '../components/food--panel/timeline-exe/timeline-exe.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import {NavigationService} from '../services/navigation.service';
     TrainingComponent,
     NgbdTableBasic,
     StatsComponent,
-    MealComponent
+    MealComponent,
+    BMIComponent,
+    TimelineExeComponent
   ],
   imports: [
     BrowserModule,

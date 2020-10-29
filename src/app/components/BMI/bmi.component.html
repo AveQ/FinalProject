@@ -1,0 +1,84 @@
+<!--
+      NAV AND TITLE
+    -->
+<div class="containerForBMI overflow-hidden">
+  <div class="bmi-heading">
+    <div class="navigation">
+      <app-navb></app-navb>
+      <div class="naviagtion-title">
+        BMI
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <!--
+      TEXT BEFORE DATE
+    -->
+    <div class="row basicInfoBMI">
+      <span class="col-12 basicInfoBMI-text">WPROWADŹ DANE</span>
+      <span class="col-12 basicInfoBMI-text1">BODY MASS INDEX</span>
+    </div>
+    <!--
+      FORM
+    -->
+    <div class="col-12 d-flex justify-content-center m">
+      <div class="infoBMI">
+        <div class="progressIcon">
+          <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+               x="0px" y="0px" width="30px" height="30px" viewBox="0 0 57.288 122.88"
+               enable-background="new 0 0 57.288 122.88" xml:space="preserve"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M32.499,0c4.436,0,7.926,1.281,10.468,3.819c2.515,2.53,3.785,6.007,3.785,10.481 c0,4.538-2.163,8.572-6.521,12.11c-4.381,3.538-9.463,5.318-15.254,5.318c-4.352,0-7.812-1.218-10.465-3.66 c-2.651-2.47-3.976-5.665-3.976-9.639c0-5.007,2.163-9.322,6.465-12.987C21.301,1.816,26.465,0,32.499,0L32.499,0z M57.288,122.88 H0v-9.64h10.765V54.36H0v-7.674h26.775c6.763,0,13.418-0.812,19.992-2.47v69.024h10.521V122.88L57.288,122.88z"/></g></svg>
+        </div>
+        <p class="infoBMI-header text-center"><b>Zakres BMI</b></p>
+        <div class="dataBMI">
+          <b>< 16</b> - wygłodzenie <br>
+          <b>16 - 16.99 </b>- wychudzenie <br>
+          <b>17 - 18.49 </b>- niedowaga <br>
+          <b>18.5 - 24.99 </b>- wartość prawidłowa <br>
+          <b>25 - 29.99 </b>- nadwaga <br>
+          <b>30 - 34.99</b> - I stopień otyłości <br>
+          <b>35 - 39.99 </b>- II stopień otyłości <br>
+          <b>> 40</b> - otyłość skrajna <br>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="bmiForm" (ngSubmit)="onSubmit()" class="col-md-6 col-12 contForBMIForm mt-5">
+      <div class="form-group row text-center">
+        <label for="weight" class="col-lg-4 col-form-label">Waga [kg]</label>
+        <div class="col-lg-6">
+          <input formControlName="weight" type="number" class="form-control" id="weight" placeholder="80">
+        </div>
+      </div>
+      <div class="form-group row text-center">
+        <label for="height" class="col-lg-4 col-form-label">Wzrost [cm]</label>
+        <div class="col-lg-6">
+          <input formControlName="height" type="number" class="form-control" id="height" placeholder="170">
+        </div>
+      </div>
+      <fieldset class="form-group">
+        <div class="row">
+          <div class="col-form-label col-lg-4 pt-0 text-center">Płeć</div>
+          <div class="col-lg-8">
+            <div class="form-check">
+              <input formControlName="woman" class="form-check-input" type="radio"  id="gridRadios1" value="true">
+              <label class="form-check-label" for="gridRadios1">
+                Kobieta
+              </label>
+            </div>
+            <div class="form-check">
+              <input formControlName="man" class="form-check-input" type="radio"  id="gridRadios2" value="true">
+              <label class="form-check-label" for="gridRadios2">
+                Mężczyzna
+              </label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <div class="form-group row justify-content-center">
+        <div class="col-lg-9">
+          <button type="submit" class="btn btn-dark">Sprawdź</button>
+          <button type="button" class="btn btn-dark ml-2">Użyj danych z profilu</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

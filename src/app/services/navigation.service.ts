@@ -3,14 +3,21 @@ import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
 export class NavigationService {
-  private navigate = new BehaviorSubject(false);
+  private mealNavigate = new BehaviorSubject(false);
+  private navbarNavigate = new BehaviorSubject(0);
   constructor() {
   }
-  returnSubject() {
-    return this.navigate;
+  returnMealSubject() {
+    return this.mealNavigate;
   }
-  changeSubject(value) {
-    this.navigate.next(value);
+  changeMealSubject(value) {
+    this.mealNavigate.next(value);
+  }
+  returnNavSubject() {
+    return this.navbarNavigate;
+  }
+  changeNavSubject(value) {
+    this.navbarNavigate.next(value);
   }
 
 }

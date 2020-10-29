@@ -1,8 +1,8 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ChartOptions, ChartType} from 'chart.js';
 import {Label} from 'ng2-charts';
-import {NavigationService} from '../../services/navigation.service';
 import {Subscription} from 'rxjs';
+import {NavigationService} from '../../../services/navigation.service';
 
 class Day {
   name: string;
@@ -21,66 +21,44 @@ enum Days {
 }
 
 @Component({
-  selector: 'app-food--panel',
-  templateUrl: './food-panel.component.html',
-  styleUrls: ['./food-panel.component.scss']
+  selector: 'app-timeline',
+  templateUrl: './timeline-exe.component.html',
+  styleUrls: ['./timeline-exe.component.scss']
 })
-export class FoodPanelNewComponent implements OnInit, OnDestroy {
+export class TimelineExeComponent implements OnInit, OnDestroy {
   activeMenuCategory = 0;
   updateMeal = false;
   myNavSubject: Subscription;
-  meals = [
+  exercises = [
     {
-      name: 'śniadnie',
-      kcal: '1000kcal',
-      carb: '1000g',
-      proteins: '1000g',
-      fats: '1000g',
-      classForMeal: 'imageMeal-breakfast'
+      id: 1,
+      name: 'bieganie',
+      kind: 'Cardio',
+      time: 160,
+      burn: 540
     },
     {
-      name: 'II śniadanie',
-      kcal: '1000kcal',
-      carb: '1000g',
-      proteins: '1000g',
-      fats: '1000g',
-      classForMeal: 'imageMeal-sec'
+      id: 2,
+      name: 'rowerek',
+      kind: 'Cardio',
+      time: 160,
+      burn: 540
     },
     {
-      name: 'Obiad',
-      kcal: '1000kcal',
-      carb: '1000g',
-      proteins: '1000g',
-      fats: '1000g',
-      classForMeal: 'imageMeal-din'
+      id: 3,
+      name: 'kajak',
+      kind: 'Cardio',
+      time: 160,
+      burn: 540
     },
     {
-      name: 'Podwieczorek',
-      kcal: '1000kcal',
-      carb: '1000g',
-      proteins: '1000g',
-      fats: '1000g',
-      classForMeal: 'imageMeal-br'
-    },
-    {
-      name: 'Kolacja',
-      kcal: '1000kcal',
-      carb: '1000g',
-      proteins: '1000g',
-      fats: '1000g',
-      classForMeal: 'imageMeal-sup'
-    },
-    {
-      name: 'Dodatkowe',
-      kcal: '231kcal',
-      carb: '1000g',
-      proteins: '1010g',
-      fats: '1032g',
-      classForMeal: 'imageMeal-add'
+      id: 4,
+      name: 'wyciskanie na ławce skośnej',
+      kind: 'Siłowe',
+      time: 160,
+      burn: 540
     }
   ];
-
-  currentDate = '27.07.20 - wtorek';
   private counter = 0;
   private maxDays = 30;
   currentDay: Day = {
@@ -131,30 +109,46 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
       type: 'success'
     }
   ];
+  finalExerciseArray = [];
   stat: boolean = false;
   isOpen = false;
 
   constructor(private navigateService: NavigationService) {
   }
 
+  setFilter(value) {
+    this.finalExerciseArray = [];
+    if(value === 'wszystkie') {
+      this.finalExerciseArray = this.exercises;
+    } else {
+      this.exercises.find(element =>{
+        if (element.kind === value) {
+          this.finalExerciseArray.push(element);
+        }
+      });
+    }
+  }
+
   ngOnInit(): void {
     this.setMaxAndMinDate();
     this.setDate(new Date().getTime());
-    this.myNavSubject  = this.navigateService.returnMealSubject().subscribe(
+    this.myNavSubject = this.navigateService.returnMealSubject().subscribe(
       value => {
         this.updateMeal = value;
       }
     );
-    this.navigateService.changeNavSubject(1);
+    this.navigateService.changeNavSubject(2);
+    this.finalExerciseArray = this.exercises;
   }
+
   changeMealStatus(value) {
     this.navigateService.changeMealSubject(value);
   }
+
   setMaxAndMinDate() {
     this.minDate = new Date(new Date().getTime() - 86400000 * 30).toISOString().substr(0, 10);
     this.maxDate = new Date(new Date().getTime() + 86400000 * 30).toISOString().substr(0, 10);
   }
-
 
 
   setDate(date) {
