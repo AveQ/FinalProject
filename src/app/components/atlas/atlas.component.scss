@@ -1,0 +1,727 @@
+// font awesome
+
+.fa-heart {
+  color: #ececec;
+}
+.fa-heart-active {
+  color: #ec0101;
+}
+.fa-heart-animation {
+  animation: 1s linear heartAnimation;
+}
+
+@keyframes heartAnimation {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.2);
+  }
+  20% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1.2);
+  }
+  80% {
+    transform: scale(1);
+  }
+  90% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+// TITLE AND NAVIGATION
+.atlas-heading {
+  height: 255px;
+  font-family: 'Roboto Condensed', sans-serif;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+  ), url("src/assets/welcome-page/bg2.jpg") no-repeat top center fixed;
+  background-size: cover;
+}
+
+.navigation {
+  height: 100px;
+}
+
+.naviagtion-title {
+  height: 155px;
+  padding-top: 50px;
+  letter-spacing: 2px;
+  width: 100vw;
+  text-align: center;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+
+// FOOD PANEL - DATE
+.boxAtlas {
+
+}
+.containerForAtlas {
+  overflow: hidden;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+.basicInfoAtlas {
+  text-align: center;
+
+
+  & .basicInfoAtlas-text {
+    position: relative;
+    margin-top: 50px;
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
+    font-family: 'Libre Baskerville', serif;
+
+  }
+
+  & .basicInfoAtlas-text1 {
+    font-size: 30px;
+    color: black;
+    font-weight: bold;
+    font-family: 'Libre Baskerville', serif;
+  }
+}
+
+
+
+.sportPanelContainer {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, 0%);
+  height: calc(100vh - 60px);
+  font-family: 'Libre Baskerville', serif;
+  overflow-x: hidden;
+}
+
+.col-12, .row {
+  margin: 0;
+  padding: 0;
+}
+
+.panelSport-options {
+  position: relative;
+}
+.panelSport-list {
+  margin: 0;
+  padding: 0;
+}
+
+.panelSport-pointList {
+  display: inline-block;
+  margin: 5px;
+  cursor: pointer;
+  padding: 5px 0;
+}
+
+.underline-sportPanel {
+  margin: 10px 0;
+}
+
+.underlineOption {
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: -3px;
+    bottom: -24px;
+    height: 2px;
+    background-color: #9c0000;
+    transform: scale(0);
+    animation: linear 0.3s underlineSec forwards;
+  }
+}
+
+.exercisesCounter {
+  color: gray;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.contForVideo, .contForFilters {
+
+}
+.contForFilters {
+
+  margin-bottom: 50px;
+}
+.videos {
+  margin: 0 5px;
+}
+.exercise {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 20px;
+
+
+}
+.heart {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  z-index: 1;
+  border-radius: 50%;
+}
+.panelExer {
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 0;
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+  cursor: pointer;
+  position: relative;
+}
+
+.exercise-image {
+  width: 100%;
+  height: 150px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+.imageProp {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  filter: brightness(65%);
+}
+.exercise-muscles, .exercise-name {
+  width: 90%;
+  margin: 0 auto;
+}
+.exercise-muscles {
+  margin-top: 10px;
+  color: gray;
+  font-size: 12px;
+}
+.exercise-name {
+  margin: 10px auto;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.lvl-exercise {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, 0%);
+  font-size: 14px;
+}
+
+.magnifier {
+  background: url(src/assets/magnifier/search.png) no-repeat scroll 10px 10px;
+  background-size: 15px;
+  padding-left:35px;
+}
+.contForMagnifier {
+  color: gray;
+}
+.contForSort {
+  margin-top: 30px;
+  color: gray;
+}
+.filterButton {
+  display: none;
+}
+
+// wiedza ogólna
+.containerForBod {
+  text-align: center;
+}
+.container--close {
+  display: none;
+}
+.infoExer {
+  color: gray;
+  font-size: 14px;
+}
+.body {
+  display: inline-block;
+  width: 304px;
+  height: 340px;
+  position: relative;
+}
+.partOfBody {
+  position: absolute;
+  cursor: pointer;
+
+  &:after {
+    position: absolute;
+    content: '';
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    height: 10px;
+    width: 10px;
+    border-radius: 100%;
+    background-color: #dc0000;
+  }
+  &:hover:after {
+    background-color: #7c0000;
+  }
+}
+.selectPart {
+  display: block;
+}
+.correctPart {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.front, .back {
+  cursor: pointer;
+}
+.front {
+}
+.tileBody {
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 20px;
+  margin: 20px 0;
+}
+
+.biceps-one, .biceps-two {
+  width: 30px;
+  height: 13px;
+  top: 60px;
+}
+.biceps-one {
+  left: 80px;
+}
+.biceps-two {
+  right: 80px;
+}
+.shoulders-one, .shoulders-two {
+  width: 18px;
+  height: 13px;
+  top: 60px;
+  z-index: 2;
+}
+.shoulders-one {
+  left: 110px;
+}
+.shoulders-two {
+  right: 110px;
+}
+.triceps-one, .triceps-two {
+  width: 30px;
+  height: 10px;
+  top: 73px;
+}
+.triceps-one {
+  left: 80px;
+}
+.triceps-two {
+  right: 80px;
+}
+.forearm-one, .forearm-two {
+  width: 40px;
+  height: 21px;
+  top: 60px;
+}
+.forearm-one {
+  left: 40px;
+}
+.forearm-two {
+  right: 40px;
+}
+.chest {
+  z-index: 1;
+  width: 55px;
+  left: 125px;
+  height: 53px;
+  top: 63px;
+}
+.stomach {
+  z-index: 1;
+  width: 55px;
+  left: 125px;
+  height: 53px;
+  top: 116px;
+}
+.quadriceps-one, .quadriceps-two {
+  width: 30px;
+  height: 41px;
+  top: 180px;
+}
+.quadriceps-one {
+  left: 118px;
+}
+.quadriceps-two {
+  right: 118px;
+}
+.calf-one, .calf-two {
+  width: 20px;
+  height: 61px;
+  top: 241px;
+}
+.calf-one {
+  left: 123px;
+}
+.calf-two {
+  right: 121px;
+}
+.hood-one, .hood-two {
+  width: 20px;
+  height: 11px;
+  top: 57px;
+}
+.hood-one {
+  left: 123px
+}
+.hood-two {
+  right: 123px;
+}
+.back {
+  width: 50px;
+  height: 81px;
+  left: 127px;
+  top: 66px;
+}
+.gluteus {
+  width: 57px;
+  height: 30px;
+  left: 124px;
+  top: 147px;
+}
+// exercise modal
+
+.sportPanelContainer {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 0%);
+  font-family: 'Libre Baskerville', serif;
+  overflow-x: hidden;
+}
+
+.col-12, .row {
+  margin: 0;
+  padding: 0;
+}
+
+.sportPanelTitle {
+  margin-top: 20px;
+  margin-left: 5px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.panelSport-list {
+  margin: 0;
+  padding: 0;
+}
+
+.panelSport-pointList {
+  display: inline-block;
+  margin: 5px;
+}
+
+.underline-sportPanel {
+  margin: 10px;
+}
+
+.opt {
+  margin-left: 5px;
+}
+
+.theScaleOfDifficulty {
+  width: 240px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  & .theScaleOfDifficulty-name {
+    text-align: center;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+}
+
+.description, .mistakes {
+  width: 90%;
+  margin: 0 auto;
+
+  & .description-text {
+    font-size: 16px;
+    text-align: justify;
+  }
+}
+.description-heading{
+  text-align: center;
+  letter-spacing: 1px;
+  font-weight: bold;
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+.contForVid {
+  padding: 0 10px;
+}
+.video-box {
+  margin: 20px 0;
+  //background-color: black;
+  //min-height: 280px;
+  //border-radius: 10px;
+  //position: relative;
+  width: 100%;
+}
+.video-box--video {
+  //position: absolute;
+  //left: 50%;
+  //top:50%;
+  //transform: translate(-50%,-50%);
+  //height: 100%;
+  //min-height: 200px;
+  //width: 100%;
+  display: block;
+  height: 200px;
+  width: 500px;
+  margin: 0 auto;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.addExercise {
+  text-align: center;
+  margin: 10px 5px 0;
+  padding: 10px 10px 0;
+}
+.addExercise-heading {
+  text-align: center;
+  letter-spacing: 1px;
+  font-weight: bold;
+  font-size: 24px;
+  margin: 10px 0;
+}
+.addExercise-small {
+  display: block;
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.addExercise-button {
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  margin-top: 10px;
+}
+.addExercise-button-text {
+  position: relative;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+.back-button {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+@media(max-width: 600px) {
+  .sportPanelTitle {
+    font-size: 24px;
+    margin-top: 10px;
+  }
+  .opt {
+    font-size: 12px;
+  }
+  .panelSport-pointList {
+    margin: 5px 3px;
+  }
+  .theScaleOfDifficulty {
+    width: 200px;
+    & .theScaleOfDifficulty-name {
+      font-size: 12px;
+    }
+  }
+  .addExercise-heading {
+    font-size: 18px;
+  }
+  .addExercise-small {
+    font-size: 12px;
+  }
+}
+
+
+
+
+
+@media(max-width: 991px) {
+  .contForFilters {
+    margin-bottom: 20px;
+  }
+  .filterButton {
+    display: block;
+    margin: 0;
+    text-align: right;
+  }
+  .filters {
+    display: none;
+    transition: 0.3s linear all;
+  }
+  .filters--open {
+    text-align: center;
+    display: block;
+  }
+  .contForSort, .contForMagnifier {
+    margin: 2px;
+    font-size: 14px;
+    display: inline-block;
+  }
+  .contForMagnifier{
+    width: 154px;
+  }
+}
+.contForPagination{
+  padding-top: 20px;
+
+}
+.pagination {
+
+}
+.page-link {
+  color: black;
+}
+
+.filterButton {
+  span {
+    cursor: pointer;
+  }
+}
+@media(max-width: 600px) {
+  .opt {
+    font-size: 12px;
+  }
+  .panelSport-pointList {
+    margin: 5px 3px;
+  }
+  .exercisesCounter {
+    font-size: 14px;
+  }
+  .video-box--video {
+    width: 400px;
+  }
+}
+
+@media(max-width: 450px) {
+  .container-lg {
+    padding: 10px;
+  }
+  .video-box--video {
+    width: 290px;
+  }
+}
+
+@keyframes underlineSec {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes closeSector {
+  0% {
+    margin-left: 0;
+  }
+  99% {
+    margin-left: 100vw;
+  }
+  100% {
+    margin-left: 100vw;
+    display: none;
+  }
+}
+
+@keyframes openSector {
+  0% {
+    margin-left: -100vw;
+  }
+  99% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: 0;
+    opacity: 1;
+  }
+}
+
+
+
+
+
+
+// MEDIAS
+@media(max-width: 1250px) {
+  .atlas-heading {
+    height: 175px;
+    background-color: #373737;
+    font-family: 'Roboto Condensed', sans-serif;
+  }
+  .navigation {
+    height: 100px;
+  }
+  .naviagtion-title {
+    height: 75px;
+    padding-top: 10px;
+    letter-spacing: 1px;
+    width: 100vw;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  .basicInfoAtlas {
+    & .basicInfoAtlas-text {
+      font-size: 15px;
+
+      &:after {
+        width: 110px;
+      }
+    }
+
+    & .basicInfoAtlas-text1 {
+      font-size: 20px;
+    }
+  }
+
+}
+
+@media(max-width: 400px) {
+  .part {
+    padding: 0 5px;
+  }
+  .barName {
+    font-size: 10px;
+  }
+}
+
+@media(max-width: 500px) {
+  .part {
+    padding: 0 5px;
+  }
+  .barName {
+    font-size: 12px;
+  }
+}

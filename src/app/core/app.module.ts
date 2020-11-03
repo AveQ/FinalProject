@@ -23,7 +23,8 @@ import {MealComponent} from '../components/food--panel/meal/meal.component';
 import {NavigationService} from '../services/navigation.service';
 import {BMIComponent} from '../components/BMI/bmi.component';
 import {TimelineExeComponent} from '../components/food--panel/timeline-exe/timeline-exe.component';
-
+import {AtlasComponent} from '../components/atlas/atlas.component';
+import {SettingsComponent} from '../components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -41,14 +42,16 @@ import {TimelineExeComponent} from '../components/food--panel/timeline-exe/timel
     StatsComponent,
     MealComponent,
     BMIComponent,
-    TimelineExeComponent
+    TimelineExeComponent,
+    AtlasComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ChartsModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [NavigationService],
   bootstrap: [AppComponent]

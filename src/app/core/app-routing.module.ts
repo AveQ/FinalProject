@@ -7,6 +7,8 @@ import {WelcomePageComponent} from '../components/welcome-page/welcome-page.comp
 import {FoodPanelNewComponent} from '../components/food--panel/food-panel.component';
 import {BMIComponent} from '../components/BMI/bmi.component';
 import {TimelineExeComponent} from '../components/food--panel/timeline-exe/timeline-exe.component';
+import {AtlasComponent} from '../components/atlas/atlas.component';
+import {SettingsComponent} from '../components/settings/settings.component';
 
 
 const routes: Routes = [
@@ -14,6 +16,8 @@ const routes: Routes = [
   {path: 'atlas-exercises', component: AtlasExercisesComponent},
   {path: 'authorisation', component: AuthComponent},
   {path: 'atlas-exercises/exercise', component: ExerciseComponent},
+  {path: 'atlas', component: AtlasComponent},
+  {path: 'settings', component: SettingsComponent},
   {path: 'bmi', component: BMIComponent},
   {path: 'timeline-exercise', component: TimelineExeComponent},
   {path: '', component: WelcomePageComponent},

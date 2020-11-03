@@ -1,0 +1,109 @@
+// TITLE AND NAVIGATION
+.settings-heading {
+  height: 255px;
+  font-family: 'Roboto Condensed', sans-serif;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+  ), url("src/assets/welcome-page/bg2.jpg") no-repeat top center fixed;
+  background-size: cover;
+}
+
+.navigation {
+  height: 100px;
+}
+
+.naviagtion-title {
+  height: 155px;
+  padding-top: 50px;
+  letter-spacing: 2px;
+  width: 100vw;
+  text-align: center;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+
+// FOOD PANEL - DATE
+.boxSettings {
+
+}
+.containerForSettings {
+  overflow: hidden;
+}
+.basicInfoSettings {
+  text-align: center;
+
+
+  & .basicInfoSettings-text {
+    position: relative;
+    margin-top: 50px;
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
+    font-family: 'Libre Baskerville', serif;
+
+  }
+
+  & .basicInfoSettings-text1 {
+    font-size: 30px;
+    color: black;
+    font-weight: bold;
+    font-family: 'Libre Baskerville', serif;
+  }
+}
+
+// MEDIAS
+@media(max-width: 1250px) {
+  .settings-heading {
+    height: 175px;
+    background-color: #373737;
+    font-family: 'Roboto Condensed', sans-serif;
+  }
+  .navigation {
+    height: 100px;
+  }
+  .naviagtion-title {
+    height: 75px;
+    padding-top: 10px;
+    letter-spacing: 1px;
+    width: 100vw;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  .basicInfoSettings {
+    & .basicInfoSettings-text {
+      font-size: 15px;
+
+      &:after {
+        width: 110px;
+      }
+    }
+
+    & .basicInfoSettings-text1 {
+      font-size: 20px;
+    }
+  }
+
+}
+
+@media(max-width: 400px) {
+  .part {
+    padding: 0 5px;
+  }
+  .barName {
+    font-size: 10px;
+  }
+}
+
+@media(max-width: 500px) {
+  .part {
+    padding: 0 5px;
+  }
+  .barName {
+    font-size: 12px;
+  }
+}
