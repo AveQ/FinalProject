@@ -27,11 +27,14 @@
 
 // FOOD PANEL - DATE
 .boxSettings {
-
+  font-family: Montserrat, Georgia, 'Times New Roman', Times, serif;
+  background-color: #f1f1f1;
 }
+
 .containerForSettings {
   overflow: hidden;
 }
+
 .basicInfoSettings {
   text-align: center;
 
@@ -51,6 +54,152 @@
     color: black;
     font-weight: bold;
     font-family: 'Libre Baskerville', serif;
+  }
+}
+
+.colAnim {
+  transition: all .1s linear;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover .iAnim {
+    animation: iconAnim linear .5s;
+  }
+}
+
+.col-xl-3.col-sm-6.col-12 {
+  margin-bottom: 20px;
+}
+
+.row.contForCards [class*='card'] {
+  min-height: 116px;
+}
+
+.card-body-extra {
+  padding-top: 25px;
+}
+
+.card-body {
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.75);
+}
+
+.account {
+  color: #b2b2b4;
+}
+
+.account-blue {
+  color: #FF7588;
+}
+
+.account-green {
+  color: #1c9112;
+}
+
+.account-brown {
+  color: #673311;
+}
+
+.account-silver {
+  color: #9e9e9e;
+}
+
+.account-gold {
+  color: #cda900;
+}
+
+.account-diamond {
+  color: #8da8b7;
+}
+
+.card-body-gradient-diamond {
+  background-image: linear-gradient(
+      to right,
+      #ffffff, #88a1ae
+  );
+}
+
+.card-body-gradient-gold {
+  background-image: linear-gradient(
+      to right,
+      #ffffff, #a07e00
+  );
+}
+
+.card-body-gradient-silver {
+  background-image: linear-gradient(
+      to right,
+      #ffffff, silver
+  );
+}
+
+.blocked {
+  filter: grayscale(1);
+  color: gray;
+}
+// MODAL
+
+.componentModalSetting {
+  font-family: Montserrat, Georgia, "Times New Roman", Times, serif;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(55, 55, 55, 0.51);
+
+}
+.windowModal {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  background-color: white;
+  padding: 10px;
+}
+.cross {
+  display: inline-block;
+}
+.titleModal-big {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+  color:black;
+  text-shadow: 0 1px, 1px 0, 1px 1px;
+  letter-spacing:1px;
+}
+.titleModal-small {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.input-new-value {
+  width: 80%;
+  margin: 0 auto;
+}
+.btn-new-value {
+  margin: 30px auto;
+  display: block;
+  font-weight: bold;
+}
+// KEYFRAMES
+@keyframes iconAnim { // icon from font-awesome in cards
+  0% {
+    transform: rotate(0);
+  }
+  20% {
+    transform: rotate(20deg);
+  }
+  40% {
+    transform: rotate(0);
+  }
+  60% {
+    transform: rotate(-20deg);
+  }
+  80% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(0);
   }
 }
 
