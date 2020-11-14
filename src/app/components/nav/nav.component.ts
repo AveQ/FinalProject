@@ -18,6 +18,7 @@ export class NavComponent implements OnInit {
   signup: boolean = false;
   authFailed = false;
   menuOpen = 0;
+  otherMenu = false;
 
   constructor(private navigateService: NavigationService) {
   }
@@ -31,6 +32,9 @@ export class NavComponent implements OnInit {
     );
   }
 
+  openOtherMenu() {
+    this.otherMenu = !this.otherMenu;
+  }
   changeSidebar() {
     this.sidebarLock = !this.sidebarLock;
   }

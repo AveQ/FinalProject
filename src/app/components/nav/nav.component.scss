@@ -58,13 +58,15 @@ nav {
   display: flex;
   line-height: 60px;
 }
-@mixin hamb{
+
+@mixin hamb {
   position: absolute;
   background-color: white;
   height: 3px;
   width: 100%;
   left: 0;
 }
+
 .contForHamb {
   display: none;
   height: 30px;
@@ -72,6 +74,7 @@ nav {
   position: relative;
   text-align: center;
   margin-top: 20px;
+
   .box {
     position: relative;
     height: 25px;
@@ -79,20 +82,24 @@ nav {
     cursor: pointer;
   }
 }
+
 .firstHamb {
   @include hamb();
   top: 0;
 }
+
 .secHamb {
   @include hamb();
   bottom: 0;
 }
+
 .centerHamb {
   @include hamb();
   transform: translateY(-50%);
   top: 50%;
 
 }
+
 .menu {
   margin: 0;
   padding: 0;
@@ -117,6 +124,33 @@ nav {
   display: none;
 }
 
+.listOther {
+  position: relative;
+  &:hover .menuOther {
+    display: block;
+  }
+}
+
+.menuOther {
+  display: none;
+  position: absolute;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #dd0101;
+  border-bottom: 1px solid #dd0101;
+
+}
+.menuOther--open {
+  display: block;
+}
+.bmi, .air {
+  height: 40px;
+  line-height: 40px;
+}
+.air{
+  padding-bottom: 10px;
+}
 .joinToUs {
   background-color: #dd0101;
   margin: 0;
@@ -157,7 +191,7 @@ nav {
     top: 0;
   }
   100% {
-    top: -500px;
+    top: -650px;
   }
 }
 
@@ -169,7 +203,7 @@ nav {
     width: 100vw;
     position: absolute;
     height: auto;
-    top: -500%;
+    top: -650%;
     left: 0;
   }
   .menu {
@@ -183,6 +217,9 @@ nav {
   }
   .rotatedText {
     font-size: 12px;
+  }
+  .menuOther {
+    position: static;
   }
 }
 
@@ -212,6 +249,7 @@ nav {
 
     font-size: 23px;
     height: 60px;
+
     & span {
       display: none;
     }

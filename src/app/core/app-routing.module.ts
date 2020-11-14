@@ -9,6 +9,7 @@ import {BMIComponent} from '../components/BMI/bmi.component';
 import {TimelineExeComponent} from '../components/food--panel/timeline-exe/timeline-exe.component';
 import {AtlasComponent} from '../components/atlas/atlas.component';
 import {SettingsComponent} from '../components/settings/settings.component';
+import {AirComponent} from '../components/air/air.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'atlas', component: AtlasComponent},
   {path: 'settings', component: SettingsComponent},
   {path: 'bmi', component: BMIComponent},
+  {path: 'air', component: AirComponent},
   {path: 'timeline-exercise', component: TimelineExeComponent},
   {path: '', component: WelcomePageComponent},
 ];

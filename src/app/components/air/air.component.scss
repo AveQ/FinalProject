@@ -1,0 +1,113 @@
+.bmi-heading {
+  height: 255px;
+  font-family: 'Roboto Condensed', sans-serif;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+  ), url("src/assets/polution/industry-1752876_1920.png") no-repeat bottom center fixed;
+  background-size: cover;
+}
+
+.navigation {
+  height: 100px;
+}
+
+.naviagtion-title {
+  height: 155px;
+  padding-top: 50px;
+  letter-spacing: 2px;
+  width: 100vw;
+  text-align: center;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+}
+.basicInfoBMI {
+  text-align: center;
+
+
+  & .basicInfoBMI-text {
+    position: relative;
+    margin-top: 50px;
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
+    font-family: 'Libre Baskerville', serif;
+
+  }
+
+  & .basicInfoBMI-text1 {
+    font-size: 30px;
+    color: black;
+    font-weight: bold;
+    font-family: 'Libre Baskerville', serif;
+  }
+}
+.contForBMIForm {
+  margin: 0 auto;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: bold;
+}
+.infoBMI {
+  font-family: 'Roboto Condensed', sans-serif;
+  display: inline-block;
+  box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.75);
+  padding: 20px 40px;
+  margin-top: 30px;
+}
+.contForInfoBMI {
+
+}
+.infoBMI-header {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.progressIcon{
+  display: block;
+  height: 50px;
+  width: 50px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  text-align: center;
+  line-height: 42px;
+  border-radius: 50%;
+  border: 3px solid black;
+  & svg {
+  }
+}
+
+// medias
+
+@media(max-width: 1250px) {
+  .bmi-heading {
+    height: 175px;
+    background-color: #373737;
+    font-family: 'Roboto Condensed', sans-serif;
+  }
+  .navigation {
+    height: 100px;
+  }
+  .naviagtion-title {
+    height: 75px;
+    padding-top: 10px;
+    letter-spacing: 1px;
+    width: 100vw;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  .basicInfoBMI {
+    & .basicInfoBMI-text {
+      font-size: 15px;
+      &:after {
+        width: 110px;
+      }
+    }
+
+    & .basicInfoBMI-text1 {
+      font-size: 20px;
+    }
+  }
+
+}

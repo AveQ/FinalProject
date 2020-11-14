@@ -25,6 +25,7 @@ import {BMIComponent} from '../components/BMI/bmi.component';
 import {TimelineExeComponent} from '../components/food--panel/timeline-exe/timeline-exe.component';
 import {AtlasComponent} from '../components/atlas/atlas.component';
 import {SettingsComponent} from '../components/settings/settings.component';
+import {AirComponent} from '../components/air/air.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {SettingsComponent} from '../components/settings/settings.component';
     BMIComponent,
     TimelineExeComponent,
     AtlasComponent,
-    SettingsComponent
+    SettingsComponent,
+    AirComponent
   ],
   imports: [
     BrowserModule,
