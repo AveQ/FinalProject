@@ -26,6 +26,8 @@ import {TimelineExeComponent} from '../components/food--panel/timeline-exe/timel
 import {AtlasComponent} from '../components/atlas/atlas.component';
 import {SettingsComponent} from '../components/settings/settings.component';
 import {AirComponent} from '../components/air/air.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {NFLInterceptorService} from '../services/NFLInterceptorService.service';
 
 @NgModule({
   declarations: [
@@ -54,8 +56,16 @@ import {AirComponent} from '../components/air/air.component';
     ChartsModule,
     NgbModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [NavigationService],
+  providers: [
+    NavigationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NFLInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

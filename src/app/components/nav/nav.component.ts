@@ -35,6 +35,10 @@ export class NavComponent implements OnInit {
   openOtherMenu() {
     this.otherMenu = !this.otherMenu;
   }
+  menuExit() {
+    this.menuOpen = 2;
+    this.otherMenu = false;
+  }
   changeSidebar() {
     this.sidebarLock = !this.sidebarLock;
   }

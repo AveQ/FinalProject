@@ -1,3 +1,7 @@
+<!---
+  #TODO:
+   -NAPRAWIĆ OTWIERANIE POBOCZNEGO MENU.
+-->
 <nav class="d-flex align-content-center flex-wrap">
   <div class="row contForAll d-flex justify-content-between">
     <div class="logo-wrapper">
@@ -18,16 +22,16 @@
         <li class="list"><a routerLink="/food-panel" class="link-list" [ngStyle]="{'color' : selectRoute === 1 ? 'red' : 'white'}">PANEL ODŻYWIANIA</a></li>
         <li class="list"><a routerLink="/timeline-exercise" class="link-list" [ngStyle]="{'color' : selectRoute === 2 ? 'red' : 'white'}">DZIENNIK AKTYWNOŚCI</a></li>
         <li class="list"><a routerLink="/atlas" class="link-list" [ngStyle]="{'color' : selectRoute === 3 ? 'red' : 'white'}">ATLAS</a></li>
-        <li class="list listOther"><a  routerLink="/bmi" class="link-list" [ngStyle]="{'color' : selectRoute === 4 ? 'red' : 'white'}">
-          <span (click)="openOtherMenu()">USTAWIENIA</span>
-          <ul [ngClass]="{'menuOther--open' : otherMenu}" class="menuOther">
-            <li class="bmi" style="color: white">BMI</li>
-            <li class="air" style="color: white">POWIETRZE</li>
+        <li class="list"><a routerLink="/settings" class="link-list" [ngStyle]="{'color' : selectRoute === 5 ? 'red' : 'white'}">UŻYTKOWNIK</a></li>
+        <li class="list listOther"><a class="link-list" [ngStyle]="{'color' : selectRoute === 4 ? 'red' : 'white'}">
+          <span (click)="openOtherMenu()">INNE</span>
+          <ul [ngStyle]="{'display' : otherMenu ? 'block' : 'none'}" class="menuOther">
+            <li routerLink="/bmi" class="bmi" style="color: white"><span class="textOther">BMI</span></li>
+            <li routerLink="/air" class="air" style="color: white"><span class="textOther">POWIETRZE</span></li>
           </ul>
         </a></li>
-        <li class="list"><a routerLink="/settings" class="link-list" [ngStyle]="{'color' : selectRoute === 5 ? 'red' : 'white'}">UŻYTKOWNIK</a></li>
         <li class="list"><a routerLink="/authorisation" class="link-list joinToUs">DOŁĄCZ</a></li>
-        <li class="list list-hamburger" (click)="menuOpen = 2"><a class="link-list link-list-hamburger">ZWIŃ</a>
+        <li class="list list-hamburger" (click)="menuExit()"><a class="link-list link-list-hamburger">ZWIŃ</a>
         </li>
       </ul>
     </div>

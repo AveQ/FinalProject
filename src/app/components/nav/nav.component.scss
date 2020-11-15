@@ -126,6 +126,7 @@ nav {
 
 .listOther {
   position: relative;
+  cursor: pointer;
   &:hover .menuOther {
     display: block;
   }
@@ -134,22 +135,30 @@ nav {
 .menuOther {
   display: none;
   position: absolute;
+  left: 100%;
+  transform: translateX(-50%);
   list-style-type: none;
-  padding: 0;
+  cursor: default;
   margin: 0;
-  border-top: 1px solid #dd0101;
-  border-bottom: 1px solid #dd0101;
-
-}
-.menuOther--open {
-  display: block;
+  padding: 5px 10px;
+  text-align: left;
+  background-color: #373737;
+  border-radius: 10px;
 }
 .bmi, .air {
   height: 40px;
   line-height: 40px;
+  font-size: 13px;
+
 }
 .air{
   padding-bottom: 10px;
+}
+.textOther {
+  cursor: pointer;
+  &:hover {
+    color: #dd0101;
+  }
 }
 .joinToUs {
   background-color: #dd0101;
@@ -220,6 +229,13 @@ nav {
   }
   .menuOther {
     position: static;
+    left: 0;
+    border-top: 1px solid #dd0101;
+    border-bottom: 1px solid #dd0101;
+    padding: 0px;
+    border-radius: 0;
+    text-align: center;
+    transform: translateX(0);
   }
 }
 
