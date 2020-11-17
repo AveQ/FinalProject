@@ -10,7 +10,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class BMIComponent implements OnInit, OnDestroy {
   bmiForm: FormGroup;
-  bmi = 0;
+  bmi = null;
   constructor(private navigateService: NavigationService, private fb: FormBuilder) {
   }
 

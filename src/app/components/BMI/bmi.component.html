@@ -41,12 +41,40 @@
         </div>
       </div>
     </div>
-    <div class="mt-2 bmiScore col-12 text-center">
+    <div *ngIf="bmi >= 18.5 && bmi < 25 && bmi !== null" class="mt-2 bmiScore col-12 text-center">
       <hr style="width: 80%">
-      <h5 class="d-block">Twoje BMI jest w normie!</h5>
-      <i class="d-block far fa-check-circle fa-3x" style="color: #1c9112"></i>
+      <h5 class="">Twoje BMI jest w normie!</h5>
+      <i class=" far fa-check-circle fa-3x" style="color: #1c9112"></i>
       <h5>Dobra robota!</h5>
-      <span>Twoje BMI wynosi <b>{{bmi}}</b> i mieści się w odpowiednim przedziale 18.5 - 24.99. <br> Byle tak dalej <i class="far fa-smile-beam"></i>!</span>
+      <span>Twoje BMI wynosi <b>{{bmi}}</b> i mieści się w odpowiednim przedziale 18.5 - 24.99. <br> Byle tak dalej <i
+        class="far fa-smile-beam"></i>!</span>
+      <hr style="width: 50%">
+    </div>
+    <div *ngIf="bmi >= 25 && bmi !== null" class="mt-2 bmiScore col-12 text-center">
+      <hr style="width: 80%">
+      <h5 class="d-block">Twoje BMI jest powyżej normy!</h5>
+      <i class="far fa-times-circle fa-3x" style="color: #dd0101"></i>
+      <h5 *ngIf="bmi>=25 && bmi < 30">Masz nadwagę!</h5>
+      <h5 *ngIf="bmi >= 30">Masz otyłość!</h5>
+      <span>Twoje BMI wynosi <b>{{bmi}}</b> i nie mieści się w odpowiednim przedziale 18.5 - 24.99. <br> Zmień nawyki żywieniowe <i
+        class="far fa-frown-open"></i>!</span>
+      <hr style="width: 50%">
+    </div>
+    <div *ngIf="bmi < 18.5 && bmi !== null" class="mt-2 bmiScore col-12 text-center">
+      <hr style="width: 80%">
+      <h5 class="d-block">Twoje BMI jest poniżej normy!</h5>
+      <i class="far fa-times-circle fa-3x" style="color: #dd0101"></i>
+      <h5>Masz niedowagę!</h5>
+      <span>Twoje BMI wynosi <b>{{bmi}}</b> i nie mieści się w odpowiednim przedziale 18.5 - 24.99. <br> Zmień nawyki żywieniowe <i
+        class="far fa-frown-open"></i>!</span>
+      <hr style="width: 50%">
+    </div>
+    <div *ngIf="bmi === null" class="mt-2 bmiScore col-12 text-center">
+      <hr style="width: 80%">
+      <h5 class="d-block">Sprawdź swoje BMI!</h5>
+      <i class="far fa-question-circle fa-3x"></i>
+      <h5 >Wpisz dane!</h5>
+      <span>Następnie sprawdz czy mieścisz się w odpowiednim<br>przedziale <em>18.5 - 24.99</em>. </span>
       <hr style="width: 50%">
     </div>
     <form [formGroup]="bmiForm" (ngSubmit)="onSubmit()" class="col-md-6 col-12 contForBMIForm mt-5">
@@ -67,13 +95,15 @@
           <div class="col-form-label col-lg-4 pt-0 text-center">Płeć</div>
           <div class="col-lg-8">
             <div class="form-check">
-              <input (click)="changeOtherCheckbox('woman')" formControlName="woman" class="form-check-input" type="checkbox"  id="gridRadios1" value="true">
+              <input (click)="changeOtherCheckbox('woman')" formControlName="woman" class="form-check-input"
+                     type="checkbox" id="gridRadios1" value="true">
               <label class="form-check-label" for="gridRadios1">
                 Kobieta
               </label>
             </div>
             <div class="form-check">
-              <input (click)="changeOtherCheckbox('man')" formControlName="man" class="form-check-input" type="checkbox"  id="gridRadios2" value="true">
+              <input (click)="changeOtherCheckbox('man')" formControlName="man" class="form-check-input" type="checkbox"
+                     id="gridRadios2" value="true">
               <label class="form-check-label" for="gridRadios2">
                 Mężczyzna
               </label>
@@ -84,7 +114,7 @@
       <div class="form-group row justify-content-center">
         <div class="col-lg-12 text-center">
           <button type="submit" class="btn btn-dark" [disabled]="!bmiForm.valid">Sprawdź</button>
-          <button type="button" class="btn btn-dark ml-2" >Użyj danych z profilu</button>
+          <button type="button" class="btn btn-dark ml-2">Użyj danych z profilu</button>
         </div>
       </div>
     </form>

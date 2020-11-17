@@ -22,6 +22,7 @@
   font-size: 40px;
   font-weight: bold;
 }
+
 .basicInfoBMI {
   text-align: center;
 
@@ -43,26 +44,31 @@
     font-family: 'Libre Baskerville', serif;
   }
 }
+
 .contForBMIForm {
   margin: 0 auto;
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: bold;
 }
+
 .infoBMI {
   font-family: 'Roboto Condensed', sans-serif;
   display: inline-block;
-  box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.75);
+  box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.75);
   padding: 20px 40px;
   margin-top: 30px;
 }
+
 .contForInfoBMI {
 
 }
+
 .infoBMI-header {
   font-size: 20px;
   margin-bottom: 5px;
 }
-.progressIcon{
+
+.progressIcon {
   display: block;
   height: 50px;
   width: 50px;
@@ -72,9 +78,26 @@
   line-height: 42px;
   border-radius: 50%;
   border: 3px solid black;
+
   & svg {
   }
 }
+
+.bmiScore {
+  height: auto;
+  transform: scale(0);
+  animation: bmi-animation linear .3s forwards;
+}
+
+@keyframes bmi-animation {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
 // medias
 
 @media(max-width: 1250px) {
@@ -99,6 +122,7 @@
   .basicInfoBMI {
     & .basicInfoBMI-text {
       font-size: 15px;
+
       &:after {
         width: 110px;
       }
