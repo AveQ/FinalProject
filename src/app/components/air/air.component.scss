@@ -76,10 +76,34 @@
   }
 }
 .outputs {
-  margin: 0 auto;
+  margin: 10px auto;
 }
 .boxCity {
   padding: 10px 0;
+  box-shadow: 0 0 4px 0 rgba(0,0,0,0.75);
+  font-family: 'Libre Baskerville', serif;
+  & h5{
+    margin: 0;
+    font-weight: bold;
+  }
+  & small{
+    margin: 5px 0;
+  }
+  & .airStatus {
+    font-weight: bold;
+  }
+}
+.infoEmptyString {
+  text-align: center;
+  font-weight: bold;
+}
+.pagination {
+  margin: 0;
+  padding: 0;
+}
+.shortInfo {
+  font-size: 14px;
+  
 }
 // medias
 
@@ -115,4 +139,10 @@
     }
   }
 
+}
+
+@media(max-width: 500px) {
+  .outputs, .shortInfo {
+    padding: 0;
+  }
 }

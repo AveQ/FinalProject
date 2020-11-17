@@ -25,7 +25,9 @@ export class AirComponent implements OnInit, OnDestroy {
   // zanieczyszczenia dla 5 miast
   arrayWithPollutions;
   // ostateczna tablica czyta w DOM
-  finalArray;
+  finalArray = [];
+  // wyzeruj tablice jak string === ''
+  emptyFlag = true;
 
   constructor(private navigateService: NavigationService, private airPollutionService: AirPollutionService) {
   }
@@ -38,6 +40,24 @@ export class AirComponent implements OnInit, OnDestroy {
     this.getPollutionData();
   }
 
+  isNext() {
+    return (this.page * 5 + 6) <= this.filteredStations.length;
+  }
+
+  otherPage(value) {
+    console.log(this.isNext());
+    console.log('tablica : ' + this.filteredStations.length);
+    console.log(this.page * 5 + 5);
+    // nastepna strona
+    if (value && this.isNext()) {
+      this.page++;
+      this.createTable();
+    } else if (!value) { // poprzednia strona
+      this.page--;
+      this.createTable();
+    }
+  }
+
   onSubmit() {
     console.log(this.airForm.value);
   }
@@ -47,6 +67,7 @@ export class AirComponent implements OnInit, OnDestroy {
 
   // znajdź miasto, które posiada substring podany przez użytkownika
   searchCity(value, city) {
+    this.page = 0;
     this.filteredStations = [];
     this.arrayWithCity = [];
     this.filteredStations = this.stations.filter(stat => {
@@ -55,6 +76,7 @@ export class AirComponent implements OnInit, OnDestroy {
       }
     });
     this.createTable();
+    city.value === '' ? this.emptyFlag = true : this.emptyFlag = false;
   }
 
   // pobierz całą listę stacji i zapisz w lokalnej tablicy objetków
@@ -71,7 +93,7 @@ export class AirComponent implements OnInit, OnDestroy {
     );
   }
 
-  // po wczytaniu danych do tablicy pokaz 10 elementow zaleznych od aktualnej strony
+  // po wczytaniu danych do tablicy pokaz 5 elementow zaleznych od aktualnej strony
   createTable() {
     this.tempArray = [];
     const firstElement = this.page * 5;
@@ -101,29 +123,33 @@ export class AirComponent implements OnInit, OnDestroy {
 
   // stwórz ostateczna tablice
   createFinalArray() {
-    this.finalArray = [];
-    let jsonObject = {};
-    for (const element of this.arrayWithCity) {
-      jsonObject = {
-        id: element.id,
-        city: element.city.name,
-        address: element.addressStreet,
-        lastResearch: this.getDateOfLastResearch(this.arrayWithPollutions.find(object => {
-          return object.id === element.id;
-        })),
-        airStatus: this.getAirStatus(this.arrayWithPollutions.find(object => {
-          return object.id === element.id;
-        })),
-        type: this.getTypeOfStation(this.arrayWithPollutions.find(object => {
-          return object.id === element.id;
-        }))
-      };
-      this.finalArray.push(jsonObject);
+    if (!this.emptyFlag) {
+      this.finalArray = [];
+      let jsonObject = {};
+      for (const element of this.arrayWithCity) {
+        jsonObject = {
+          id: element.id,
+          city: element.city.name,
+          address: element.addressStreet,
+          lastResearch: this.getDateOfLastResearch(this.arrayWithPollutions.find(object => {
+            return object.id === element.id;
+          })),
+          airStatus: this.getAirStatus(this.arrayWithPollutions.find(object => {
+            return object.id === element.id;
+          })),
+          type: this.getTypeOfStation(this.arrayWithPollutions.find(object => {
+            return object.id === element.id;
+          }))
+        };
+        this.finalArray.push(jsonObject);
+      }
+    } else {
+      this.finalArray = [];
     }
   }
 
 // sprawdz date badania
-  getAirStatus(value: { pm10IndexLevel: { indexLevelName }, no2IndexLevel: {indexLevelName}}) {
+  getAirStatus(value: { pm10IndexLevel: { indexLevelName }, no2IndexLevel: { indexLevelName } }) {
     if (value && value.pm10IndexLevel && value.pm10IndexLevel.indexLevelName) {
       return value.pm10IndexLevel.indexLevelName;
     } else if (value && value.no2IndexLevel && value.no2IndexLevel.indexLevelName) {
@@ -132,6 +158,7 @@ export class AirComponent implements OnInit, OnDestroy {
       return 'Brak danych';
     }
   }
+
   // sprawdz status powietraz
   getDateOfLastResearch(value: { pm10SourceDataDate, no2SourceDataDate }) {
     if (value && value.pm10SourceDataDate) {
@@ -142,6 +169,7 @@ export class AirComponent implements OnInit, OnDestroy {
       return 'Brak danych';
     }
   }
+
   // sprawdz typ stacji
   getTypeOfStation(value: { pm10SourceDataDate, no2SourceDataDate }) {
     if (value && value.pm10SourceDataDate) {

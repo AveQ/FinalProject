@@ -34,28 +34,60 @@
         </div>
       </div>
     </div>
-    <form *ngIf="loading" [formGroup]="airForm" (ngSubmit)="onSubmit()" class="col-md-6 col-12 contForBMIForm mt-5 text-center">
+    <form *ngIf="loading" [formGroup]="airForm" (ngSubmit)="onSubmit()"
+          class="col-md-6 col-12 contForBMIForm mt-5 text-center">
       <div class="form-group row d-flex justify-content-center">
         <label for="city" class="col-lg-4 col-form-label">Miasto:</label>
         <div class="col-lg-12">
-          <input #element (input)="searchCity($event, element)" autocomplete="off" formControlName="city" type="text" class="form-control text-center" id="city" placeholder="Katowice">
+          <input #element (input)="searchCity($event, element)" autocomplete="off" formControlName="city" type="text"
+                 class="form-control text-center" id="city" placeholder="Katowice">
         </div>
       </div>
       <div class="form-group row justify-content-center">
       </div>
     </form>
-    <div class="d-block text-center font-weight-bold mb-2">Wyniki:</div>
-    <div *ngFor="let elem of finalArray" class="col-md-6 col-12 text-center outputs">
-      <div class="boxCity card">
-        <h5>{{elem.city}}</h5>
-        <small> {{elem.address}}</small>
-        <div class="row ">
-          <div class="col-12">{{elem.lastResearch}}</div>
-          <div class="col-4">{{elem.airStatus}}</div>
-          <div class="col-4">{{elem.type}}</div>
-          <div class="col-4">{{elem.id}}</div>
+    <div class="d-block text-center font-weight-bold">Wyniki:</div>
+
+    <div *ngIf="!emptyFlag">
+      <div class="col-md-6 col-12 mb-2 shortInfo d-flex justify-content-between" style="margin: 0 auto;">
+        <div class="d-inline-block"><em>Znaleziono <b>{{filteredStations.length}}</b> stacje.</em></div>
+        <div class="d-inline-block"><em>{{page*5+1}}-{{isNext() ? page*5+5 : filteredStations.length}}</em></div>
+      </div>
+      <div *ngFor="let elem of finalArray" class="col-md-6 col-12 text-center outputs">
+        <div class="boxCity card">
+          <h5>{{elem.city}}</h5>
+          <small> <em>{{elem.address}}</em></small>
+          <div class="row ">
+            <div class="col-12">{{elem.lastResearch}}</div>
+            <div *ngIf="elem.airStatus === 'Bardzo dobry'" class="col-4 airStatus text-success">{{elem.airStatus}}</div>
+            <div *ngIf="elem.airStatus === 'Dobry'" class="col-4 airStatus"
+                 style="color: #71b83a">{{elem.airStatus}}</div>
+            <div *ngIf="elem.airStatus === 'Umiarkowany'" class="col-4 airStatus text-warning">{{elem.airStatus}}</div>
+            <div *ngIf="elem.airStatus === 'Dostateczny' || elem.airStatus === 'Zły' || elem.airStatus === 'Bardzo zły'"
+                 class="col-4 airStatus text-danger">{{elem.airStatus}}</div>
+            <div *ngIf="elem.airStatus === 'Brak danych'" class="col-4 airStatus">{{elem.airStatus}}</div>
+            <div class="col-4">{{elem.type}}</div>
+            <div class="col-4">ID: {{elem.id}}</div>
+          </div>
         </div>
       </div>
+      <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+          <li style="cursor: pointer" [ngClass]="{'disabled' : page === 0}" class="page-item">
+            <a (click)="otherPage(false)" class="text-dark page-link" tabindex="-1">Poprzednie</a>
+          </li>
+          <li class="page-item active">
+            <a class="page-link" style="background-color: black; border: gray 1px solid">{{page + 1}}</a>
+          </li>
+          <li style="cursor: pointer" [ngClass]="{'disabled' : !isNext()}" class="page-item">
+            <a (click)="otherPage(true)" class="text-dark page-link">Następne</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div *ngIf="emptyFlag" class="infoEmptyString">
+
+      Brak wyników
 
     </div>
   </div>
