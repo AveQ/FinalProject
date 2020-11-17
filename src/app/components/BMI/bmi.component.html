@@ -21,7 +21,7 @@
     <!--
       FORM
     -->
-    <div class="col-12 d-flex justify-content-center m">
+    <div class="col-12 d-flex justify-content-center ">
       <div class="infoBMI">
         <div class="progressIcon">
           <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -41,6 +41,14 @@
         </div>
       </div>
     </div>
+    <div class="mt-2 bmiScore col-12 text-center">
+      <hr style="width: 80%">
+      <h5 class="d-block">Twoje BMI jest w normie!</h5>
+      <i class="d-block far fa-check-circle fa-3x" style="color: #1c9112"></i>
+      <h5>Dobra robota!</h5>
+      <span>Twoje BMI wynosi <b>{{bmi}}</b> i mieści się w odpowiednim przedziale 18.5 - 24.99. <br> Byle tak dalej <i class="far fa-smile-beam"></i>!</span>
+      <hr style="width: 50%">
+    </div>
     <form [formGroup]="bmiForm" (ngSubmit)="onSubmit()" class="col-md-6 col-12 contForBMIForm mt-5">
       <div class="form-group row text-center">
         <label for="weight" class="col-lg-4 col-form-label">Waga [kg]</label>
@@ -59,13 +67,13 @@
           <div class="col-form-label col-lg-4 pt-0 text-center">Płeć</div>
           <div class="col-lg-8">
             <div class="form-check">
-              <input formControlName="woman" class="form-check-input" type="radio"  id="gridRadios1" value="true">
+              <input (click)="changeOtherCheckbox('woman')" formControlName="woman" class="form-check-input" type="checkbox"  id="gridRadios1" value="true">
               <label class="form-check-label" for="gridRadios1">
                 Kobieta
               </label>
             </div>
             <div class="form-check">
-              <input formControlName="man" class="form-check-input" type="radio"  id="gridRadios2" value="true">
+              <input (click)="changeOtherCheckbox('man')" formControlName="man" class="form-check-input" type="checkbox"  id="gridRadios2" value="true">
               <label class="form-check-label" for="gridRadios2">
                 Mężczyzna
               </label>
@@ -74,9 +82,9 @@
         </div>
       </fieldset>
       <div class="form-group row justify-content-center">
-        <div class="col-lg-9">
-          <button type="submit" class="btn btn-dark">Sprawdź</button>
-          <button type="button" class="btn btn-dark ml-2">Użyj danych z profilu</button>
+        <div class="col-lg-12 text-center">
+          <button type="submit" class="btn btn-dark" [disabled]="!bmiForm.valid">Sprawdź</button>
+          <button type="button" class="btn btn-dark ml-2" >Użyj danych z profilu</button>
         </div>
       </div>
     </form>
