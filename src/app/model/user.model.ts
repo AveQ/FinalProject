@@ -7,6 +7,17 @@ export class User {
     public email: string,
     private token: string,
     private tokenExpirationDate: Date,
+    public user: {
+      id: string,
+      nick: string,
+      weight: number,
+      height: number,
+      gender: string,
+      weeklyChange: number,
+      country: string,
+      age: number,
+      language: string
+    }
   ) {
   }
 

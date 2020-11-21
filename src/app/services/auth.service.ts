@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
-import {User} from '../components/user.model';
+import {User} from '../model/user.model';
 import {BehaviorSubject} from 'rxjs';
 
 // export interface AuthResponseData  {
@@ -23,19 +23,55 @@ export interface AuthResponseData {
   email: string;
   token: string;
   expirationDate: string;
+  user: {
+    id: string,
+    nick: string,
+    weight: number,
+    height: number,
+    gender: string,
+    weeklyChange: number,
+    country: string,
+    age: number,
+    language: string
+  };
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private user = new BehaviorSubject<User>(null);
+  user = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient) {
   }
 
-  getTheUser() {
-    return this.user ? this.user : null;
+  autoLogin() {
+    const userData: {
+      id: string,
+      email: string,
+      token: string,
+      tokenExpirationDate: string,
+      user: {
+        id: string,
+        nick: string,
+        weight: number,
+        height: number,
+        gender: string,
+        weeklyChange: number,
+        country: string,
+        age: number,
+        language: string
+      }
+    } = JSON.parse(localStorage.getItem('userData'));
+    if (!userData) {
+      return;
+    }
+    const loadedUser = new User(userData.id, userData.email, userData.token,
+      new Date(userData.tokenExpirationDate), userData.user);
+
+    if (loadedUser.myToken) {
+      this.user.next(loadedUser);
+    }
   }
 
   signup(value) {
@@ -45,15 +81,20 @@ export class AuthService {
   login(value) {
     return this.http.post<AuthResponseData>('http://localhost:3000/users/login', value).pipe(
       tap(resData => {
-        this.handleAuthentication(resData.id, resData.email, resData.token, resData.expirationDate);
+        this.handleAuthentication(resData.id, resData.email, resData.token, resData.expirationDate, resData.user);
       })
     );
   }
 
-  private handleAuthentication(id, email, token, expirationDate) {
+  private handleAuthentication(id, email, token, expirationDate, use) {
     const expDate = new Date(new Date().getTime() + +expirationDate * 1000); // one hour expiration
-    const user = new User(id, email, token, expDate);
+    const user = new User(id, email, token, expDate, use);
     this.user.next(user);
     localStorage.setItem('userData', JSON.stringify(user));
+  }
+
+  logout() {
+    this.user.next(null);
+    localStorage.clear();
   }
 }

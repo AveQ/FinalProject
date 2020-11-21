@@ -1,6 +1,9 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {NavigationService} from '../../services/navigation.service';
 import {FormControl, FormGroup} from '@angular/forms';
+import {AuthService} from '../../services/auth.service';
+import {BehaviorSubject, Subscription} from 'rxjs';
+import {User} from '../../model/user.model';
 
 
 @Component({
@@ -13,27 +16,27 @@ export class SettingsComponent implements OnInit, OnDestroy {
   settings = [
     {
       name: 'Nick',
-      name_value: 'AveQ',
+      name_value: 'Brak',
       class_icon: 'fas fa-user-circle fa-3x '
     },
     {
       name: 'Waga',
-      name_value: '103 kg',
+      name_value: 60,
       class_icon: 'fas fa-weight fa-3x account'
     },
     {
       name: 'Wzrost',
-      name_value: '183 cm',
+      name_value: 170,
       class_icon: 'fas fa-arrows-alt-v fa-3x'
     },
     {
       name: 'Płeć',
-      name_value: 'Mężczyzna',
+      name_value: 'Brak',
       class_icon: 'fas fa-venus-mars fa-3x account'
     },
     {
       name: 'Tygodniowa zmiana',
-      name_value: '+1 kg',
+      name_value: '0kg',
       class_icon: 'fas fa-exchange-alt fa-3x'
     },
     {
@@ -43,7 +46,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     },
     {
       name: 'Wiek',
-      name_value: '23',
+      name_value: 50,
       class_icon: 'fas fa-birthday-cake fa-3x'
     },
     {
@@ -98,7 +101,17 @@ export class SettingsComponent implements OnInit, OnDestroy {
   newValueLanguage: FormGroup;
   changeValue = '';
   modalOpen = false;
-  constructor(private navigationService: NavigationService) {
+  userSub: Subscription;
+  weight = 60;
+  height = 170;
+  nick = 'Your nick';
+  gender = 'Mężczyzna';
+  changeWeek = 0;
+  country = 'Poland';
+  age = 30;
+  language = 'PL';
+
+  constructor(private navigationService: NavigationService, private authService: AuthService) {
     this.newValue = new FormGroup({
       newValue: new FormControl(),
     });
@@ -110,22 +123,49 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.navigationService.changeNavSubject(5);
+    // this.userSub = this.authService.user.subscribe(
+    //   user => {
+    //     this.nick = user.user.nick;
+    //     this.gender = user.user.gender;
+    //     this.changeWeek = user.user.weeklyChange;
+    //     this.country = user.user.country;
+    //     this.age = user.user.age;
+    //     this.language = user.user.language;
+    //   }
+    // );
+    this.configuration();
   }
 
   onSubmit() {
     console.log(this.newValue.value);
   }
+
+  // funkcja ustawiająca obiekt settings
+  configuration() {
+    // for (const element in this.settings) {
+    //   if (this.settings.hasOwnProperty(element)) {
+    //     switch (this.settings[element].name) {
+    //       case 'Nick': {
+    //       }
+    //     }
+    //   }
+    // }
+  }
+
   openModal(value) {
     this.modalOpen = true;
     this.changeValue = value;
   }
+
   closeModal() {
     this.modalOpen = false;
     this.changeValue = '';
   }
+
   onSubmitLanguage() {
     console.log(this.newValueLanguage.value);
   }
+
   ngOnDestroy(): void {
   }
 }

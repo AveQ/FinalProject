@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NavigationService} from '../../services/navigation.service';
+import {AuthService} from '../../services/auth.service';
+import {BehaviorSubject, Subscription} from 'rxjs';
+import {User} from '../../model/user.model';
 
 @Component({
   selector: 'app-navb',
@@ -7,6 +10,10 @@ import {NavigationService} from '../../services/navigation.service';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
+  // sprawdź czy użytkownik jest zalogowany
+  userSub: Subscription;
+  isAuthenticated = false;
+  // inne
   rotateImage = false;
   name = 'Gosia';
   sidebarLock = true;
@@ -20,10 +27,19 @@ export class NavComponent implements OnInit {
   menuOpen = 0;
   otherMenu = false;
 
-  constructor(private navigateService: NavigationService) {
+  constructor(
+    private navigateService: NavigationService,
+    private authService: AuthService
+  ) {
   }
 
   ngOnInit(): void {
+    console.log(this.userSub);
+    this.userSub = this.authService.user.subscribe(
+      user => {
+        this.isAuthenticated = !!user;
+      }
+    );
     this.name === 'Sign up' ? this.account = 'Sign up' : this.account = 'Account';
     this.navigateService.returnNavSubject().subscribe(
       value => {
@@ -35,12 +51,17 @@ export class NavComponent implements OnInit {
   openOtherMenu() {
     this.otherMenu = !this.otherMenu;
   }
+
   menuExit() {
     this.menuOpen = 2;
     this.otherMenu = false;
   }
+
   changeSidebar() {
     this.sidebarLock = !this.sidebarLock;
   }
 
+  logout() {
+    this.authService.logout();
+  }
 }
