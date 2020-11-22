@@ -104,12 +104,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   userSub: Subscription;
   weight = 60;
   height = 170;
-  nick = 'Your nick';
-  gender = 'Mężczyzna';
-  changeWeek = 0;
-  country = 'Poland';
-  age = 30;
-  language = 'PL';
 
   constructor(private navigationService: NavigationService, private authService: AuthService) {
     this.newValue = new FormGroup({
@@ -123,16 +117,24 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.navigationService.changeNavSubject(5);
-    // this.userSub = this.authService.user.subscribe(
-    //   user => {
-    //     this.nick = user.user.nick;
-    //     this.gender = user.user.gender;
-    //     this.changeWeek = user.user.weeklyChange;
-    //     this.country = user.user.country;
-    //     this.age = user.user.age;
-    //     this.language = user.user.language;
-    //   }
-    // );
+    this.userSub = this.authService.user.subscribe(
+      user => {
+        if (user) {
+          console.log(user);
+          this.settings[0].name_value = user.user.nick ? user.user.nick : 'Nick';
+          this.settings[1].name_value = user.user.weight + ' kg';
+          this.settings[2].name_value = user.user.height + ' cm';
+          this.settings[3].name_value = user.user.gender;
+          this.settings[4].name_value = user.user.weeklyChange + ' kg';
+          this.settings[5].name_value = user.user.country;
+          this.settings[6].name_value = user.user.age + '';
+          this.settings[7].name_value = user.user.language;
+          this.dietInfo[0].name_value = user.user.forecast;
+          this.dietInfo[1].name_value = user.user.target;
+        }
+
+      }
+    );
     this.configuration();
   }
 

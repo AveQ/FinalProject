@@ -60,7 +60,9 @@ export class AuthService {
         weeklyChange: number,
         country: string,
         age: number,
-        language: string
+        language: string,
+        target: string,
+        forecast: string
       }
     } = JSON.parse(localStorage.getItem('userData'));
     if (!userData) {

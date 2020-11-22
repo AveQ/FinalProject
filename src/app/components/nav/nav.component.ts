@@ -3,6 +3,7 @@ import {NavigationService} from '../../services/navigation.service';
 import {AuthService} from '../../services/auth.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {User} from '../../model/user.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-navb',
@@ -29,7 +30,8 @@ export class NavComponent implements OnInit {
 
   constructor(
     private navigateService: NavigationService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
   }
 

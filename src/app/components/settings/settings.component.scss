@@ -181,6 +181,19 @@
   display: block;
   font-weight: bold;
 }
+// avatar
+.boxAvatar {
+  width: 100%;
+  margin-bottom: 50px;
+  text-align: center;
+}
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+  background-color: #373737;
+  margin: 0 auto;
+}
 // KEYFRAMES
 @keyframes iconAnim { // icon from font-awesome in cards
   0% {

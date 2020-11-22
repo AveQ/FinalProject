@@ -16,7 +16,9 @@ export class User {
       weeklyChange: number,
       country: string,
       age: number,
-      language: string
+      language: string,
+      target: string,
+      forecast: string
     }
   ) {
   }
