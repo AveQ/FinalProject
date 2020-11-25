@@ -26,6 +26,7 @@ enum Days {
   styleUrls: ['./food-panel.component.scss']
 })
 export class FoodPanelNewComponent implements OnInit, OnDestroy {
+
   activeMenuCategory = 0;
   updateMeal = false;
   myNavSubject: Subscription;
@@ -135,6 +136,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   isOpen = false;
 
   constructor(private navigateService: NavigationService) {
+
   }
 
   ngOnInit(): void {
