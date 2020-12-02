@@ -112,6 +112,8 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   maxDate;
   minDate;
 
+  userWater = 0;
+
   bars = [
     {
       name: 'Kalorie',
@@ -163,12 +165,13 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   loadMealHistory() {
     this.foodService.loadData(this.userId).subscribe(
       data => {
+
         this.userMealHistory = data.mealHistory;
       },
       err => {
       },
       () => {
-        this.setTodayHistory();
+          this.setTodayHistory();
       }
     );
   }

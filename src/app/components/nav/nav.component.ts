@@ -36,7 +36,6 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.userSub);
     this.userSub = this.authService.user.subscribe(
       user => {
         this.isAuthenticated = !!user;

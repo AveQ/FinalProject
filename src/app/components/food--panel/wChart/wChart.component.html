@@ -8,7 +8,7 @@
   <div class="modal-body">
     <div class="form boxForWindowWater d-flex justify-content-around">
       <div (click)="newWaterStatus(true)" class="increment">+</div>
-      <input (change)="changeInputValue($event)" value = '{{statusWater}}' type="text" max="5000" min="0" type="number" class="form-control windowWater">
+      <input (change)="changeInputValue($event)" value = '{{statusWater}}' type="text" max="2500" min="0" type="number" class="form-control windowWater">
       <div (click)="newWaterStatus(false)" class="decrease">-</div>
     </div>
   </div>
@@ -38,7 +38,7 @@
               >
       </canvas>
       <div class="score">
-        {{this.waterData}}%
+        {{this.waterData / 25}}%
       </div>
     </div>
   </div>
