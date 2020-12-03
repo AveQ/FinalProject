@@ -32,6 +32,23 @@ export interface MealResponseData {
   request;
 }
 
+export interface MealResponseAllData {
+  count: number;
+  meals: [
+    {
+      _id: string;
+      carbs: number;
+      kcal: number;
+      fiber: number;
+      oneServing: number;
+      proteins: number;
+      salt: number;
+      fats: number;
+      name: string;
+      request;
+    }
+  ];
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -50,5 +67,8 @@ export class FoodService {
 
   patchWaterData(id, toChange, newValue) {
     return this.http.patch('http://localhost:3000/mealsHistory/' + id, [{'propName': toChange, 'value': newValue}]);
+  }
+  getAllMeals() {
+    return this.http.get<MealResponseAllData>('http://localhost:3000/meals/');
   }
 }

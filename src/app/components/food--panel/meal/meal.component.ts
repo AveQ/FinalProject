@@ -1,97 +1,70 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NavigationService} from '../../../services/navigation.service';
+import {FoodService} from '../../../services/food.service';
 
 interface Meal {
-  id: number;
-  howMany: string;
+  carbs: number;
+  fats: number;
+  fiber: number;
+  kcal: number;
   name: string;
-  properties: number[];
+  proteins: number;
+  salt: number;
+  id: string;
+  amount: string;
 }
 
 interface MealDB {
-  id: number;
+  _id: string;
+  carbs: number;
+  kcal: number;
+  fiber: number;
+  oneServing: number;
+  proteins: number;
+  salt: number;
+  fats: number;
   name: string;
-  properties: number[];
+  request;
 }
 
-const Meal: Meal[] = [
-  {
-    id: 1,
-    howMany: '100g',
-    name: 'Masło',
-    properties: [1200, 400, 500, 300],
-  },
-  {
-    id: 2,
-    howMany: '200g',
-    name: 'Ogórek',
-    properties: [20, 2, 3, 15],
-  },
-];
-const MealDB: MealDB[] = [
-  {
-    id: 1,
-    name: 'Masełko',
-    properties: [
-      1000, 234, 1234, 231
-    ]
-  },
-  {
-    id: 2,
-    name: 'Rosołek',
-    properties: [
-      1000, 234, 1234, 231
-    ]
-  },
-  {
-    id: 1,
-    name: 'Udeczko',
-    properties: [
-      1000, 234, 1234, 231
-    ]
-  },
-  {
-    id: 1,
-    name: 'Udeczko',
-    properties: [
-      1000, 234, 1234, 231
-    ]
-  },
-  {
-    id: 1,
-    name: 'Spaghetti',
-    properties: [
-      1000, 234, 1234, 231
-    ]
-  }
-];
 
 @Component({
   selector: 'app-meal',
   templateUrl: './meal.component.html',
   styleUrls: ['./meal.component.scss']
 })
-export class MealComponent implements OnInit {
+export class MealComponent implements OnInit, OnDestroy {
+
   nameOfMeal = 'śniadnie';
-  nameOfProduct = 'Niewybrano';
-  meal = Meal;
-  mealDB = MealDB;
+  myMealProp: Meal;
+  meal: Meal[] = [];
+  mealDB: MealDB[] = [];
   page = 1;
   typeOfDB = null;
+  @Input() arrayWithId;
 
   showMoreInfo(data) {
     console.log(data);
   }
 
-  constructor(private modalService: NgbModal, private navigateService: NavigationService) {
+  constructor(private modalService: NgbModal, private navigateService: NavigationService, private foodService: FoodService) {
   }
 
   ngOnInit(): void {
+    console.log(this.arrayWithId);
+    this.loadMeals();
   }
 
   changeTypeOfDataBase(value) {
     this.typeOfDB = value;
+    switch (value) {
+      case'application':
+        this.loadDBData();
+        break;
+      case'wlasna':
+        break;
+    }
   }
 
   navigate() {
@@ -100,6 +73,52 @@ export class MealComponent implements OnInit {
 
   openSm(content, value) {
     this.modalService.open(content, {size: 'sm'});
-    this.nameOfProduct = value;
+    this.myMealProp = value;
+  }
+
+  loadMeals() {
+    const ids = this.arrayWithId.ids;
+    let mealTemp;
+    for (const element in ids) {
+      if (ids.hasOwnProperty(element)) {
+        const amountTemp = ids[element].amount;
+        this.foodService.getInfoMeal(ids[element].id).subscribe(
+          data => {
+            mealTemp = {
+              carbs: data.carbs * amountTemp,
+              fats: data.fats * amountTemp,
+              fiber: data.fiber * amountTemp,
+              kcal: data.kcal * amountTemp,
+              name: data.name,
+              proteins: data.proteins * amountTemp,
+              salt: data.salt * amountTemp,
+              id: data._id,
+              amount: 100 * amountTemp,
+            };
+            this.meal.push(mealTemp);
+          }, error => {
+          }, () => {
+            console.log(this.meal);
+          }
+        );
+      }
+    }
+  }
+
+  loadDBData() {
+    this.foodService.getAllMeals().subscribe(
+      data => {
+        this.mealDB = data.meals;
+      },
+      error => {
+      },
+      () => {
+        console.log(this.mealDB)
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.meal = [];
   }
 }

@@ -30,7 +30,6 @@ export class WChartComponent implements OnInit, DoCheck {
   public recom = 2500;
   @Input() waterData = null;
   @Input() historyId = null;
-  change = false;
 // Doughnut
   public doughnutChartOptions = {
     responsive: false,
@@ -98,13 +97,14 @@ export class WChartComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
-    this.change = true;
+
   }
 
   // TODO:
   // ZMIENIC KONIECZNIE BO CALY CZAS SIE WYSWIETLA!!
   // reagowanie na input i zmienianie dynamicznie danych na wykresie
   ngDoCheck(): void {
+    this.recom = 2500 - this.waterData;
     this.doughnutChartData = [
       [this.waterData, this.recom]
     ];

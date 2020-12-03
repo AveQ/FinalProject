@@ -1,17 +1,20 @@
 <div class="container">
   <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title">{{nameOfProduct}}</h4>
+      <h4 class="modal-title">{{myMealProp.name}}</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
       <p class="text-center"><b>
-        <span style="color: red">400g</span> <br>
-        Węglowodany: 300g <br>
-        Białko: 240g <br>
-        Tłuszcze: 430g <br></b>
+        <span style="color: red">{{myMealProp.amount}}g</span> <br>
+        Węglowodany: {{myMealProp.carbs}} g <br>
+        Białko: {{myMealProp.proteins}} g <br>
+        Tłuszcze: {{myMealProp.fats}} g <br>
+        Sól: {{myMealProp.salt}} g <br>
+        Błonnik: {{myMealProp.fiber}} g <br>
+      </b>
       </p>
 
     </div>
@@ -22,7 +25,7 @@
   <div class="row">
     <div class="col-12">
       <h3 class="header">Spersonalizuj {{nameOfMeal}}</h3>
-      <p class="text-center">Kalorie łącznie: 400 kcal</p>
+      <p class="text-center">Kalorie łącznie: {{arrayWithId.kcal}}</p>
     </div>
     <div class="col-12 p-0">
       <p class="textTable text-center mt-4 mb-4">Dodane posiłki</p>
@@ -39,7 +42,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let myMeal of meal; index as i">
-          <th scope="row">{{ myMeal.howMany }}</th>
+          <th scope="row">{{myMeal.amount}} g</th>
           <td>
             <p><b>
               {{myMeal.name}}
@@ -48,13 +51,13 @@
           <td>
             <p>
               <b>
-                {{myMeal.properties[0]}} kcal
+                {{myMeal.kcal}} kcal
               </b>
             </p>
 
           </td>
           <td>
-            <b style="cursor: pointer;" (click)="openSm(content, myMeal.name)">Wyświetl</b>
+            <b style="cursor: pointer;" (click)="openSm(content, myMeal)">Wyświetl</b>
           </td>
           <td>
             <b style="cursor: pointer;">Usuń</b>
@@ -93,11 +96,11 @@
             {{myMealDB.name}}
           </th>
           <td>
-            <b>{{myMealDB.properties[0]}} kcal</b>
+            <b>{{myMealDB.kcal}} kcal</b>
           </td>
           <td>
             <b style="cursor: pointer;">Dodaj</b>
-            <b style="cursor: pointer; margin-left: 5px;">Szczegóły</b>
+            <b style="cursor: pointer; margin-left: 5px;" (click)="openSm(content, myMealDB)">Szczegóły</b>
           </td>
         </tr>
         </tbody>
@@ -108,3 +111,4 @@
       </div>
     </div>
   </div>
+</div>

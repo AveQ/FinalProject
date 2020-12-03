@@ -113,7 +113,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   minDate;
 
   userWater = 0;
-
+  arrayWithId;
   bars = [
     {
       name: 'Kalorie',
@@ -172,7 +172,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
       err => {
       },
       () => {
-          this.setTodayHistory();
+        this.setTodayHistory();
       }
     );
   }
@@ -212,7 +212,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
                   carbs += infoMeal.carbs * data['meal_' + i][element].mealAmong;
                   kcal += infoMeal.kcal * data['meal_' + i][element].mealAmong;
                   fiber += infoMeal.fiber * data['meal_' + i][element].mealAmong;
-                  _id.push(infoMeal._id);
+                  _id.push({id: infoMeal._id, amount: data['meal_' + i][element].mealAmong});
                   tempMeal = infoMeal;
                 },
                 error => {
@@ -259,8 +259,12 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
     this.loadMealHistory();
   }
 
-  changeMealStatus(value) {
+  changeMealStatus(value, numberValue?) {
+
     this.navigateService.changeMealSubject(value);
+    if (numberValue !== null) {
+      this.loadMeals(numberValue);
+    }
   }
 
   setMaxAndMinDate() {
@@ -308,5 +312,9 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
     this.changeMealStatus(false);
     this.myNavSubject.unsubscribe();
     this.userSubscription.unsubscribe();
+  }
+
+  loadMeals(value) {
+    this.arrayWithId = this.meals[value];
   }
 }

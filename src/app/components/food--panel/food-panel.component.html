@@ -74,7 +74,7 @@
 
     -->
     <div class="row  justify-content-center" [ngClass]="{'containerForMeals--open' : activeMenuCategory === 0, 'containerForMeals' : activeMenuCategory != 0 }">
-      <div (click)="changeMealStatus(true)" *ngFor="let meal of meals; let i = index;" class="col-md-3 col-12 boxForMeal">
+      <div (click)="changeMealStatus(true, i)" *ngFor="let meal of meals; let i = index;" class="col-md-3 col-12 boxForMeal">
         <div class="{{meal.classForMeal}} imageMeal-zoom"></div>
         <div class="beam"></div>
         <div class="infoMeal">
@@ -144,7 +144,7 @@
     </div>
   </div>
   <div *ngIf="updateMeal" class="updateMeal">
-    <app-meal></app-meal>
+    <app-meal [arrayWithId] = 'arrayWithId'></app-meal>
   </div>
 </div>
 <!--
