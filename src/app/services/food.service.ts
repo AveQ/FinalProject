@@ -47,4 +47,8 @@ export class FoodService {
   loadData(id) {
     return this.http.get<FoodResponseData>('http://localhost:3000/mealsHistory/' + id);
   }
+
+  patchWaterData(id, toChange, newValue) {
+    return this.http.patch('http://localhost:3000/mealsHistory/' + id, [{'propName': toChange, 'value': newValue}]);
+  }
 }

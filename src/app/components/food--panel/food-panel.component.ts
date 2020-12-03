@@ -149,6 +149,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
 
   user;
   userId;
+  historyId;
 
   // wszystkie dni użytkownika
   userMealHistory = [];
@@ -157,7 +158,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
 
   constructor(private navigateService: NavigationService,
               private authService: AuthService,
-              private foodService: FoodService) {
+              private foodService: FoodService,) {
 
   }
 
@@ -179,6 +180,11 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   // znajdz dzisiejsza historie i pobierz ja do zmiennej oraz ustaw wszsytkie posilki w jedna tablice
   setTodayHistory() {
     this.todayHistory = _.find(this.userMealHistory, data => {
+      // ustaw nawodnienie
+      this.userWater = data.water;
+      // zapisz id historii
+      this.historyId = data._id;
+      // ustaw posilki
       if (new Date(this.currentDay.time).getDate() === new Date(data.date).getDate() &&
         new Date(this.currentDay.time).getMonth() === new Date(data.date).getMonth()) {
         // przejdz przez wszystkie 6 posilkow

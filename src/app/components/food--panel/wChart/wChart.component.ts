@@ -1,7 +1,8 @@
-import {AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, DoCheck, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 import {Label, MultiDataSet} from 'ng2-charts';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {FoodService} from '../../../services/food.service';
 
 class Day {
   name: string;
@@ -24,11 +25,12 @@ enum Days {
   templateUrl: './wChart.component.html',
   styleUrls: ['./wChart.component.scss']
 })
-export class WChartComponent implements OnInit {
-
+export class WChartComponent implements OnInit, DoCheck {
   public statusWater = 250;
   public recom = 2500;
-  @Input() public waterData;
+  @Input() waterData = null;
+  @Input() historyId = null;
+  change = false;
 // Doughnut
   public doughnutChartOptions = {
     responsive: false,
@@ -46,6 +48,7 @@ export class WChartComponent implements OnInit {
     },
   ];
   public doughnutChartType: ChartType = 'doughnut';
+
 
   openSm(content) {
     this.modalService.open(content, {size: 'sm'});
@@ -76,9 +79,18 @@ export class WChartComponent implements OnInit {
     }
     this.doughnutChartData = [this.waterData, this.recom];
     this.modalService.dismissAll();
+    this.foodService.patchWaterData(this.historyId, 'water', this.waterData).subscribe(
+      data => {
+      },
+      error => {
+      },
+      () => {
+      }
+    );
   }
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal,
+              private foodService: FoodService) {
   }
 
   changeInputValue(val) {
@@ -86,7 +98,15 @@ export class WChartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log();
+    this.change = true;
   }
 
+  // TODO:
+  // ZMIENIC KONIECZNIE BO CALY CZAS SIE WYSWIETLA!!
+  // reagowanie na input i zmienianie dynamicznie danych na wykresie
+  ngDoCheck(): void {
+    this.doughnutChartData = [
+      [this.waterData, this.recom]
+    ];
+  }
 }
