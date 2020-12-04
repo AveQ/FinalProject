@@ -19,6 +19,20 @@
 
     </div>
   </ng-template>
+<!--  dodawanie posilku -->
+  <ng-template #adding let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{myMealProp.name}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Ile gram:</p>
+      <input #valueInp type="number">
+      <button class="btn btn-dark" (click)="addProduct(adding, valueInp)">Dodaj</button>
+    </div>
+  </ng-template>
   <!--
     TABLE
   -->
@@ -99,7 +113,7 @@
             <b>{{myMealDB.kcal}} kcal</b>
           </td>
           <td>
-            <b style="cursor: pointer;">Dodaj</b>
+            <b style="cursor: pointer;" (click)="openSm(adding, myMealDB)">Dodaj</b>
             <b style="cursor: pointer; margin-left: 5px;" (click)="openSm(content, myMealDB)">Szczegóły</b>
           </td>
         </tr>

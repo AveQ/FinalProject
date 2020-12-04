@@ -43,16 +43,15 @@ export class MealComponent implements OnInit, OnDestroy {
   page = 1;
   typeOfDB = null;
   @Input() arrayWithId;
+  @Input() objectFromParent;
 
   showMoreInfo(data) {
-    console.log(data);
   }
 
   constructor(private modalService: NgbModal, private navigateService: NavigationService, private foodService: FoodService) {
   }
 
   ngOnInit(): void {
-    console.log(this.arrayWithId);
     this.loadMeals();
   }
 
@@ -98,7 +97,6 @@ export class MealComponent implements OnInit, OnDestroy {
             this.meal.push(mealTemp);
           }, error => {
           }, () => {
-            console.log(this.meal);
           }
         );
       }
@@ -113,9 +111,43 @@ export class MealComponent implements OnInit, OnDestroy {
       error => {
       },
       () => {
-        console.log(this.mealDB)
       }
     );
+  }
+
+  addProduct(modal, value) {
+    let tempMeal;
+    let portion = value.value;
+    let name = 'meal_' + (this.objectFromParent.index + 1);
+    // this.foodService.loadDataHistoryMeal(this.objectFromParent.id).subscribe(
+    //   data => {
+    //     tempMeal = data.mealHistory[0][name];
+    //   },
+    //   error => {
+    //   },
+    //   () => {
+    //     this.editUserMeal();
+    //   }
+    // );
+    // this.modalService.dismissAll();
+    this.editUserMeal(name);
+  }
+
+  editUserMeal(meal) {
+    this.foodService.patchWaterData(this.objectFromParent.id, meal, [
+      {
+        "idMeal": "5fc0147f03284e4554db7262",
+        "mealAmong": 11
+      }
+    ]).subscribe(
+      data => {
+        console.log(meal);
+      },
+      error => {
+      },
+      () => {
+        console.log('juz');
+      });
   }
 
   ngOnDestroy(): void {

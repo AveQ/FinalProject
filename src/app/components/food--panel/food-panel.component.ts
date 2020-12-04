@@ -37,55 +37,55 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   meals = [
     {
       name: 'śniadnie',
-      kcal: '1000kcal',
-      carb: '1000g',
-      proteins: '1000g',
-      fats: '1000g',
+      kcal: '0 kcal',
+      carb: '0 g',
+      proteins: '0 g',
+      fats: '0 g',
       classForMeal: 'imageMeal-breakfast',
       ids: []
     },
     {
       name: 'II śniadanie',
-      kcal: '1000kcal',
-      carb: '1000g',
-      proteins: '1000g',
-      fats: '1000g',
+      kcal: '0 kcal',
+      carb: '0 g',
+      proteins: '0 g',
+      fats: '0 g',
       classForMeal: 'imageMeal-sec',
       ids: []
     },
     {
       name: 'Obiad',
-      kcal: '1000kcal',
-      carb: '1000g',
-      proteins: '1000g',
-      fats: '1000g',
+      kcal: '0 kcal',
+      carb: '0 g',
+      proteins: '0 g',
+      fats: '0 g',
       classForMeal: 'imageMeal-din',
       ids: []
     },
     {
       name: 'Podwieczorek',
-      kcal: '1000kcal',
-      carb: '1000g',
-      proteins: '1000g',
-      fats: '1000g',
+      kcal: '0 kcal',
+      carb: '0 g',
+      proteins: '0 g',
+      fats: '0 g',
       classForMeal: 'imageMeal-br',
       ids: []
     },
     {
       name: 'Kolacja',
-      kcal: '1000kcal',
-      carb: '1000g',
-      proteins: '1000g',
-      fats: '1000g',
+      kcal: '0 kcal',
+      carb: '0 g',
+      proteins: '0 g',
+      fats: '0 g',
       classForMeal: 'imageMeal-sup',
       ids: []
     },
     {
       name: 'Dodatkowe',
-      kcal: '231kcal',
-      carb: '1000g',
-      proteins: '1010g',
-      fats: '1032g',
+      kcal: '0 kcal',
+      carb: '0 g',
+      proteins: '0 g',
+      fats: '0 g',
       classForMeal: 'imageMeal-add',
       ids: []
     }
@@ -114,37 +114,8 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
 
   userWater = 0;
   arrayWithId;
-  bars = [
-    {
-      name: 'Kalorie',
-      current: 1245,
-      max: 223322,
-      value: 80,
-      type: 'success'
-    },
-    {
-      name: 'Białko',
-      current: 1245,
-      max: 2222,
-      value: 35,
-      type: 'success'
-    },
-    {
-      name: 'Tłuszcze',
-      current: 1245,
-      max: 2222,
-      value: 90,
-      type: 'danger'
-    },
-    {
-      name: 'Węglow.',
-      current: 1245,
-      max: 2222,
-      value: 23,
-      type: 'success'
-    }
-  ];
-  stat: boolean = false;
+  objectToChild;
+  stat = false;
   isOpen = false;
 
   user;
@@ -156,9 +127,20 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   // aktualny dzien uzytkownika - posilki
   todayHistory;
 
+  newUserHistory = {
+    idUser: '',
+    date: 0,
+    meal_1: [],
+    meal_2: [],
+    meal_3: [],
+    meal_4: [],
+    meal_5: [],
+    meal_6: []
+  };
+
   constructor(private navigateService: NavigationService,
               private authService: AuthService,
-              private foodService: FoodService,) {
+              private foodService: FoodService) {
 
   }
 
@@ -180,59 +162,73 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   // znajdz dzisiejsza historie i pobierz ja do zmiennej oraz ustaw wszsytkie posilki w jedna tablice
   setTodayHistory() {
     this.todayHistory = _.find(this.userMealHistory, data => {
-      // ustaw nawodnienie
-      this.userWater = data.water;
-      // zapisz id historii
-      this.historyId = data._id;
-      // ustaw posilki
-      if (new Date(this.currentDay.time).getDate() === new Date(data.date).getDate() &&
-        new Date(this.currentDay.time).getMonth() === new Date(data.date).getMonth()) {
-        // przejdz przez wszystkie 6 posilkow
-        for (let i = 1; i < 7; i++) {
-          // sprawdz wszystkie elementy dodane do posilku
-          let _id = [];
-          let carbs = 0;
-          let kcal = 0;
-          let fiber = 0;
-          let proteins = 0;
-          let salt = 0;
-          let fats = 0;
-          let name = '';
-          for (const element in data['meal_' + i]) {
-            if (data['meal_' + i].hasOwnProperty(element)) {
-              let tempMeal;
-              // pobierz dane o elemencie posilku
-              this.foodService.getInfoMeal(data['meal_' + i][element].idMeal).subscribe(
-                infoMeal => {
-                  // valueTemp = valueTemp + valueMeal * portionMeal;
-                  name = infoMeal.name;
-                  fats = fats + (infoMeal.fats) * data['meal_' + i][element].mealAmong;
-                  salt += infoMeal.salt * data['meal_' + i][element].mealAmong;
-                  proteins += infoMeal.proteins * data['meal_' + i][element].mealAmong;
-                  carbs += infoMeal.carbs * data['meal_' + i][element].mealAmong;
-                  kcal += infoMeal.kcal * data['meal_' + i][element].mealAmong;
-                  fiber += infoMeal.fiber * data['meal_' + i][element].mealAmong;
-                  _id.push({id: infoMeal._id, amount: data['meal_' + i][element].mealAmong});
-                  tempMeal = infoMeal;
-                },
-                error => {
-                },
-                () => {
-                  this.meals[i - 1].carb = carbs + 'g';
-                  this.meals[i - 1].fats = fats + 'g';
-                  this.meals[i - 1].ids = _id;
-                  this.meals[i - 1].proteins = proteins + 'g';
-                  this.meals[i - 1].kcal = kcal + 'kcal';
-                }
-              );
+        // ustaw nawodnienie
+        this.userWater = data.water;
+        // zapisz id historii
+        this.historyId = data._id;
+        // ustaw posilki
+        if (new Date(this.currentDay.time).getDate() === new Date(data.date).getDate() &&
+          new Date(this.currentDay.time).getMonth() === new Date(data.date).getMonth()) {
+
+          // przejdz przez wszystkie 6 posilkow
+          for (let i = 1; i < 7; i++) {
+            // sprawdz wszystkie elementy dodane do posilku
+            let _id = [];
+            let carbs = 0;
+            let kcal = 0;
+            let fiber = 0;
+            let proteins = 0;
+            let salt = 0;
+            let fats = 0;
+            let name = '';
+            for (const element in data['meal_' + i]) {
+              if (data['meal_' + i].hasOwnProperty(element)) {
+                let tempMeal;
+                // pobierz dane o elemencie posilku
+                this.foodService.getInfoMeal(data['meal_' + i][element].idMeal).subscribe(
+                  infoMeal => {
+                    // valueTemp = valueTemp + valueMeal * portionMeal;
+                    name = infoMeal.name;
+                    fats = fats + (infoMeal.fats) * data['meal_' + i][element].mealAmong;
+                    salt += infoMeal.salt * data['meal_' + i][element].mealAmong;
+                    proteins += infoMeal.proteins * data['meal_' + i][element].mealAmong;
+                    carbs += infoMeal.carbs * data['meal_' + i][element].mealAmong;
+                    kcal += infoMeal.kcal * data['meal_' + i][element].mealAmong;
+                    fiber += infoMeal.fiber * data['meal_' + i][element].mealAmong;
+                    _id.push({id: infoMeal._id, amount: data['meal_' + i][element].mealAmong});
+                    tempMeal = infoMeal;
+                  },
+                  error => {
+                  },
+                  () => {
+                    this.meals[i - 1].carb = carbs + 'g';
+                    this.meals[i - 1].fats = fats + 'g';
+                    this.meals[i - 1].ids = _id;
+                    this.meals[i - 1].proteins = proteins + 'g';
+                    this.meals[i - 1].kcal = kcal + 'kcal';
+                  }
+                );
+              }
             }
           }
+          return data;
         }
-
-        return data;
       }
-    });
-    this.setInfoMeals();
+    );
+    if (_.isEmpty(this.todayHistory)) {
+      this.newUserHistory.date = new Date().getTime();
+      this.newUserHistory.idUser = this.userId;
+      this.foodService.postUserHistory(this.newUserHistory).subscribe(
+        history => {
+          console.log('Utworzono\n' + history);
+        },
+        error => {
+        },
+        () => {
+          this.loadMealHistory();
+        }
+      );
+    }
   }
 
   // pobierz informacje o jedzeniu w posilkach
@@ -265,6 +261,10 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
     if (numberValue !== null) {
       this.loadMeals(numberValue);
     }
+    this.objectToChild = {
+      index: numberValue,
+      id: this.todayHistory._id
+    };
   }
 
   setMaxAndMinDate() {
@@ -297,7 +297,8 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
       new Date(time).toISOString().substr(5, 2);
   }
 
-  changeDate(date, status: boolean) { // false - previous date, true - next date
+  changeDate(date, status: boolean) {
+    // false - previous date, true - next date
     if (this.counter < this.maxDays && status) {
       status ? this.setDate(date + 86400000) : this.setDate(date - 86400000);
       status ? this.counter++ : this.counter--;

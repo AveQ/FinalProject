@@ -49,6 +49,7 @@ export interface MealResponseAllData {
     }
   ];
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -62,13 +63,21 @@ export class FoodService {
   }
 
   loadData(id) {
-    return this.http.get<FoodResponseData>('http://localhost:3000/mealsHistory/' + id);
+    return this.http.get<FoodResponseData>('http://localhost:3000/mealsHistory/users/' + id);
+  }
+  loadDataHistoryMeal(id) {
+    return this.http.get<FoodResponseData>('http://localhost:3000/mealsHistory/meals/' + id);
   }
 
   patchWaterData(id, toChange, newValue) {
     return this.http.patch('http://localhost:3000/mealsHistory/' + id, [{'propName': toChange, 'value': newValue}]);
   }
+
   getAllMeals() {
     return this.http.get<MealResponseAllData>('http://localhost:3000/meals/');
+  }
+
+  postUserHistory(value) {
+    return this.http.post('http://localhost:3000/mealsHistory/', value);
   }
 }
