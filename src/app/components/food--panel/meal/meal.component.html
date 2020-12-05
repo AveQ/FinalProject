@@ -30,7 +30,7 @@
     <div class="modal-body">
       <p>Ile gram:</p>
       <input #valueInp type="number">
-      <button class="btn btn-dark" (click)="addProduct(adding, valueInp)">Dodaj</button>
+      <button class="btn btn-dark" (click)="addProduct(adding, valueInp, myMealProp)">Dodaj</button>
     </div>
   </ng-template>
   <!--
@@ -74,7 +74,7 @@
             <b style="cursor: pointer;" (click)="openSm(content, myMeal)">Wyświetl</b>
           </td>
           <td>
-            <b style="cursor: pointer;">Usuń</b>
+            <b style="cursor: pointer;" (click)="deleteUserMeal(myMeal)">Usuń</b>
           </td>
         </tr>
         </tbody>

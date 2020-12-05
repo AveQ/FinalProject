@@ -2,6 +2,9 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NavigationService} from '../../../services/navigation.service';
 import {FoodService} from '../../../services/food.service';
+import * as _ from 'lodash';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 interface Meal {
   carbs: number;
@@ -44,15 +47,34 @@ export class MealComponent implements OnInit, OnDestroy {
   typeOfDB = null;
   @Input() arrayWithId;
   @Input() objectFromParent;
-
+  paramsSubscription: Subscription;
+  typeOfMeal;
   showMoreInfo(data) {
   }
 
-  constructor(private modalService: NgbModal, private navigateService: NavigationService, private foodService: FoodService) {
+  constructor(
+    private modalService: NgbModal,
+    private navigateService: NavigationService,
+    private foodService: FoodService,
+    private router: Router,
+    private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.loadMeals();
+    console.log(this.objectFromParent);
+    this.router.navigate(
+      ['/food-panel/meals'],
+      {
+        queryParams:{active: this.objectFromParent.index},
+        queryParamsHandling: 'merge'
+      });
+
+    this.paramsSubscription = this.route.queryParams.subscribe(
+      (params: Params) => {
+        console.log(params.active);
+      }
+    );
   }
 
   changeTypeOfDataBase(value) {
@@ -68,6 +90,7 @@ export class MealComponent implements OnInit, OnDestroy {
 
   navigate() {
     this.navigateService.changeMealSubject(false);
+    this.router.navigate(['/food-panel/meals'], {queryParams: null});
   }
 
   openSm(content, value) {
@@ -115,39 +138,63 @@ export class MealComponent implements OnInit, OnDestroy {
     );
   }
 
-  addProduct(modal, value) {
-    let tempMeal;
-    let portion = value.value;
-    let name = 'meal_' + (this.objectFromParent.index + 1);
-    // this.foodService.loadDataHistoryMeal(this.objectFromParent.id).subscribe(
-    //   data => {
-    //     tempMeal = data.mealHistory[0][name];
-    //   },
-    //   error => {
-    //   },
-    //   () => {
-    //     this.editUserMeal();
-    //   }
-    // );
-    // this.modalService.dismissAll();
-    this.editUserMeal(name);
+  // pobierz meal_x zeby zmodyfikowac
+  addProduct(modal, value, mealObject) {
+    const portion = +value.value / 100;
+    if (portion !== null && portion >= 0) {
+      console.log(mealObject._id);
+      let tempMeal;
+      const name = 'meal_' + (this.objectFromParent.index + 1);
+      this.foodService.loadDataHistoryMeal(this.objectFromParent.id).subscribe(
+        data => {
+          tempMeal = data[name];
+        },
+        error => {
+        },
+        () => {
+          tempMeal.push({
+            idMeal: mealObject._id,
+            mealAmong: portion
+          });
+          this.editUserMeal(name, tempMeal);
+          console.log(tempMeal);
+        }
+      );
+    } else {
+      console.log('Incorrect input value');
+    }
+    this.modalService.dismissAll();
   }
 
-  editUserMeal(meal) {
-    this.foodService.patchWaterData(this.objectFromParent.id, meal, [
-      {
-        "idMeal": "5fc0147f03284e4554db7262",
-        "mealAmong": 11
-      }
-    ]).subscribe(
+  editUserMeal(name, newValue) {
+    this.foodService.patchWaterData(this.objectFromParent.id, name, newValue).subscribe(
       data => {
-        console.log(meal);
+        console.log(data);
       },
       error => {
       },
       () => {
-        console.log('juz');
       });
+  }
+
+  deleteUserMeal(objectMeal) {
+    let tempMeal;
+    const name = 'meal_' + (this.objectFromParent.index + 1);
+    this.foodService.loadDataHistoryMeal(this.objectFromParent.id).subscribe(
+      data => {
+        tempMeal = data[name];
+      },
+      error => {
+      },
+      () => {
+        const index = _.findLastIndex(tempMeal, {idMeal:
+          objectMeal.id, mealAmong: objectMeal.amount / 100
+        });
+        tempMeal = tempMeal.slice(0, index).concat(tempMeal.slice(index + 1));
+        this.editUserMeal(name, tempMeal);
+      }
+    );
+    console.log(objectMeal);
   }
 
   ngOnDestroy(): void {

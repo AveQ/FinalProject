@@ -10,10 +10,13 @@ import {TimelineExeComponent} from '../components/food--panel/timeline-exe/timel
 import {AtlasComponent} from '../components/atlas/atlas.component';
 import {SettingsComponent} from '../components/settings/settings.component';
 import {AirComponent} from '../components/air/air.component';
+import {MealComponent} from '../components/food--panel/meal/meal.component';
+import {WChartComponent} from '../components/food--panel/wChart/wChart.component';
 
 
 const routes: Routes = [
-  {path: 'food-panel', component: FoodPanelNewComponent},
+  // {path: 'food-panel', component: FoodPanelNewComponent},
+  { path: 'food-panel/:active', component: FoodPanelNewComponent},
   {path: 'atlas-exercises', component: AtlasExercisesComponent},
   {path: 'authorisation', component: AuthComponent},
   {path: 'atlas-exercises/exercise', component: ExerciseComponent},

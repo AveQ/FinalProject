@@ -6,6 +6,7 @@ import {Subscription} from 'rxjs';
 import * as _ from 'lodash';
 import {AuthService} from '../../services/auth.service';
 import {FoodService} from '../../services/food.service';
+import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 
 class Day {
   name: string;
@@ -37,57 +38,63 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   meals = [
     {
       name: 'śniadnie',
-      kcal: '0 kcal',
-      carb: '0 g',
-      proteins: '0 g',
-      fats: '0 g',
+      kcal: 0,
+      carb: 0,
+      proteins: 0,
+      fats: 0,
       classForMeal: 'imageMeal-breakfast',
-      ids: []
+      ids: [],
+      queryParams: {active: 'breakfast'}
     },
     {
       name: 'II śniadanie',
-      kcal: '0 kcal',
-      carb: '0 g',
-      proteins: '0 g',
-      fats: '0 g',
+      kcal: 0,
+      carb: 0,
+      proteins: 0,
+      fats: 0,
       classForMeal: 'imageMeal-sec',
-      ids: []
+      ids: [],
+      queryParams: {active: 'secondBreakfast'}
     },
     {
       name: 'Obiad',
-      kcal: '0 kcal',
-      carb: '0 g',
-      proteins: '0 g',
-      fats: '0 g',
+      kcal: 0,
+      carb: 0,
+      proteins: 0,
+      fats: 0,
       classForMeal: 'imageMeal-din',
-      ids: []
+      ids: [],
+      queryParams: {active: 'dinner'}
     },
     {
       name: 'Podwieczorek',
-      kcal: '0 kcal',
-      carb: '0 g',
-      proteins: '0 g',
-      fats: '0 g',
+      kcal: 0,
+      carb: 0,
+      proteins: 0,
+      fats: 0,
       classForMeal: 'imageMeal-br',
-      ids: []
+      ids: [],
+      queryParams: {active: 'afternoonSnack'}
     },
     {
       name: 'Kolacja',
-      kcal: '0 kcal',
-      carb: '0 g',
-      proteins: '0 g',
-      fats: '0 g',
+      kcal: 0,
+      carb: 0,
+      proteins: 0,
+      fats: 0,
       classForMeal: 'imageMeal-sup',
-      ids: []
+      ids: [],
+      queryParams: {active: 'supper'}
     },
     {
       name: 'Dodatkowe',
-      kcal: '0 kcal',
-      carb: '0 g',
-      proteins: '0 g',
-      fats: '0 g',
+      kcal: 0,
+      carb: 0,
+      proteins: 0,
+      fats: 0,
       classForMeal: 'imageMeal-add',
-      ids: []
+      ids: [],
+      queryParams: {active: 'extra'}
     }
   ];
 
@@ -138,9 +145,12 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
     meal_6: []
   };
 
+
   constructor(private navigateService: NavigationService,
               private authService: AuthService,
-              private foodService: FoodService) {
+              private foodService: FoodService,
+              private router: Router,
+              private route: ActivatedRoute) {
 
   }
 
@@ -201,11 +211,11 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
                   error => {
                   },
                   () => {
-                    this.meals[i - 1].carb = carbs + 'g';
-                    this.meals[i - 1].fats = fats + 'g';
+                    this.meals[i - 1].carb = carbs;
+                    this.meals[i - 1].fats = fats;
                     this.meals[i - 1].ids = _id;
-                    this.meals[i - 1].proteins = proteins + 'g';
-                    this.meals[i - 1].kcal = kcal + 'kcal';
+                    this.meals[i - 1].proteins = proteins;
+                    this.meals[i - 1].kcal = kcal;
                   }
                 );
               }
@@ -231,11 +241,37 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
     }
   }
 
-  // pobierz informacje o jedzeniu w posilkach
-  setInfoMeals() {
+  // sprawdz params i ustaw podstronke. jezeli inna od dozwolonych przekieruj na glowna
+  setRoute() {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      console.log(params.get('active'));
+      switch (params.get('active')) {
+        case'meals': {
+          this.activeMenuCategory = 0;
+          break;
+        }
+        case'water': {
+          this.activeMenuCategory = 1;
+          break;
+        }
+        case'summary': {
+          this.activeMenuCategory = 3;
+          break;
+        }
+        case'exercises': {
+          this.activeMenuCategory = 2;
+          break;
+        }
+        default: {
+          this.router.navigateByUrl(this.router.url.replace(params.get('active'), 'meals'));
+          break;
+        }
+      }
+    });
   }
 
   ngOnInit(): void {
+    this.setRoute();
     this.userSubscription = this.authService.user.subscribe(
       user => {
         if (user) {
