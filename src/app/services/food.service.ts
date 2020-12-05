@@ -57,6 +57,64 @@ export class FoodService {
 
   constructor(private http: HttpClient) {
   }
+  // dane podstawowe do obsługi komponentu - szablon
+  private meal = [
+    {
+      name: 'śniadnie',
+      kcal: 0,
+      carb: 0,
+      proteins: 0,
+      fats: 0,
+      classForMeal: 'imageMeal-breakfast',
+      ids: []
+    },
+    {
+      name: 'II śniadanie',
+      kcal: 0,
+      carb: 0,
+      proteins: 0,
+      fats: 0,
+      classForMeal: 'imageMeal-sec',
+      ids: []
+    },
+    {
+      name: 'Obiad',
+      kcal: 0,
+      carb: 0,
+      proteins: 0,
+      fats: 0,
+      classForMeal: 'imageMeal-din',
+      ids: []
+    },
+    {
+      name: 'Podwieczorek',
+      kcal: 0,
+      carb: 0,
+      proteins: 0,
+      fats: 0,
+      classForMeal: 'imageMeal-br',
+      ids: []
+    },
+    {
+      name: 'Kolacja',
+      kcal: 0,
+      carb: 0,
+      proteins: 0,
+      fats: 0,
+      classForMeal: 'imageMeal-sup',
+      ids: []
+    },
+    {
+      name: 'Dodatkowe',
+      kcal: 0,
+      carb: 0,
+      proteins: 0,
+      fats: 0,
+      classForMeal: 'imageMeal-add',
+      ids: []
+    }
+  ];
+  // metody do serwera
 
   getInfoMeal(id) {
     return this.http.get<MealResponseData>('http://localhost:3000/meals/' + id);
@@ -65,6 +123,7 @@ export class FoodService {
   loadData(id) {
     return this.http.get<FoodResponseData>('http://localhost:3000/mealsHistory/users/' + id);
   }
+
   loadDataHistoryMeal(id) {
     return this.http.get<FoodResponseData>('http://localhost:3000/mealsHistory/meals/' + id);
   }
@@ -79,5 +138,11 @@ export class FoodService {
 
   postUserHistory(value) {
     return this.http.post('http://localhost:3000/mealsHistory/', value);
+  }
+
+  // logika
+
+  getMeal() {
+    return this.meal;
   }
 }

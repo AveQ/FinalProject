@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 export class AirPollutionService {
   constructor(private http: HttpClient) {
   }
+  // do serwera
   getStations() {
     return this.http.get('http://localhost:3000/pollutions');
   }

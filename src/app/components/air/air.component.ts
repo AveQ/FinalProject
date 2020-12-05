@@ -45,10 +45,6 @@ export class AirComponent implements OnInit, OnDestroy {
   }
 
   otherPage(value) {
-    console.log(this.isNext());
-    console.log('tablica : ' + this.filteredStations.length);
-    console.log(this.page * 5 + 5);
-    // nastepna strona
     if (value && this.isNext()) {
       this.page++;
       this.createTable();
@@ -60,9 +56,6 @@ export class AirComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log(this.airForm.value);
-  }
-
-  ngOnDestroy(): void {
   }
 
   // znajdź miasto, które posiada substring podany przez użytkownika
@@ -179,5 +172,7 @@ export class AirComponent implements OnInit, OnDestroy {
     } else {
       return 'Brak danych';
     }
+  }
+  ngOnDestroy(): void {
   }
 }

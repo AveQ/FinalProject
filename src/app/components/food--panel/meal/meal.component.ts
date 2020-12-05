@@ -5,6 +5,7 @@ import {FoodService} from '../../../services/food.service';
 import * as _ from 'lodash';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {AuthService} from '../../../services/auth.service';
 
 interface Meal {
   carbs: number;
@@ -48,25 +49,32 @@ export class MealComponent implements OnInit, OnDestroy {
   @Input() arrayWithId;
   @Input() objectFromParent;
   paramsSubscription: Subscription;
-  typeOfMeal;
-  showMoreInfo(data) {
-  }
+  private userSubscription;
+  private user;
 
   constructor(
     private modalService: NgbModal,
     private navigateService: NavigationService,
     private foodService: FoodService,
     private router: Router,
+    private authService: AuthService,
     private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.userSubscription = this.authService.user.subscribe(
+      user => {
+        if (user) {
+          this.user = user;
+        }
+      }
+    );
     this.loadMeals();
     console.log(this.objectFromParent);
     this.router.navigate(
       ['/food-panel/meals'],
       {
-        queryParams:{active: this.objectFromParent.index},
+        queryParams: {active: this.objectFromParent.index},
         queryParamsHandling: 'merge'
       });
 
@@ -77,6 +85,9 @@ export class MealComponent implements OnInit, OnDestroy {
     );
   }
 
+  isThereUser() {
+    return !!this.user;
+  }
   changeTypeOfDataBase(value) {
     this.typeOfDB = value;
     switch (value) {

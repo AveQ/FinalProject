@@ -14,17 +14,11 @@ export class NavComponent implements OnInit {
   // sprawdź czy użytkownik jest zalogowany
   userSub: Subscription;
   isAuthenticated = false;
-  // inne
+  // inne - stylowanie
   rotateImage = false;
-  name = 'Gosia';
-  sidebarLock = true;
+  name = 'User';
   account: string = 'Account';
   selectRoute: number = 0;
-  focusonEmail: boolean = false;
-  focusonPassword: boolean = false;
-  dataInvalid: boolean = false;
-  signup: boolean = false;
-  authFailed = false;
   menuOpen = 0;
   otherMenu = false;
 
@@ -56,10 +50,6 @@ export class NavComponent implements OnInit {
   menuExit() {
     this.menuOpen = 2;
     this.otherMenu = false;
-  }
-
-  changeSidebar() {
-    this.sidebarLock = !this.sidebarLock;
   }
 
   logout() {

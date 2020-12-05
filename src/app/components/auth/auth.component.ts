@@ -60,9 +60,6 @@ export class AuthComponent implements OnInit {
       () => {
       }
     );
-
-
-    console.log(this.signinForm.value);
   }
 
   onFocus(name: string) {
@@ -81,7 +78,4 @@ export class AuthComponent implements OnInit {
     }
   }
 
-  closeComponent() {
-
-  }
 }
