@@ -15,7 +15,7 @@
   <!--
       ATLAS
     -->
-  <div *ngIf="false" class="row justify-content-center">
+  <div *ngIf="openExer === false" class="row justify-content-center">
 
 
     <div class="col-sm-10 col-12 mt-5 p-2 p-sm-0">
@@ -40,27 +40,27 @@
         </div>
         <div class="col-lg-9 col-12 order-1 order-lg-0 contForVideo">
           <div class="row rowExer">
-            <div *ngFor="let exercise of exerciseMok" class="col-lg-4 col-sm-6 col-12 exercise">
+            <div (click)="openExercise(exercise._id)" *ngFor="let exercise of exercises" class="col-lg-4 col-sm-6 col-12 exercise">
               <div class="panelExer">
                 <div class="heart">
                   <i #element (click)="animationHeart(element)" [ngClass]="{'fa-heart-active': exercise.favourite}"
                      class="fas fa-heart fa-sm"></i>
                 </div>
                 <div class="exercise-image">
-                  <img class="imageProp" [src]=exercise.img alt="">
+                  <img class="imageProp" [src]=exerciseMok[0].img alt="">
                 </div>
-                <div class="exercise-muscles"><em>{{exercise.smallDesc | uppercase}}</em></div>
-                <div class="exercise-name">{{exercise.bigDesc | uppercase}}</div>
+                <div class="exercise-muscles"><em>{{exercise.type | uppercase}}</em></div>
+                <div class="exercise-name">{{exercise.name | uppercase}}</div>
                 <div class="lvl-exercise d-flex justify-content-around">
                   <div class="typeOfExer d-inline-block">
-                    <i *ngIf="exercise.typeOfExer === 'cardio'" class="fas fa-running"></i>
-                    <i *ngIf="exercise.typeOfExer === 'weight'" class="fas fa-dumbbell"></i>
+                    <i *ngIf="exercise.type === 'cardio'" class="fas fa-running"></i>
+                    <i *ngIf="exercise.type === 'weight'" class="fas fa-dumbbell"></i>
                   </div>
                   <div class="video">
                     <i class="fas fa-film"></i>
                   </div>
                   <div class="rateOfExer d-inline-block">
-                    <i class="far fa-star"></i> 4.0
+                    <i class="far fa-star"></i> {{exercise.rate | number: '1.1-2'}}
                   </div>
                 </div>
               </div>
@@ -272,30 +272,18 @@
   <!--
     selected exer
   -->
-  <div class="row">
-      <div class="row justify-content-center">
-        <div class="col-xl-10 col-11-lg">
-          <h2 class="sportPanelTitle">{{nameOfExercise}}</h2>
+  <div *ngIf="openExer === true" class="row justify-content-center">
+      <div class="row justify-content-center mainCoint">
+        <div class="col-12">
+          <h2 class="sportPanelTitle">{{this.selectedExercise.name}}</h2>
           <div class="panelSport-options">
             <ul class="panelSport-list">
               <li class="panelSport-pointList">
-                <span class="opt">Główna partia mięsniowa: <b>{{muscle}}</b></span>
+                <span class="opt">Główna partia mięsniowa: <b>{{this.selectedExercise.musclePart}}</b></span>
               </li>
             </ul>
           </div>
           <hr class="underline-sportPanel">
-
-<!--          <div class="video row">-->
-<!--            <div class="contForVid col-md-6 col-12">-->
-<!--              <h5 class="description-heading">Prezentacja ćwiczenia</h5>-->
-<!--              <iframe [src]='safeSrc' class="video-box&#45;&#45;video" allowfullscreen>-->
-<!--              </iframe>-->
-<!--            </div>-->
-<!--            <div class="addExercise col-md-6 col-12">-->
-<!--              <h5 class="addExercise-heading">Dodaj ćwiczenie do Dziennika Aktywności</h5>-->
-<!--              <small class="addExercise-small">Szacowane spalone kcal wykonując 15 min ćwiczenia: {{kcal15min}}kcal</small>-->
-<!--            </div>-->
-<!--          </div>-->
           <div class="burnKcal">
             <div class="addExercise">
               <h5 class="addExercise-heading">Dodaj ćwiczenie do Dziennika Aktywności</h5>
@@ -322,10 +310,10 @@
               </ngb-progressbar>
             </p>
             <p class="description-text">
-              <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At atque aut corporis culpa dignissimos ea est eveniet ex in ipsa ipsum iusto non nostrum, officiis perspiciatis provident quas ratione vitae?</span><span>Alias delectus ea iure soluta voluptate. Accusantium adipisci assumenda dicta et, harum hic labore nisi numquam omnis praesentium provident quaerat quas qui repellendus repudiandae vel vero! Consequatur iusto maiores repudiandae.</span>
+              <span>{{this.selectedExercise.description}}</span>
             </p>
           </div>
-          <button class="btn btn-dark back-button">Inne ćwiczenie</button>
+          <button class="btn btn-dark back-button" (click)="closeExercise()">Powrót</button>
         </div>
       </div>
 

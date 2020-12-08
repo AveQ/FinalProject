@@ -1,6 +1,10 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {NavigationService} from '../../services/navigation.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {ExerciseService} from '../../services/exercise.service';
+import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {ExerciseModel} from '../../model/exercise.model';
 
 @Component({
   selector: 'app-atlas',
@@ -15,8 +19,25 @@ export class AtlasComponent implements OnInit, OnDestroy {
   heartAnimation = false;
   safeSrc: SafeResourceUrl;
   videoURL = 'https://www.youtube.com/embed/3vJHQjiEp1w';
-
-  constructor(private navigationService: NavigationService, private sanitizer: DomSanitizer) {
+  openExer = false;
+  selectedExercise: ExerciseModel = {
+      id: '0',
+      name: '0',
+      type: '0',
+      description: '0',
+      rate: 0,
+      popular: 0,
+      musclePart: '0',
+      image: '0',
+      video: '0',
+      difficult: 0
+  };
+  constructor(
+    private navigationService: NavigationService,
+    private sanitizer: DomSanitizer,
+    private exerciseService: ExerciseService,
+    private route: ActivatedRoute,
+    private router: Router) {
 
   }
 
@@ -29,12 +50,8 @@ export class AtlasComponent implements OnInit, OnDestroy {
       name: 'Ćwiczenia',
       on: true
     },
-    {
-      name: 'Rozgrzewka',
-      on: false
-    },
   ];
-
+  exercises;
   exerciseMok = [
     {
       id: 1,
@@ -42,7 +59,8 @@ export class AtlasComponent implements OnInit, OnDestroy {
       smallDesc: 'biceps',
       bigDesc: 'WYCISKANIE SZTANGI NA ŁAWECZCE SKOŚNEJ',
       favourite: true,
-      typeOfExer: 'weight'
+      typeOfExer: 'weight',
+      rate: 1
     },
     {
       id: 2,
@@ -50,7 +68,8 @@ export class AtlasComponent implements OnInit, OnDestroy {
       smallDesc: 'biceps',
       bigDesc: 'podnoszenie hantli sposobem młotkowym',
       favourite: false,
-      typeOfExer: 'weight'
+      typeOfExer: 'weight',
+      rate: 2
     },
     {
       id: 3,
@@ -58,7 +77,8 @@ export class AtlasComponent implements OnInit, OnDestroy {
       smallDesc: 'biceps',
       bigDesc: 'Martwy ciąg',
       favourite: false,
-      typeOfExer: 'weight'
+      typeOfExer: 'weight',
+      rate: 3
     },
     {
       id: 4,
@@ -66,7 +86,8 @@ export class AtlasComponent implements OnInit, OnDestroy {
       smallDesc: 'biceps',
       bigDesc: 'Przysiady',
       favourite: true,
-      typeOfExer: 'weight'
+      typeOfExer: 'weight',
+      rate: 1
     },
     {
       id: 5,
@@ -74,18 +95,18 @@ export class AtlasComponent implements OnInit, OnDestroy {
       smallDesc: 'cardio',
       bigDesc: 'Jazda na rowerze',
       favourite: false,
-      typeOfExer: 'cardio'
+      typeOfExer: 'cardio',
+      rate: 2.3
     },
     {
       id: 6,
       img: 'assets/workout/DSC_3033.JPG',
       smallDesc: 'cardio',
       bigDesc: 'Bieganie na bieżni',
-      favourite: true,
-      typeOfExer: 'cardio'
+      typeOfExer: 'cardio',
+      rate: 4.5
     }
   ];
-
 
 
   nameOfExercise = 'Uginanie przedramion';
@@ -94,12 +115,56 @@ export class AtlasComponent implements OnInit, OnDestroy {
   lvlOfDifficulty = 'Expert';
   colorOfDifficulty = 'success';
   kcal15min = 125;
-
-
-
+  exerciseId = '0';
+  paramsSubscription: Subscription;
   ngOnInit(): void {
+    this.paramsSubscription = this.route.queryParams.subscribe(
+      (params: Params) => { this.exerciseId = params.exerciseId; }
+    );
+    this.exerciseService.getAllExercises().subscribe(
+      data => {
+        this.exercises = data.exercises;
+        console.log(this.exercises);
+      },
+      err => {
+
+      },
+      () => {
+      }
+    );
+    if (this.exerciseId !== undefined) {
+      this.loadExercise();
+    }
     this.navigationService.changeNavSubject(3);
-    this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(this.videoURL);
+    this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoURL);
+  }
+
+  loadExercise() {
+    this.openExer = true;
+    this.exerciseService.getExercise(this.exerciseId).subscribe(
+      data => {
+        this.selectedExercise = data;
+      },
+      error => {},
+      () => { this.checkDifficulty(); }
+    );
+  }
+
+  openExercise(value) {
+    console.log(value);
+    this.router.navigate(
+      ['/atlas'],
+      {
+        queryParams: {exerciseId: value},
+        queryParamsHandling: 'merge'
+      });
+    this.exerciseId = value;
+    this.loadExercise();
+  }
+
+  closeExercise() {
+    this.router.navigate(['/atlas']);
+    this.openExer = !this.openExer;
   }
 
   animationHeart(element: HTMLElement) {
@@ -124,18 +189,17 @@ export class AtlasComponent implements OnInit, OnDestroy {
   }
 
 
-
   checkDifficulty() {
-    switch (this.scaleOfDifficulty) {
-      case 33: {
+    switch (this.selectedExercise.difficult) {
+      case 0: {
         this.setDifficulty('success', 33, 'Łatwy');
         break;
       }
-      case 66: {
+      case 1: {
         this.setDifficulty('warning', 66, 'Trudny');
         break;
       }
-      case 100: {
+      case 2: {
         this.setDifficulty('danger', 100, 'Expert');
         break;
       }
@@ -144,6 +208,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   setDifficulty(color, scale, lvl) {
     this.scaleOfDifficulty = scale;
     this.lvlOfDifficulty = lvl;

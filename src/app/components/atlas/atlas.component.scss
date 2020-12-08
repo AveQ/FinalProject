@@ -166,8 +166,6 @@
   padding: 0;
   margin: 0;
   margin-bottom: 20px;
-
-
 }
 .heart {
   height: 20px;
@@ -418,7 +416,9 @@
   margin: 0;
   padding: 0;
 }
-
+.mainCoint {
+  min-width: 1200px;
+}
 .sportPanelTitle {
   margin-top: 20px;
   margin-left: 5px;
@@ -723,5 +723,10 @@
   }
   .barName {
     font-size: 12px;
+  }
+}
+@media (max-width: 1200px) {
+  .mainCoint {
+    min-width: auto;
   }
 }
