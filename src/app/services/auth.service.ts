@@ -32,7 +32,10 @@ export interface AuthResponseData {
     weeklyChange: number,
     country: string,
     age: number,
-    language: string
+    language: string,
+    target: string,
+    forecast: string,
+    userFavExercises: []
   };
 }
 
@@ -62,7 +65,8 @@ export class AuthService {
         age: number,
         language: string,
         target: string,
-        forecast: string
+        forecast: string,
+        userFavExercises: []
       }
     } = JSON.parse(localStorage.getItem('userData'));
     if (!userData) {

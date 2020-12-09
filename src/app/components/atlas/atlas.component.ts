@@ -5,6 +5,9 @@ import {ExerciseService} from '../../services/exercise.service';
 import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {ExerciseModel} from '../../model/exercise.model';
+import {AuthService} from '../../services/auth.service';
+import {UserService} from '../../services/user.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-atlas',
@@ -21,24 +24,26 @@ export class AtlasComponent implements OnInit, OnDestroy {
   videoURL = 'https://www.youtube.com/embed/3vJHQjiEp1w';
   openExer = false;
   selectedExercise: ExerciseModel = {
-      id: '0',
-      name: '0',
-      type: '0',
-      description: '0',
-      rate: 0,
-      popular: 0,
-      musclePart: '0',
-      image: '0',
-      video: '0',
-      difficult: 0
+    id: '0',
+    name: '0',
+    type: '0',
+    description: '0',
+    rate: 0,
+    popular: 0,
+    musclePart: '0',
+    image: '0',
+    video: '0',
+    difficult: 0
   };
+
   constructor(
     private navigationService: NavigationService,
     private sanitizer: DomSanitizer,
     private exerciseService: ExerciseService,
     private route: ActivatedRoute,
-    private router: Router) {
-
+    private router: Router,
+    private authService: AuthService,
+    private userService: UserService) {
   }
 
   basicSportMenu = [
@@ -117,9 +122,29 @@ export class AtlasComponent implements OnInit, OnDestroy {
   kcal15min = 125;
   exerciseId = '0';
   paramsSubscription: Subscription;
+  user;
+  userId;
+  favUserExercises=[];
+
   ngOnInit(): void {
+
+    this.authService.user.subscribe(
+      data => {
+        if (data) {
+          this.user = data;
+          this.userId = this.user.user.id;
+          console.log(this.userId);
+        }
+      },
+      error => {
+      },
+      () => {
+      }
+    );
     this.paramsSubscription = this.route.queryParams.subscribe(
-      (params: Params) => { this.exerciseId = params.exerciseId; }
+      (params: Params) => {
+        this.exerciseId = params.exerciseId;
+      }
     );
     this.exerciseService.getAllExercises().subscribe(
       data => {
@@ -130,6 +155,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
 
       },
       () => {
+
       }
     );
     if (this.exerciseId !== undefined) {
@@ -139,14 +165,21 @@ export class AtlasComponent implements OnInit, OnDestroy {
     this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoURL);
   }
 
+  isFavourite(id) {
+    return this.favUserExercises.includes(id);
+  }
+
   loadExercise() {
     this.openExer = true;
     this.exerciseService.getExercise(this.exerciseId).subscribe(
       data => {
         this.selectedExercise = data;
       },
-      error => {},
-      () => { this.checkDifficulty(); }
+      error => {
+      },
+      () => {
+        this.checkDifficulty();
+      }
     );
   }
 
@@ -167,13 +200,46 @@ export class AtlasComponent implements OnInit, OnDestroy {
     this.openExer = !this.openExer;
   }
 
-  animationHeart(element: HTMLElement) {
+  animationHeart(element: HTMLElement, exerciseId) {
+    const index = this.favUserExercises.findIndex(data => data === exerciseId);
+    if (index === -1) {
+      this.favUserExercises.push(exerciseId);
+      this.updateDataFavExercise();
+    } else {
+      this.favUserExercises.splice(index, 1);
+      console.log( this.favUserExercises)
+      this.updateDataFavExercise();
+    }
     this.heartAnimation = !this.heartAnimation;
-    element.classList.contains('fa-heart-active') ? element.classList.remove('fa-heart-active') : element.classList.add('fa-heart-active');
+    element.classList.contains('fa-heart-active')
+      ? element.classList.remove('fa-heart-active') : element.classList.add('fa-heart-active');
     element.classList.add('fa-heart-animation');
     setTimeout(() => {
       element.classList.remove('fa-heart-animation');
     }, 1000);
+  }
+
+  downloadFavExercise(id) {
+    this.userService.getUserFavExercises(id).subscribe(
+      data => {
+        this.favUserExercises = data.user.userFavExercises;
+      }, error => {
+      },
+      () => {
+      }
+    );
+  }
+
+  updateDataFavExercise() {
+    console.log(this.favUserExercises)
+    this.userService.patchUserFavExercises(this.userId, 'userFavExercises', this.favUserExercises)
+      .subscribe(
+        data => {
+          console.log(data);
+        }, error => {
+        }, () => {
+        }
+      );
   }
 
   changeCategory(index) {

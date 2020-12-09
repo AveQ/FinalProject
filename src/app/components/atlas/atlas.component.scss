@@ -173,7 +173,7 @@
   position: absolute;
   left: 5px;
   top: 5px;
-  z-index: 1;
+  z-index: 2;
   border-radius: 50%;
 }
 .panelExer {
@@ -199,6 +199,7 @@
   width: 100%;
   min-height: 100%;
   filter: brightness(65%);
+  z-index: 1;
 }
 .exercise-muscles, .exercise-name {
   width: 90%;

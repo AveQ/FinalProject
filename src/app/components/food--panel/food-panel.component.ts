@@ -3,7 +3,7 @@ import {NavigationService} from '../../services/navigation.service';
 import {Subscription} from 'rxjs';
 import * as _ from 'lodash';
 import {AuthService} from '../../services/auth.service';
-import {FoodService} from '../../services/food.service';
+import {FoodResponseData, FoodService} from '../../services/food.service';
 import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 import {TimeService} from '../../services/time.service';
 
@@ -20,7 +20,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   // szablon kategorii - sniadanie, kolacja itp
   private userId;
   // wszystkie dni użytkownika
-  private userMealHistory = [];
+  private userMealHistory: FoodResponseData;
   // aktualny dzien uzytkownika - posilki
   private todayHistory;
   // uzytkownik
@@ -91,8 +91,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   loadMealHistory() {
     this.foodService.loadData(this.userId).subscribe(
       data => {
-
-        this.userMealHistory = data.mealHistory;
+          this.userMealHistory = data;
       },
       err => {
       },
@@ -112,6 +111,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
 
   // znajdz dzisiejsza historie i pobierz ja do zmiennej oraz ustaw wszsytkie posilki w jedna tablice
   setTodayHistory() {
+
     this.todayHistory = _.find(this.userMealHistory, data => {
         // ustaw nawodnienie
         this.userWater = data.water;
@@ -165,13 +165,13 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
           return data;
         }
       }
+
     );
     if (_.isEmpty(this.todayHistory)) {
       this.newUserHistory.date = new Date().getTime();
       this.newUserHistory.idUser = this.userId;
       this.foodService.postUserHistory(this.newUserHistory).subscribe(
         history => {
-          console.log('Utworzono\n' + history);
         },
         error => {
         },
@@ -185,7 +185,6 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   // sprawdz params i ustaw podstronke. jezeli inna od dozwolonych przekieruj na glowna
   setRoute() {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      console.log(params.get('active'));
       switch (params.get('active')) {
         case'meals': {
           this.activeMenuCategory = 0;

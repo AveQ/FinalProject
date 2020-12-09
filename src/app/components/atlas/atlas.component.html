@@ -40,18 +40,18 @@
         </div>
         <div class="col-lg-9 col-12 order-1 order-lg-0 contForVideo">
           <div class="row rowExer">
-            <div (click)="openExercise(exercise._id)" *ngFor="let exercise of exercises" class="col-lg-4 col-sm-6 col-12 exercise">
+            <div  *ngFor="let exercise of exercises" class="col-lg-4 col-sm-6 col-12 exercise">
               <div class="panelExer">
                 <div class="heart">
-                  <i #element (click)="animationHeart(element)" [ngClass]="{'fa-heart-active': exercise.favourite}"
+                  <i #element (click)="animationHeart(element, exercise._id)" [ngClass]="{'fa-heart-active': isFavourite(exercise._id)}"
                      class="fas fa-heart fa-sm"></i>
                 </div>
                 <div class="exercise-image">
-                  <img class="imageProp" [src]=exerciseMok[0].img alt="">
+                  <img (click)="openExercise(exercise._id)" class="imageProp" [src]=exerciseMok[0].img alt="">
                 </div>
-                <div class="exercise-muscles"><em>{{exercise.type | uppercase}}</em></div>
-                <div class="exercise-name">{{exercise.name | uppercase}}</div>
-                <div class="lvl-exercise d-flex justify-content-around">
+                <div (click)="openExercise(exercise._id)" class="exercise-muscles"><em>{{exercise.type | uppercase}}</em></div>
+                <div (click)="openExercise(exercise._id)" class="exercise-name">{{exercise.name | uppercase}}</div>
+                <div (click)="openExercise(exercise._id)" class="lvl-exercise d-flex justify-content-around">
                   <div class="typeOfExer d-inline-block">
                     <i *ngIf="exercise.type === 'cardio'" class="fas fa-running"></i>
                     <i *ngIf="exercise.type === 'weight'" class="fas fa-dumbbell"></i>
