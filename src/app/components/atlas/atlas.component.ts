@@ -57,65 +57,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
     },
   ];
   exercises;
-  exerciseMok = [
-    {
-      id: 1,
-      img: 'assets/workout/DSC_3033.JPG',
-      smallDesc: 'biceps',
-      bigDesc: 'WYCISKANIE SZTANGI NA ŁAWECZCE SKOŚNEJ',
-      favourite: true,
-      typeOfExer: 'weight',
-      rate: 1
-    },
-    {
-      id: 2,
-      img: 'assets/workout/DSC_3033.JPG',
-      smallDesc: 'biceps',
-      bigDesc: 'podnoszenie hantli sposobem młotkowym',
-      favourite: false,
-      typeOfExer: 'weight',
-      rate: 2
-    },
-    {
-      id: 3,
-      img: 'assets/workout/DSC_3033.JPG',
-      smallDesc: 'biceps',
-      bigDesc: 'Martwy ciąg',
-      favourite: false,
-      typeOfExer: 'weight',
-      rate: 3
-    },
-    {
-      id: 4,
-      img: 'assets/workout/DSC_3033.JPG',
-      smallDesc: 'biceps',
-      bigDesc: 'Przysiady',
-      favourite: true,
-      typeOfExer: 'weight',
-      rate: 1
-    },
-    {
-      id: 5,
-      img: 'assets/workout/DSC_3033.JPG',
-      smallDesc: 'cardio',
-      bigDesc: 'Jazda na rowerze',
-      favourite: false,
-      typeOfExer: 'cardio',
-      rate: 2.3
-    },
-    {
-      id: 6,
-      img: 'assets/workout/DSC_3033.JPG',
-      smallDesc: 'cardio',
-      bigDesc: 'Bieganie na bieżni',
-      typeOfExer: 'cardio',
-      rate: 4.5
-    }
-  ];
 
-
-  nameOfExercise = 'Uginanie przedramion';
-  muscle = 'Biceps';
   scaleOfDifficulty = 66;
   lvlOfDifficulty = 'Expert';
   colorOfDifficulty = 'success';
@@ -123,17 +65,17 @@ export class AtlasComponent implements OnInit, OnDestroy {
   exerciseId = '0';
   paramsSubscription: Subscription;
   user;
-  userId;
-  favUserExercises=[];
+  favUserExercises = [];
 
   ngOnInit(): void {
 
+    // pobierz dane o użytkowniku
     this.authService.user.subscribe(
       data => {
         if (data) {
           this.user = data;
-          this.userId = this.user.user.id;
-          console.log(this.userId);
+          this.favUserExercises = this.user.user.userFavExercises;
+          console.log(this.favUserExercises);
         }
       },
       error => {
@@ -141,21 +83,12 @@ export class AtlasComponent implements OnInit, OnDestroy {
       () => {
       }
     );
+    // pobierz cwiczenia
+    this.getExercises();
+    // sledz sciezke
     this.paramsSubscription = this.route.queryParams.subscribe(
       (params: Params) => {
         this.exerciseId = params.exerciseId;
-      }
-    );
-    this.exerciseService.getAllExercises().subscribe(
-      data => {
-        this.exercises = data.exercises;
-        console.log(this.exercises);
-      },
-      err => {
-
-      },
-      () => {
-
       }
     );
     if (this.exerciseId !== undefined) {
@@ -165,8 +98,26 @@ export class AtlasComponent implements OnInit, OnDestroy {
     this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoURL);
   }
 
-  isFavourite(id) {
-    return this.favUserExercises.includes(id);
+  getExercises() {
+    this.exerciseService.getAllExercises().subscribe(
+      data => {
+        this.exercises = data.exercises;
+      },
+      err => {
+
+      },
+      () => {
+        this.favUserExercises = this.user.user.userFavExercises;
+        for (const exer in this.exercises) {
+          if (this.exercises.hasOwnProperty(exer)) {
+            // sprawdz ktore cwiczenia sa ulubione i daj serduszko
+            this.exercises[exer].favourite = !!this.favUserExercises.find(data => {
+              return data === this.exercises[exer]._id;
+            });
+          }
+        }
+      }
+    );
   }
 
   loadExercise() {
@@ -207,9 +158,15 @@ export class AtlasComponent implements OnInit, OnDestroy {
       this.updateDataFavExercise();
     } else {
       this.favUserExercises.splice(index, 1);
-      console.log( this.favUserExercises)
+      console.log(this.favUserExercises);
       this.updateDataFavExercise();
     }
+    // zeby aktualizowac dane przechowywane lokalnie
+    const tempUser = this.authService.user.getValue();
+    tempUser.user.userFavExercises = this.favUserExercises;
+    localStorage.setItem('userData', JSON.stringify(tempUser));
+    this.authService.user.next(tempUser);
+    // animacja
     this.heartAnimation = !this.heartAnimation;
     element.classList.contains('fa-heart-active')
       ? element.classList.remove('fa-heart-active') : element.classList.add('fa-heart-active');
@@ -231,11 +188,10 @@ export class AtlasComponent implements OnInit, OnDestroy {
   }
 
   updateDataFavExercise() {
-    console.log(this.favUserExercises)
-    this.userService.patchUserFavExercises(this.userId, 'userFavExercises', this.favUserExercises)
+    console.log(this.favUserExercises);
+    this.userService.patchUserFavExercises(this.user.user.id, 'userFavExercises', this.favUserExercises)
       .subscribe(
         data => {
-          console.log(data);
         }, error => {
         }, () => {
         }

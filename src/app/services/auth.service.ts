@@ -66,7 +66,7 @@ export class AuthService {
         language: string,
         target: string,
         forecast: string,
-        userFavExercises: []
+        userFavExercises
       }
     } = JSON.parse(localStorage.getItem('userData'));
     if (!userData) {
@@ -102,5 +102,11 @@ export class AuthService {
   logout() {
     this.user.next(null);
     localStorage.clear();
+  }
+
+  getUserFavExer() {
+    if (this.user) {
+      return this.user.getValue();
+    }
   }
 }

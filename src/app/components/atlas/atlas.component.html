@@ -43,11 +43,11 @@
             <div  *ngFor="let exercise of exercises" class="col-lg-4 col-sm-6 col-12 exercise">
               <div class="panelExer">
                 <div class="heart">
-                  <i #element (click)="animationHeart(element, exercise._id)" [ngClass]="{'fa-heart-active': isFavourite(exercise._id)}"
+                  <i #element (click)="animationHeart(element, exercise._id)" [ngClass]="{'fa-heart-active': exercise.favourite}"
                      class="fas fa-heart fa-sm"></i>
                 </div>
                 <div class="exercise-image">
-                  <img (click)="openExercise(exercise._id)" class="imageProp" [src]=exerciseMok[0].img alt="">
+                  <img (click)="openExercise(exercise._id)" class="imageProp" src='assets/workout/DSC_3033.JPG' alt="">
                 </div>
                 <div (click)="openExercise(exercise._id)" class="exercise-muscles"><em>{{exercise.type | uppercase}}</em></div>
                 <div (click)="openExercise(exercise._id)" class="exercise-name">{{exercise.name | uppercase}}</div>

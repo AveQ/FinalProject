@@ -18,7 +18,8 @@ export class User {
       age: number,
       language: string,
       target: string,
-      forecast: string
+      forecast: string,
+      userFavExercises
     }
   ) {
   }
