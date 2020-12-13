@@ -34,6 +34,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
     video: '0',
     difficult: 0
   };
+  counterExercises = 0;
 
   constructor(
     private navigationService: NavigationService,
@@ -106,16 +107,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
     this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoURL);
   }
 
-  // nastepna badz poprzednia strona
-  pagination(value) {
-    if (value && this.isNext()) {
-      this.page++;
-    } else if (!value && this.page <= 0) { // poprzednia strona
-      this.page--;
-    }
-    this.exercises = this.allExercisesDb.slice(this.page * 2, this.page * 2 + 2);
-  }
-
   // zmiana sortowania
   changeSortType(value, type) {
     this.filters[type] = value;
@@ -124,7 +115,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
 
   // znajdz cwiczenie zgodnie z filtrami
   searchAndSortExercises() {
-    console.log(this.allExercisesDb);
     // chwilowa tablica do edycji
     let tempArray = [];
     // po nazwie
@@ -154,7 +144,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
         // jezeli idFav bedzie takie jak cwiczenia dodaj
         if (tempArray.hasOwnProperty(exercise)) {
           console.log(this.favUserExercises);
-          if (this.favUserExercises.find(id => id === tempArray[exercise]._id) ) {
+          if (this.favUserExercises.find(id => id === tempArray[exercise]._id)) {
             partArray.push(tempArray[exercise]);
           }
         }
@@ -187,18 +177,35 @@ export class AtlasComponent implements OnInit, OnDestroy {
         break;
       }
     }
-    this.exercises = sortArray;
+    this.filtersArray = sortArray;
+    this.counterExercises = this.filtersArray.length;
+    this.exercises = this.filtersArray.slice(this.page * 2, this.page * 2 + 2);
   }
 
 
   isNext() {
-    return (this.page * 2 + 3) <= this.allExercisesDb.length;
+    return (this.page * 2 + 3) <= this.filtersArray.length;
+  }
+
+  // nastepna badz poprzednia strona
+  pagination(value) {
+
+    if (value && this.isNext()) {
+      this.page++;
+    } else if (!value && !(this.page <= 0)) { // poprzednia strona
+      console.log(value)
+      this.page--;
+    }
+    this.exercises = this.filtersArray.slice(this.page * 2, this.page * 2 + 2);
+  }
+
+  setExercisesPagination() {
+
   }
 
   getExercises() {
     this.exerciseService.getAllExercises().subscribe(
       data => {
-        this.exercises = data.exercises;
         this.allExercisesDb = data.exercises;
         console.log(data);
       },
@@ -215,6 +222,9 @@ export class AtlasComponent implements OnInit, OnDestroy {
             });
           }
         }
+        this.searchAndSortExercises();
+        this.exercises = this.filtersArray.slice(this.page * 2, this.page * 2 + 2);
+        this.counterExercises = this.allExercisesDb.length;
       }
     );
   }

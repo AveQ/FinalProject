@@ -32,7 +32,7 @@
       <div [ngClass]="{'container--close': basicSportMenu[1].on === false}" class="row videos justify-content-center">
         <div class="col-12 exercisesCounter d-flex justify-content-between">
           <span>
-            Znalezione ćwiczenia (233):
+            Znalezione ćwiczenia ({{counterExercises}}):
           </span>
           <div class="filterButton">
             <span (click)="filtersHidden = !filtersHidden">Filters</span>
@@ -71,7 +71,7 @@
           <div class="row contForPagination">
             <ul class="pagination">
               <li class="page-item"><a class="page-link" (click)="pagination(false)">Poprzednie</a></li>
-              <li class="page-item"><a class="page-link">1</a></li>
+              <li class="page-item"><a class="page-link">{{page + 1}}</a></li>
               <li class="page-item"><a class="page-link" (click)="pagination(true)">Następne</a></li>
             </ul>
           </div>
