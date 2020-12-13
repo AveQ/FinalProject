@@ -40,16 +40,18 @@
         </div>
         <div class="col-lg-9 col-12 order-1 order-lg-0 contForVideo">
           <div class="row rowExer">
-            <div  *ngFor="let exercise of exercises" class="col-lg-4 col-sm-6 col-12 exercise">
+            <div *ngFor="let exercise of exercises" class="col-lg-4 col-sm-6 col-12 exercise">
               <div class="panelExer">
                 <div class="heart">
-                  <i #element (click)="animationHeart(element, exercise._id)" [ngClass]="{'fa-heart-active': exercise.favourite}"
+                  <i #element (click)="animationHeart(element, exercise._id)"
+                     [ngClass]="{'fa-heart-active': exercise.favourite}"
                      class="fas fa-heart fa-sm"></i>
                 </div>
                 <div class="exercise-image">
                   <img (click)="openExercise(exercise._id)" class="imageProp" src='assets/workout/DSC_3033.JPG' alt="">
                 </div>
-                <div (click)="openExercise(exercise._id)" class="exercise-muscles"><em>{{exercise.type | uppercase}}</em></div>
+                <div (click)="openExercise(exercise._id)" class="exercise-muscles">
+                  <em>{{exercise.type | uppercase}}</em></div>
                 <div (click)="openExercise(exercise._id)" class="exercise-name">{{exercise.name | uppercase}}</div>
                 <div (click)="openExercise(exercise._id)" class="lvl-exercise d-flex justify-content-around">
                   <div class="typeOfExer d-inline-block">
@@ -68,9 +70,9 @@
           </div>
           <div class="row contForPagination">
             <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Poprzednie</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">Następne</a></li>
+              <li class="page-item"><a class="page-link" (click)="pagination(false)">Poprzednie</a></li>
+              <li class="page-item"><a class="page-link">1</a></li>
+              <li class="page-item"><a class="page-link" (click)="pagination(true)">Następne</a></li>
             </ul>
           </div>
         </div>
@@ -79,25 +81,28 @@
           <div [ngClass]="{'filters--open': filtersHidden === false}" class="filters">
             <div class="contForMagnifier">
               <label for="search">Wyszukaj ćwiczenie:</label>
-              <input type="text" class="form-control magnifier" placeholder="Wyszukaj..." id="search">
+              <input #input (input)="changeSortType(input.value, 'name')" type="text" class="form-control magnifier" placeholder="Wyszukaj..." id="search">
             </div>
             <div class="contForSort">
               <label for="part">Wybierz partię:</label>
-              <select class="form-control" id="part">
-                <option>Biceps</option>
-                <option>Triceps</option>
-                <option>Klatka Piersiowa</option>
-                <option>Nogi</option>
-                <option>Plecy</option>
+              <select #sel (change)="changeSortType(sel.value, 'part')" class="form-control" id="part">
+                <option [value]="''">Wszystko</option>
+                <option [value]="'biceps'">Biceps</option>
+                <option [value]="'triceps'">Triceps</option>
+                <option [value]="'chest'">Klatka Piersiowa</option>
+                <option [value]="'legs'">Nogi</option>
+                <option [value]="'back'">Plecy</option>
+                <option [value]="'fav'">Ulubione</option>
               </select>
             </div>
             <div class="contForSort">
               <label for="sort">Sortuj:</label>
-              <select class="form-control" id="sort">
-                <option>Popularność</option>
-                <option>Ocena</option>
-                <option>Alfabetycznie A-Z</option>
-                <option>Alfabetycznie Z-A</option>
+              <select #sel1 (change)="changeSortType(sel1.value, 'sort')" class="form-control" id="sort">
+                <option [value]="''">Zwyczajnie</option>
+                <option [value]="'popular'">Popularność</option>
+                <option [value]="'rate'">Ocena</option>
+                <option [value]="'a-z'">Alfabetycznie A-Z</option>
+                <option [value]="'z-a'">Alfabetycznie Z-A</option>
               </select>
             </div>
           </div>
@@ -273,49 +278,50 @@
     selected exer
   -->
   <div *ngIf="openExer === true" class="row justify-content-center">
-      <div class="row justify-content-center mainCoint">
-        <div class="col-12">
-          <h2 class="sportPanelTitle">{{this.selectedExercise.name}}</h2>
-          <div class="panelSport-options">
-            <ul class="panelSport-list">
-              <li class="panelSport-pointList">
-                <span class="opt">Główna partia mięsniowa: <b>{{this.selectedExercise.musclePart}}</b></span>
-              </li>
-            </ul>
-          </div>
-          <hr class="underline-sportPanel">
-          <div class="burnKcal">
-            <div class="addExercise">
-              <h5 class="addExercise-heading">Dodaj ćwiczenie do Dziennika Aktywności</h5>
-              <small class="addExercise-small">Ćwicząc przez 15 min spalisz aż <span style="color: #dd0101">{{kcal15min}} kcal</span></small>
-              <small class="addExercise-button">
-                <span class="btn btn-dark addExercise-button-text"><em>DODAJ</em></span>
-              </small>
-              <small *ngIf="false" class="addExercise-small">Zaloguj się żeby zobaczyć dane</small>
-            </div>
-          </div>
-          <div class="video-box">
-            <iframe [src]='safeSrc' class="video-box--video" allowfullscreen></iframe>
-          </div>
-          <div class="description">
-
-            <p class="theScaleOfDifficulty">
-              <span class="theScaleOfDifficulty-name"><em>Poziom trudności - <b>{{lvlOfDifficulty}}</b></em></span>
-              <ngb-progressbar
-                class="theScaleOfDifficulty-bar"
-                [type]="colorOfDifficulty" textType="white"
-                [value]="scaleOfDifficulty"
-                height="10px"
-              >
-              </ngb-progressbar>
-            </p>
-            <p class="description-text">
-              <span>{{this.selectedExercise.description}}</span>
-            </p>
-          </div>
-          <button class="btn btn-dark back-button" (click)="closeExercise()">Powrót</button>
+    <div class="row justify-content-center mainCoint">
+      <div class="col-12">
+        <h2 class="sportPanelTitle">{{this.selectedExercise.name}}</h2>
+        <div class="panelSport-options">
+          <ul class="panelSport-list">
+            <li class="panelSport-pointList">
+              <span class="opt">Główna partia mięsniowa: <b>{{this.selectedExercise.musclePart}}</b></span>
+            </li>
+          </ul>
         </div>
+        <hr class="underline-sportPanel">
+        <div class="burnKcal">
+          <div class="addExercise">
+            <h5 class="addExercise-heading">Dodaj ćwiczenie do Dziennika Aktywności</h5>
+            <small class="addExercise-small">Ćwicząc przez 15 min spalisz aż <span style="color: #dd0101">{{kcal15min}}
+              kcal</span></small>
+            <small class="addExercise-button">
+              <span class="btn btn-dark addExercise-button-text"><em>DODAJ</em></span>
+            </small>
+            <small *ngIf="false" class="addExercise-small">Zaloguj się żeby zobaczyć dane</small>
+          </div>
+        </div>
+        <div class="video-box">
+          <iframe [src]='safeSrc' class="video-box--video" allowfullscreen></iframe>
+        </div>
+        <div class="description">
+
+          <p class="theScaleOfDifficulty">
+            <span class="theScaleOfDifficulty-name"><em>Poziom trudności - <b>{{lvlOfDifficulty}}</b></em></span>
+            <ngb-progressbar
+              class="theScaleOfDifficulty-bar"
+              [type]="colorOfDifficulty" textType="white"
+              [value]="scaleOfDifficulty"
+              height="10px"
+            >
+            </ngb-progressbar>
+          </p>
+          <p class="description-text">
+            <span>{{this.selectedExercise.description}}</span>
+          </p>
+        </div>
+        <button class="btn btn-dark back-button" (click)="closeExercise()">Powrót</button>
       </div>
+    </div>
 
   </div>
 

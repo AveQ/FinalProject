@@ -16,7 +16,6 @@ import * as _ from 'lodash';
 })
 export class AtlasComponent implements OnInit, OnDestroy {
   filtersHidden = true;
-  page = 1;
   partOfBody = 'Wybierz partię';
   isFront = false;
   heartAnimation = false;
@@ -56,7 +55,17 @@ export class AtlasComponent implements OnInit, OnDestroy {
       on: true
     },
   ];
+  allExercisesDb;
+  filtersArray;
   exercises;
+
+  page = 0;
+
+  filters = {
+    name: '',
+    part: '',
+    sort: ''
+  };
 
   scaleOfDifficulty = 66;
   lvlOfDifficulty = 'Expert';
@@ -75,7 +84,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
         if (data) {
           this.user = data;
           this.favUserExercises = this.user.user.userFavExercises;
-          console.log(this.favUserExercises);
         }
       },
       error => {
@@ -98,10 +106,101 @@ export class AtlasComponent implements OnInit, OnDestroy {
     this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoURL);
   }
 
+  // nastepna badz poprzednia strona
+  pagination(value) {
+    if (value && this.isNext()) {
+      this.page++;
+    } else if (!value && this.page <= 0) { // poprzednia strona
+      this.page--;
+    }
+    this.exercises = this.allExercisesDb.slice(this.page * 2, this.page * 2 + 2);
+  }
+
+  // zmiana sortowania
+  changeSortType(value, type) {
+    this.filters[type] = value;
+    this.searchAndSortExercises();
+  }
+
+  // znajdz cwiczenie zgodnie z filtrami
+  searchAndSortExercises() {
+    console.log(this.allExercisesDb);
+    // chwilowa tablica do edycji
+    let tempArray = [];
+    // po nazwie
+    if (this.filters.name.length > 0) {
+      for (const exercise in this.allExercisesDb) {
+        // jezeli substring znajduje sie w nazwie cwiczenia poprostu dodaj do tmpArray
+        if (this.allExercisesDb.hasOwnProperty(exercise) &&
+          this.allExercisesDb[exercise].name.toLowerCase().includes((this.filters.name).toLowerCase())) {
+          tempArray.push(this.allExercisesDb[exercise]);
+        }
+      }
+    } else {
+      tempArray = this.allExercisesDb;
+    }
+    let partArray = [];
+    // po parrtii miesniowej
+    if (this.filters.part !== '' && this.filters.part !== 'fav') {
+      for (const exercise in tempArray) {
+        // jezeli musclePart jest taki jak zaznacozny przez uzytkownika dodaj do tmep array
+        if (tempArray.hasOwnProperty(exercise) &&
+          (tempArray[exercise].musclePart === this.filters.part)) {
+          partArray.push(this.allExercisesDb[exercise]);
+        }
+      }
+    } else if (this.filters.part === 'fav') {
+      for (const exercise in tempArray) {
+        // jezeli idFav bedzie takie jak cwiczenia dodaj
+        if (tempArray.hasOwnProperty(exercise)) {
+          console.log(this.favUserExercises);
+          if (this.favUserExercises.find(id => id === tempArray[exercise]._id) ) {
+            partArray.push(tempArray[exercise]);
+          }
+        }
+      }
+    } else {
+      partArray = tempArray;
+    }
+
+    // sortuj tablice
+    let sortArray = [];
+    switch (this.filters.sort) {
+      case '': {
+        sortArray = partArray;
+        break;
+      }
+      case 'a-z': {
+        sortArray = _.orderBy(partArray, ['name'], ['asc']);
+        break;
+      }
+      case 'z-a': {
+        sortArray = _.orderBy(partArray, ['name'], ['desc']);
+        break;
+      }
+      case 'rate': {
+        sortArray = _.orderBy(partArray, ['rate'], ['desc']);
+        break;
+      }
+      case 'popular': {
+        sortArray = _.orderBy(partArray, ['popular'], ['desc']);
+        break;
+      }
+    }
+    this.exercises = sortArray;
+  }
+
+
+  isNext() {
+    return (this.page * 2 + 3) <= this.allExercisesDb.length;
+  }
+
   getExercises() {
     this.exerciseService.getAllExercises().subscribe(
       data => {
         this.exercises = data.exercises;
+        this.allExercisesDb = data.exercises;
+        console.log(data);
       },
       err => {
 
@@ -162,6 +261,9 @@ export class AtlasComponent implements OnInit, OnDestroy {
       this.updateDataFavExercise();
     }
     // zeby aktualizowac dane przechowywane lokalnie
+    // zeby serduszko sie odznaczalo po odkliknieciu i kombinacji wszystko -> ulubione -> wszystko -> ulubione
+    let idTemp = _.findIndex(this.allExercisesDb, {_id: exerciseId});
+    this.allExercisesDb[idTemp].favourite = !this.allExercisesDb[idTemp].favourite;
     const tempUser = this.authService.user.getValue();
     tempUser.user.userFavExercises = this.favUserExercises;
     localStorage.setItem('userData', JSON.stringify(tempUser));
