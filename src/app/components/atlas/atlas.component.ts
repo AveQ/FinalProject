@@ -179,12 +179,12 @@ export class AtlasComponent implements OnInit, OnDestroy {
     }
     this.filtersArray = sortArray;
     this.counterExercises = this.filtersArray.length;
-    this.exercises = this.filtersArray.slice(this.page * 2, this.page * 2 + 2);
+    this.exercises = this.filtersArray.slice(this.page * 6, this.page * 6 + 6);
   }
 
 
   isNext() {
-    return (this.page * 2 + 3) <= this.filtersArray.length;
+    return (this.page * 6 + 7) <= this.filtersArray.length;
   }
 
   // nastepna badz poprzednia strona
@@ -196,7 +196,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
       console.log(value)
       this.page--;
     }
-    this.exercises = this.filtersArray.slice(this.page * 2, this.page * 2 + 2);
+    this.exercises = this.filtersArray.slice(this.page * 6, this.page * 6 + 6);
   }
 
   setExercisesPagination() {
@@ -207,23 +207,22 @@ export class AtlasComponent implements OnInit, OnDestroy {
     this.exerciseService.getAllExercises().subscribe(
       data => {
         this.allExercisesDb = data.exercises;
-        console.log(data);
       },
       err => {
 
       },
       () => {
         this.favUserExercises = this.user.user.userFavExercises;
-        for (const exer in this.exercises) {
-          if (this.exercises.hasOwnProperty(exer)) {
+        for (const exer in this.allExercisesDb) {
+          if (this.allExercisesDb.hasOwnProperty(exer)) {
             // sprawdz ktore cwiczenia sa ulubione i daj serduszko
-            this.exercises[exer].favourite = !!this.favUserExercises.find(data => {
-              return data === this.exercises[exer]._id;
+            this.allExercisesDb[exer].favourite = !!this.favUserExercises.find(data => {
+              return data === this.allExercisesDb[exer]._id;
             });
           }
         }
         this.searchAndSortExercises();
-        this.exercises = this.filtersArray.slice(this.page * 2, this.page * 2 + 2);
+        this.exercises = this.filtersArray.slice(this.page * 6, this.page * 6 + 6);
         this.counterExercises = this.allExercisesDb.length;
       }
     );
