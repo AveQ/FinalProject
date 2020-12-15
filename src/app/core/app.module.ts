@@ -7,7 +7,7 @@ import {LazyLoadingComponent} from '../components/lazy-loading/lazyloading.compo
 import {ChartsModule} from 'ng2-charts';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AuthComponent} from '../components/auth/auth.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {WelcomePageComponent} from '../components/welcome-page/welcome-page.component';
 import {NavComponent} from '../components/nav/nav.component';
 import {FoodPanelNewComponent} from '../components/food--panel/food-panel.component';
@@ -52,7 +52,8 @@ import {NFLInterceptorService} from '../services/NFLInterceptorService.service';
     ChartsModule,
     NgbModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     NavigationService,

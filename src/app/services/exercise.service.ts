@@ -29,5 +29,9 @@ export class ExerciseService {
 
   postUserHistory(newUserHistory) {
     return this.http.post('http://localhost:3000/userExercisesHistory', newUserHistory);
-}
+  }
+
+  patchUserHistory(id, toChange, newValue) {
+    return this.http.patch('http://localhost:3000/userExercisesHistory/' + id, [{'propName': toChange, 'value': newValue}]);
+  }
 }

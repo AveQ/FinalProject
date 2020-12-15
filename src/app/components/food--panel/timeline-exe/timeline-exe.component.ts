@@ -7,6 +7,8 @@ import {TimeService} from '../../../services/time.service';
 import {ExerciseService} from '../../../services/exercise.service';
 import * as _ from 'lodash';
 import {AuthService} from '../../../services/auth.service';
+import {Router} from '@angular/router';
+import {AtlasComponent} from '../../atlas/atlas.component';
 
 @Component({
   selector: 'app-timeline',
@@ -34,16 +36,18 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
   private user;
   private userId;
   private allUserHistory;
+  private userHistoryId;
 
   constructor(private navigateService: NavigationService,
               private timeService: TimeService,
               private exercise: ExerciseService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private route: Router) {
   }
 
   setFilter(value) {
     this.finalExerciseArray = [];
-    if (value === 'wszystkie') {
+    if (value === 'all') {
       this.finalExerciseArray = this.exercises;
     } else {
       this.exercises.find(element => {
@@ -54,15 +58,15 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit(): void {
-    this.userSubscription = this.authService.user.subscribe(
-      user => {
-        if (user) {
-          this.user = user;
-          this.userId = user.user.id;
-        }
-      }
-    );
+  deleteExer(value) {
+    let tempExercises = this.todayHistory.exercises;
+    const indexTemp = _.findIndex(tempExercises, ['idExercise', value]);
+    this.finalExerciseArray.splice(_.findIndex(this.finalExerciseArray, ['id', tempExercises[indexTemp].idExercise]), 1);
+    tempExercises.splice(indexTemp, 1);
+    this.exercise.patchUserHistory(this.todayHistory._id, 'exercises', tempExercises).subscribe();
+  }
+
+  initComponent() {
     this.timeService.setMaxAndMinDate();
     const createDate = this.timeService.setDate(new Date().getTime());
     this.currentDay = createDate[0];
@@ -78,6 +82,18 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
     this.loadUserAllHistory();
   }
 
+  ngOnInit(): void {
+    this.userSubscription = this.authService.user.subscribe(
+      user => {
+        if (user) {
+          this.user = user;
+          this.userId = user.user.id;
+        }
+      }
+    );
+    this.initComponent();
+  }
+
   changeMealStatus(value) {
     this.navigateService.changeMealSubject(value);
   }
@@ -87,6 +103,10 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
     this.currentDay = createDate[0];
     this.previousDay = createDate[1];
     this.nextDay = createDate[2];
+  }
+
+  navigateToExercises() {
+    this.route.navigate(['./atlas']);
   }
 
   loadUserAllHistory() {
@@ -105,7 +125,6 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
   }
 
   setTodayHistory() {
-
     this.todayHistory = _.find(this.allUserHistory, data => {
       // ustaw posilki
       if (new Date(this.currentDay.time).getDate() === new Date(data.date).getDate() &&
@@ -139,7 +158,7 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
         this.exercise.getExercise(tempExercises[exer].idExercise).subscribe(
           data => {
             tempObject = {
-              id: data.id,
+              id: tempExercises[exer].idExercise,
               name: data.name,
               kind: data.type,
               time: tempExercises[exer].time,
@@ -147,10 +166,9 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
             };
             this.exercises.push(tempObject);
           }
-        )
+        );
       }
     }
-    console.log(tempExercises)
   }
 
   ngOnDestroy(): void {

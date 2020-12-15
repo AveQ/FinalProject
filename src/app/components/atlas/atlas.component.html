@@ -292,11 +292,36 @@
         <div class="burnKcal">
           <div class="addExercise">
             <h5 class="addExercise-heading">Dodaj ćwiczenie do Dziennika Aktywności</h5>
-            <small class="addExercise-small">Ćwicząc przez 15 min spalisz aż <span style="color: #dd0101">{{kcal15min}}
-              kcal</span></small>
+            <form class="form-inline row justify-content-center">
+              <small class="addExercise-small">Wprowadź dzień trenignu:</small>
+              <div class="form-group calendar col-12">
+                <div class="input-group ">
+                  <input id="calendarInput" class="form-control" placeholder="yyyy-mm-dd"
+                         name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="far fa-calendar-alt "></i></button>
+                  </div>
+                </div>
+              </div>
+              <small class="addExercise-small">Wprowadź czas trenignu:</small>
+              <div class="form-group calendar col-12">
+                <div class="input-group ">
+                  <input id="numberInput" class="form-control"
+                         name="dp" [(ngModel)]="timeModel" type="number">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"><i class="far fa-clock"></i></button>
+                  </div>
+                </div>
+              </div>
+<!--              <div class="form-group minutes row">-->
+<!--                <label for="minutesInput" class="col-12">Minuty:</label>-->
+<!--                <input type="number" class="form-control col-12" id="minutesInput" placeholder="10">-->
+<!--              </div>-->
+            </form>
             <small class="addExercise-button">
-              <span class="btn btn-dark addExercise-button-text"><em>DODAJ</em></span>
+              <span (click)="sendDateToPatch()" class="btn btn-dark addExercise-button-text"><em>DODAJ</em></span>
             </small>
+            <hr/>
             <small *ngIf="false" class="addExercise-small">Zaloguj się żeby zobaczyć dane</small>
           </div>
         </div>

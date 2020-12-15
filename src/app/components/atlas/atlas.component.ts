@@ -8,6 +8,7 @@ import {ExerciseModel} from '../../model/exercise.model';
 import {AuthService} from '../../services/auth.service';
 import {UserService} from '../../services/user.service';
 import * as _ from 'lodash';
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-atlas',
@@ -22,6 +23,13 @@ export class AtlasComponent implements OnInit, OnDestroy {
   safeSrc: SafeResourceUrl;
   videoURL = 'https://www.youtube.com/embed/3vJHQjiEp1w';
   openExer = false;
+  private newUserHistory = {
+    idUser: '',
+    date: 0,
+    kcal: 0,
+    time: 666,
+    exercises: []
+  };
   selectedExercise: ExerciseModel = {
     id: '0',
     name: '0',
@@ -35,6 +43,12 @@ export class AtlasComponent implements OnInit, OnDestroy {
     difficult: 0
   };
   counterExercises = 0;
+  model: NgbDateStruct = {
+    year: 0,
+    month: 0,
+    day: 0
+  };
+  timeModel = 30;
 
   constructor(
     private navigationService: NavigationService,
@@ -43,9 +57,12 @@ export class AtlasComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
+    private exercise: ExerciseService,
     private userService: UserService) {
   }
 
+// wyszukana historia
+  historyExercise;
   basicSportMenu = [
     {
       name: 'Wiedza podstawowa',
@@ -75,7 +92,9 @@ export class AtlasComponent implements OnInit, OnDestroy {
   exerciseId = '0';
   paramsSubscription: Subscription;
   user;
+  userId;
   favUserExercises = [];
+  private allUserHistory;
 
   ngOnInit(): void {
 
@@ -84,6 +103,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
       data => {
         if (data) {
           this.user = data;
+          this.userId = data.user.id;
           this.favUserExercises = this.user.user.userFavExercises;
         }
       },
@@ -105,6 +125,9 @@ export class AtlasComponent implements OnInit, OnDestroy {
     }
     this.navigationService.changeNavSubject(3);
     this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoURL);
+    if (this.user) {
+      this.loadUserAllHistory();
+    }
   }
 
   // zmiana sortowania
@@ -193,7 +216,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
     if (value && this.isNext()) {
       this.page++;
     } else if (!value && !(this.page <= 0)) { // poprzednia strona
-      console.log(value)
+      console.log(value);
       this.page--;
     }
     this.exercises = this.filtersArray.slice(this.page * 6, this.page * 6 + 6);
@@ -348,6 +371,84 @@ export class AtlasComponent implements OnInit, OnDestroy {
     this.colorOfDifficulty = color;
   }
 
+  sendDateToPatch() {
+
+    const date = new Date(this.model.year + '-' + this.model.month + '-' + this.model.day);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+    if (this.model.year >= 2020 && this.model.year !== 0 ||
+      this.model.day !== 0 || this.model.month !== 0 &&
+      date.toString() !== 'Invalid date') {
+      this.setSelectedHistory(day, month, year);
+    } else {
+      console.log('error');
+    }
+  }
+
+  setSelectedHistory(day, month, year) {
+    this.historyExercise = _.find(this.allUserHistory, data => {
+      // ustaw posilki
+      if (day === new Date(data.date).getDate() &&
+        month === new Date(data.date).getMonth() + 1 &&
+        year === new Date(data.date).getFullYear()) {
+
+        return data;
+      }
+    });
+    if (_.isEmpty(this.historyExercise)) {
+      this.newUserHistory.date = new Date().getTime();
+      this.newUserHistory.idUser = this.userId;
+      this.exercise.postUserHistory(this.newUserHistory).subscribe(
+        history => {
+        },
+        error => {
+        },
+        () => {
+          console.log('create new hisotry');
+          this.historyExercise = this.newUserHistory;
+        }
+      );
+    }
+    let tempArray = this.historyExercise.exercises;
+    const newExercise = {
+      kcal: 123,
+      time: this.timeModel,
+      idExercise: this.exerciseId
+    };
+    // sprawdz czy juz taki rodzaj cwiczenia wystepuje w historii jak tak to ja update
+    console.log(this.exerciseId);
+    const indexTemp = _.findIndex(tempArray, ['idExercise', this.exerciseId]);
+    if (indexTemp !== -1) {
+      tempArray[indexTemp] = newExercise;
+    } else {
+      tempArray.push(newExercise);
+    }
+    this.exercise.patchUserHistory(this.historyExercise._id, 'exercises', tempArray).subscribe(
+      data => {
+      },
+      error => {
+      },
+      () => {
+        console.log('Patch successful');
+      }
+    );
+    console.log(newExercise.idExercise);
+  }
+
+  loadUserAllHistory() {
+    if (this.user) {
+      this.exercise.loadUserAllHistory(this.userId).subscribe(
+        data => {
+          this.allUserHistory = data;
+        },
+        error => {
+        },
+        () => {
+        }
+      );
+    }
+  }
 
   ngOnDestroy(): void {
   }
