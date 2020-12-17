@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavigationService} from '../../services/navigation.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../../services/auth.service';
 
 
 @Component({
@@ -11,12 +12,31 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 export class BMIComponent implements OnInit, OnDestroy {
   bmiForm: FormGroup;
   bmi = null;
-  constructor(private navigateService: NavigationService, private fb: FormBuilder) {
+  user;
+  heightUser;
+  weightUser;
+
+  constructor(private authService: AuthService,
+              private navigateService: NavigationService,
+              private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
+    this.authService.user.subscribe(
+      data => {
+        if (data) {
+          this.user = data;
+          this.heightUser = data.user.height;
+          this.weightUser = data.user.weight;
+        }
+      }
+    );
     this.navigateService.changeNavSubject(4);
     this.buildForm();
+  }
+
+  loadUserValue() {
+    this.bmi = +this.calcBMI(this.heightUser, this.weightUser);
   }
 
   // budownaie formularza startowego - pobieranie danych do bmi

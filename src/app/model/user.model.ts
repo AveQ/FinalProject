@@ -19,7 +19,10 @@ export class User {
       language: string,
       target: string,
       forecast: string,
-      userFavExercises
+      userFavExercises,
+      startingWeight: number,
+      finalWeight: number,
+      counterSignIn: number
     }
   ) {
   }

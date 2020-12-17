@@ -4,20 +4,6 @@ import {tap} from 'rxjs/operators';
 import {User} from '../model/user.model';
 import {BehaviorSubject} from 'rxjs';
 
-// export interface AuthResponseData  {
-//   id: string;
-//   email: string;
-//   token: string;
-//   expirationDate: string;
-//   nick: string;
-//   weight: number;
-//   height: number;
-//   gender: string;
-//   weeklyChange: number;
-//   country: string;
-//   age: number;
-//   language: string;
-// }
 export interface AuthResponseData {
   id: string;
   email: string;
@@ -66,7 +52,10 @@ export class AuthService {
         language: string,
         target: string,
         forecast: string,
-        userFavExercises
+        userFavExercises,
+        startingWeight: number,
+        finalWeight: number,
+        counterSignIn: number
       }
     } = JSON.parse(localStorage.getItem('userData'));
     if (!userData) {

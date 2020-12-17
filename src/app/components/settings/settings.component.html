@@ -25,7 +25,7 @@
 
     <div class="row contForCards">
       <div *ngFor="let element of settings;" class="col-xl-3 col-sm-6 col-12 ">
-        <div class="card colAnim" (click)="openModal(element.name.toLowerCase())">
+        <div class="card colAnim" (click)="openModal(element)">
           <div class="card-content ">
             <div class="card-body card-body-extra">
               <div class="media d-flex">
@@ -107,37 +107,31 @@
       </div>
 
       <div class="titleModal-small text-center">
-        ZMIEŃ NICK
+        ZMIEŃ {{curElement.name | uppercase}}
       </div>
       <!--
       NICK FORM
       -->
-      <form *ngIf="changeValue === 'nick'" [formGroup]="newValue" (ngSubmit)="onSubmit()">
+      <form *ngIf="changeValue === 'text'" [formGroup]="newValue" (ngSubmit)="onSubmit()">
         <input formControlName="newValue" type="text" class="form-control input-new-value" placeholder="wprowadź nowy nick...">
         <button type="submit" class="btn btn-dark btn-new-value">ZMIEŃ</button>
       </form>
       <!--
       WEIGHT FORM
       -->
-      <form *ngIf="changeValue === 'waga'" [formGroup]="newValue" (ngSubmit)="onSubmit()">
-        <input formControlName="newValue" type="number" min="20" max="300" class="form-control input-new-value" placeholder="wprowadź nową wagę...">
+      <form *ngIf="changeValue === 'number'" [formGroup]="newValue" (ngSubmit)="onSubmit()">
+        <input formControlName="newValue" type="number" min="20" max="300" class="form-control input-new-value" placeholder="wprowadź {{curElement.name | lowercase}}...">
         <button type="submit" class="btn btn-dark btn-new-value">ZMIEŃ</button>
       </form>
       <!--
       LANGUAGE FORM
       -->
-      <form *ngIf="changeValue === 'język'" [formGroup]="newValueLanguage" (ngSubmit)="onSubmitLanguage()">
-        <div class="form-check">
-          <input formControlName="polish" class="form-check-input" type="radio" name="polish" id="language1" value="pl" checked>
-          <label  class="form-check-label" for="language1">
-            Polski
-          </label>
-        </div>
-        <div class="form-check">
-          <input formControlName="english" class="form-check-input" type="radio" name="english" id="language2" value="en">
-          <label  class="form-check-label" for="language2">
-            English
-          </label>
+      <form *ngIf="changeValue === 'select'" [formGroup]="newValueLanguage" (ngSubmit)="onSubmitSelect(select)">
+        <div class="form-group">
+          <label for="exampleFormControlSelect1"></label>
+          <select #select class="form-control" id="exampleFormControlSelect1">
+            <option *ngFor="let option of curElement.options_value" [value]="option">{{option}}</option>
+          </select>
         </div>
         <button type="submit" class="btn btn-dark btn-new-value">ZMIEŃ</button>
       </form>
