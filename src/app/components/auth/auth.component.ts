@@ -58,6 +58,8 @@ export class AuthComponent implements OnInit {
         }
       },
       () => {
+        this.router.navigate(['../']);
+        console.log('xd');
       }
     );
   }

@@ -22,7 +22,10 @@ export class User {
       userFavExercises,
       startingWeight: number,
       finalWeight: number,
-      counterSignIn: number
+      counterSignIn: number,
+      ppm: number,
+      cpm: number,
+      physicalActivity: number
     }
   ) {
   }

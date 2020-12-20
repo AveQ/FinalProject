@@ -57,6 +57,7 @@ export class FoodService {
 
   constructor(private http: HttpClient) {
   }
+
   // dane podstawowe do obsługi komponentu - szablon
   private meal = [
     {
@@ -114,6 +115,7 @@ export class FoodService {
       ids: []
     }
   ];
+
   // metody do serwera
 
   getInfoMeal(id) {
@@ -138,6 +140,17 @@ export class FoodService {
 
   postUserHistory(value) {
     return this.http.post('http://localhost:3000/mealsHistory/', value);
+  }
+
+  isDecrease(idUser) {
+    this.http.get('http://localhost:3000/mealsHistory/users/' + idUser).subscribe(
+      data => {
+        console.log(data);
+      }, error => {
+      },
+      () => {
+      }
+    );
   }
 
   // logika

@@ -55,7 +55,10 @@ export class AuthService {
         userFavExercises,
         startingWeight: number,
         finalWeight: number,
-        counterSignIn: number
+        counterSignIn: number,
+        ppm: number,
+        cpm: number,
+        physicalActivity: number
       }
     } = JSON.parse(localStorage.getItem('userData'));
     if (!userData) {

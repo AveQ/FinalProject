@@ -53,11 +53,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
       class_icon: 'fas fa-exchange-alt fa-3x'
     },
     {
-      name: 'Kraj',
-      name_value: 'Polska',
-      options_value: ['Polska', 'USA'],
+      name: 'Aktywność fizyczna',
+      name_value: 'Brak Danych',
+      options_value: [
+        {value: 2.2, name: 'Wyczynowa'},
+        {value: 2.0, name: 'Duża'},
+        {value: 1.8, name: 'Średnia'},
+        {value: 1.5, name: 'Mała'}],
       formInfo: 'select',
-      dbName: 'language',
+      dbName: 'physicalActivity',
       class_icon: 'fas fa-globe-americas fa-3x account'
     },
     {
@@ -74,6 +78,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
       formInfo: 'select',
       dbName: 'language',
       class_icon: 'fas fa-language fa-3x account'
+    },
+    {
+      name: 'Waga docelowa',
+      name_value: 85,
+      formInfo: 'number',
+      dbName: 'finalWeight',
+      class_icon: 'fas fa-bullseye fa-3x account-blue'
     }
   ];
   dietInfo = [
@@ -83,9 +94,21 @@ export class SettingsComponent implements OnInit, OnDestroy {
       class_icon: 'fas fa-chart-line fa-3x account-green'
     },
     {
-      name: 'Waga docelowa',
-      name_value: '85 kg',
+      name: 'PPM',
+      name_value: '0 kcal',
       class_icon: 'fas fa-bullseye fa-3x account-blue'
+    },
+    {
+      name: 'CPM',
+      name_value: '0 kcal',
+      class_icon: 'fas fa-bullseye fa-3x account-blue'
+    }
+  ];
+  goal = [
+    {
+      name: 'Dziennie',
+      name_value: 'Brak danych',
+      class_icon: 'fas fa-chart-line fa-3x account-green'
     }
   ];
   achievements = [
@@ -149,7 +172,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     });
   }
 
-  // ustaw achivmenty
+  // ustaw achievement
   checkCounterLogin() {
     for (let i = 1; i < 5; i++) {
       this.achievements[i - 1].unblock = i * 5 <= this.counterUserHistory;
@@ -167,11 +190,22 @@ export class SettingsComponent implements OnInit, OnDestroy {
           this.settings[2].name_value = user.user.height + ' cm';
           this.settings[3].name_value = user.user.gender;
           this.settings[4].name_value = user.user.weeklyChange + ' kg';
-          this.settings[5].name_value = user.user.country;
+          let physName = 0;
+          this.settings[5].options_value.findIndex(data => {
+            if (data.value === +user.user.physicalActivity) {
+              physName = data.name;
+            }
+          });
+          this.settings[5].name_value = physName;
           this.settings[6].name_value = user.user.age + '';
           this.settings[7].name_value = user.user.language;
+          this.settings[8].name_value = user.user.finalWeight + ' kg';
           this.dietInfo[0].name_value = user.user.forecast;
-          this.dietInfo[1].name_value = user.user.target;
+          const ppm = this.setPPM(user.user.gender, user.user.weight, user.user.height, user.user.age);
+          this.dietInfo[1].name_value = ppm === 0 ? 'Złe Dane' : ppm.toPrecision(5) + ' kcal';
+          const cpm = this.setCPM(user.user.physicalActivity, ppm);
+          this.dietInfo[2].name_value = cpm === 0 ? 'Złe Dane' : cpm.toPrecision(5) + ' kcal';
+          this.goal[0].name_value = (cpm + (user.user.weeklyChange * 1000)).toPrecision(5) + 'kg';
           this.userId = user.user.id;
           this.user = user;
         }
@@ -185,11 +219,32 @@ export class SettingsComponent implements OnInit, OnDestroy {
           () => {
             this.counterUserHistory = tempHistory.length;
             this.checkCounterLogin();
+            this.foodService.isDecrease(this.userId);
           }
         );
       }
     );
     this.configuration();
+  }
+
+  setPPM(gender, weight, height, age) {
+    let ppm = 0;
+    if (weight >= 20 && height >= 50 && weight <= 350 && height <= 250 && age >= 8) {
+      if (gender.toLowerCase() === 'female') {
+        ppm = 665.09 + (9.56 * weight) + (1.85 * height) - (4.67 * age);
+      } else {
+        ppm = 66.47 + 13.7 * weight + 5.0 * height - 6.76 * age;
+      }
+    }
+    return ppm;
+  }
+
+  setCPM(physicalActivity, ppm) {
+    let cpm = 0;
+    if (ppm !== 'Złe Dane') {
+      cpm = ppm * physicalActivity;
+    }
+    return cpm;
   }
 
   onSubmit() {
