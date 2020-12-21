@@ -59,6 +59,13 @@
         <button class="btn btn-outline-light btn-gpls">G+</button>
       </div>
     </form>
+    <p class="text-center">
+      <span *ngIf="((this.signinForm.get('email').invalid && this.signinForm.get('email').touched) ||
+      (this.signinForm.get('password').invalid && this.signinForm.get('password').touched ) ) " class="form__info mr-1">Invalid email or password!</span>
+      <span *ngIf="authFailed" class="form__info">
+      Auth failed
+    </span>
+    </p>
     <div class="info">
       Pietras Marcin &copy;, Inżynieria Oprogramowania 2021
     </div>

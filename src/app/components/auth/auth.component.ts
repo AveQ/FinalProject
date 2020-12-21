@@ -53,7 +53,9 @@ export class AuthComponent implements OnInit {
         this.router.navigate(['/']);
       },
       error => {
-        if (error.error.message === 'Auth failed') {
+        console.log(error.error);
+        if (error.error.message === 'Auth failed' || error.error.message === 'Mail exists' ||
+          error.error.error._message === 'User validation failed') {
           this.authFailed = true;
         }
       },
