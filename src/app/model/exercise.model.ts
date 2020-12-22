@@ -11,6 +11,7 @@ export class AllExerciseModel {
     image: string;
     video: string;
     difficult: number;
+    kcalRatio: number;
     request: {
       type: string;
       url: string;
@@ -29,4 +30,5 @@ export class ExerciseModel {
   image: string;
   video: string;
   difficult: number;
+  kcalRatio: number;
 }

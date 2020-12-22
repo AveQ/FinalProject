@@ -30,6 +30,7 @@ export class WChartComponent implements OnInit, DoCheck {
   public recom = 2500;
   @Input() waterData = null;
   @Input() historyId = null;
+  @Input() summ;
 // Doughnut
   public doughnutChartOptions = {
     responsive: false,

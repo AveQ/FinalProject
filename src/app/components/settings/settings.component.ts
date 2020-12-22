@@ -15,102 +15,9 @@ import {FoodService} from '../../services/food.service';
 })
 export class SettingsComponent implements OnInit, OnDestroy {
 
-  settings = [
-    {
-      name: 'Nick',
-      name_value: 'Brak',
-      formInfo: 'text',
-      dbName: 'nick',
-      class_icon: 'fas fa-user-circle fa-3x '
-    },
-    {
-      name: 'Waga',
-      name_value: 60,
-      formInfo: 'number',
-      dbName: 'weight',
-      class_icon: 'fas fa-weight fa-3x account'
-    },
-    {
-      name: 'Wzrost',
-      name_value: 170,
-      formInfo: 'number',
-      dbName: 'height',
-      class_icon: 'fas fa-arrows-alt-v fa-3x'
-    },
-    {
-      name: 'Płeć',
-      name_value: 'Brak',
-      formInfo: 'select',
-      options_value: ['Male', 'Female'],
-      dbName: 'gender',
-      class_icon: 'fas fa-venus-mars fa-3x account'
-    },
-    {
-      name: 'Tygodniowa zmiana',
-      name_value: '0kg',
-      formInfo: 'number',
-      dbName: 'weeklyChange',
-      class_icon: 'fas fa-exchange-alt fa-3x'
-    },
-    {
-      name: 'Aktywność fizyczna',
-      name_value: 'Brak Danych',
-      options_value: [
-        {value: 2.2, name: 'Wyczynowa'},
-        {value: 2.0, name: 'Duża'},
-        {value: 1.8, name: 'Średnia'},
-        {value: 1.5, name: 'Mała'}],
-      formInfo: 'select',
-      dbName: 'physicalActivity',
-      class_icon: 'fas fa-globe-americas fa-3x account'
-    },
-    {
-      name: 'Wiek',
-      name_value: 50,
-      formInfo: 'number',
-      dbName: 'age',
-      class_icon: 'fas fa-birthday-cake fa-3x'
-    },
-    {
-      name: 'Język',
-      name_value: 'PL',
-      options_value: ['PL', 'EN'],
-      formInfo: 'select',
-      dbName: 'language',
-      class_icon: 'fas fa-language fa-3x account'
-    },
-    {
-      name: 'Waga docelowa',
-      name_value: 85,
-      formInfo: 'number',
-      dbName: 'finalWeight',
-      class_icon: 'fas fa-bullseye fa-3x account-blue'
-    }
-  ];
-  dietInfo = [
-    {
-      name: 'Prognoza wagi',
-      name_value: 'Spadek',
-      class_icon: 'fas fa-chart-line fa-3x account-green'
-    },
-    {
-      name: 'PPM',
-      name_value: '0 kcal',
-      class_icon: 'fas fa-bullseye fa-3x account-blue'
-    },
-    {
-      name: 'CPM',
-      name_value: '0 kcal',
-      class_icon: 'fas fa-bullseye fa-3x account-blue'
-    }
-  ];
-  goal = [
-    {
-      name: 'Dziennie',
-      name_value: 'Brak danych',
-      class_icon: 'fas fa-chart-line fa-3x account-green'
-    }
-  ];
+  settings;
+  dietInfo;
+  goal;
   achievements = [
     {
       name: 'Systematyczność z NFL',
@@ -180,6 +87,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.settings = this.userService.settings;
+    this.dietInfo = this.userService.dietInfo;
+    this.goal = this.userService.goal;
+    this.achievements = this.userService.achievements;
     this.navigationService.changeNavSubject(5);
     this.userSub = this.authService.user.subscribe(
       user => {
@@ -201,11 +112,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
           this.settings[7].name_value = user.user.language;
           this.settings[8].name_value = user.user.finalWeight + ' kg';
           this.dietInfo[0].name_value = user.user.forecast;
-          const ppm = this.setPPM(user.user.gender, user.user.weight, user.user.height, user.user.age);
+          const ppm = this.userService.setPPM(user.user.gender, user.user.weight, user.user.height, user.user.age);
           this.dietInfo[1].name_value = ppm === 0 ? 'Złe Dane' : ppm.toPrecision(5) + ' kcal';
-          const cpm = this.setCPM(user.user.physicalActivity, ppm);
+          const cpm = this.userService.setCPM(user.user.physicalActivity, ppm);
           this.dietInfo[2].name_value = cpm === 0 ? 'Złe Dane' : cpm.toPrecision(5) + ' kcal';
+          const mac = this.userService.returnMacro(cpm);
+          this.dietInfo[3].name_value = mac[0] === 0 ? 'Złe Dane' : mac[0].toPrecision(4) + ' g';
+          this.dietInfo[4].name_value = mac[1] === 0 ? 'Złe Dane' : mac[1].toPrecision(4) + ' g';
+          this.dietInfo[5].name_value = mac[2] === 0 ? 'Złe Dane' : mac[2].toPrecision(4) + ' g';
           this.goal[0].name_value = (cpm + (user.user.weeklyChange * 1000)).toPrecision(5) + 'kg';
+          const goalMac = this.userService.returnMacro((cpm + (user.user.weeklyChange * 1000)));
+          this.goal[1].name_value = goalMac[0] === 0 ? 'Złe Dane' : goalMac[0].toPrecision(4) + ' g';
+          this.goal[2].name_value = goalMac[1] === 0 ? 'Złe Dane' : goalMac[1].toPrecision(4) + ' g';
+          this.goal[3].name_value = goalMac[2] === 0 ? 'Złe Dane' : goalMac[2].toPrecision(4) + ' g';
           this.userId = user.user.id;
           this.user = user;
         }
@@ -224,28 +143,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
         );
       }
     );
-    this.configuration();
   }
 
-  setPPM(gender, weight, height, age) {
-    let ppm = 0;
-    if (weight >= 20 && height >= 50 && weight <= 350 && height <= 250 && age >= 8) {
-      if (gender.toLowerCase() === 'female') {
-        ppm = 665.09 + (9.56 * weight) + (1.85 * height) - (4.67 * age);
-      } else {
-        ppm = 66.47 + 13.7 * weight + 5.0 * height - 6.76 * age;
-      }
-    }
-    return ppm;
-  }
-
-  setCPM(physicalActivity, ppm) {
-    let cpm = 0;
-    if (ppm !== 'Złe Dane') {
-      cpm = ppm * physicalActivity;
-    }
-    return cpm;
-  }
 
   onSubmit() {
     console.log(this.changeValue);
@@ -266,17 +165,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.closeModal();
   }
 
-  // funkcja ustawiająca obiekt settings
-  configuration() {
-    // for (const element in this.settings) {
-    //   if (this.settings.hasOwnProperty(element)) {
-    //     switch (this.settings[element].name) {
-    //       case 'Nick': {
-    //       }
-    //     }
-    //   }
-    // }
-  }
 
   openModal(value) {
     this.modalOpen = true;

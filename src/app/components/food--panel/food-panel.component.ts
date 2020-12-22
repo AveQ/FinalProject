@@ -6,6 +6,8 @@ import {AuthService} from '../../services/auth.service';
 import {FoodResponseData, FoodService} from '../../services/food.service';
 import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 import {TimeService} from '../../services/time.service';
+import {MealHistory} from '../../model/mealHistory.model';
+import {UserService} from '../../services/user.service';
 
 
 @Component({
@@ -46,19 +48,36 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   arrayWithId;
   objectToChild;
   activeMenuCategory = 0;
+  loading = true;
   updateMeal = false;
   historyId;
+  summ = [
+    {name: 'kcal', max: 0, today: 0},
+    {name: 'proteins', max: 0, today: 0},
+    {name: 'fats', max: 0, today: 0},
+    {name: 'carbs', max: 0, today: 0}
+  ];
+  cpm;
+  ppm;
 
   constructor(private navigateService: NavigationService,
               private authService: AuthService,
               private foodService: FoodService,
               private router: Router,
               private route: ActivatedRoute,
-              private timeService: TimeService) {
+              private timeService: TimeService,
+              private  userService: UserService) {
 
   }
 
   ngOnInit(): void {
+    this.userService.summ.subscribe(
+      data => {
+        if (data) {
+          this.summ = data;
+        }
+      }
+    );
     // serwisy i ustalanie sciezki
     this.meals = this.foodService.getMeal();
     this.setRoute();
@@ -76,6 +95,16 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
     this.currentDay = createDate[0];
     this.previousDay = createDate[1];
     this.nextDay = createDate[2];
+    this.initFoodComponent();
+    this.ppm = this.userService.setPPM(this.user.user.gender,
+      this.user.user.weight,
+      this.user.user.height,
+      this.user.user.age);
+    this.cpm = this.userService.setCPM(this.user.user.physicalActivity, this.ppm) + (this.user.user.weeklyChange * 1000);
+
+  }
+
+  initFoodComponent() {
     this.myNavSubject = this.navigateService.returnMealSubject().subscribe(
       value => {
         this.updateMeal = value;
@@ -89,9 +118,11 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
 
   // załaduj historie do tablicy
   loadMealHistory() {
+    this.loading = true;
+    this.todayHistory = [];
     this.foodService.loadData(this.userId).subscribe(
       data => {
-          this.userMealHistory = data;
+        this.userMealHistory = data;
       },
       err => {
       },
@@ -107,11 +138,20 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
     this.currentDay = createDate[0];
     this.previousDay = createDate[1];
     this.nextDay = createDate[2];
+    this.initFoodComponent();
   }
 
   // znajdz dzisiejsza historie i pobierz ja do zmiennej oraz ustaw wszsytkie posilki w jedna tablice
   setTodayHistory() {
-
+    this.summ[0].max = this.cpm;
+    this.summ[1].max = this.userService.returnMacro(this.cpm)[0];
+    this.summ[2].max = this.userService.returnMacro(this.cpm)[1];
+    this.summ[3].max = this.userService.returnMacro(this.cpm)[2];
+    this.summ[0].today = 0;
+    this.summ[2].today = 0;
+    this.summ[1].today = 0;
+    this.summ[3].today = 0;
+    this.meals = this.foodService.getMeal();
     this.todayHistory = _.find(this.userMealHistory, data => {
         // ustaw nawodnienie
         this.userWater = data.water;
@@ -123,6 +163,11 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
 
           // przejdz przez wszystkie 6 posilkow
           for (let i = 1; i < 7; i++) {
+            this.meals[i - 1].carb = 0;
+            this.meals[i - 1].fats = 0;
+            this.meals[i - 1].ids = 0;
+            this.meals[i - 1].proteins = 0;
+            this.meals[i - 1].kcal = 0;
             // sprawdz wszystkie elementy dodane do posilku
             let _id = [];
             let carbs = 0;
@@ -138,6 +183,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
                 // pobierz dane o elemencie posilku
                 this.foodService.getInfoMeal(data['meal_' + i][element].idMeal).subscribe(
                   infoMeal => {
+
                     // valueTemp = valueTemp + valueMeal * portionMeal;
                     name = infoMeal.name;
                     fats = fats + (infoMeal.fats) * data['meal_' + i][element].mealAmong;
@@ -152,11 +198,18 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
                   error => {
                   },
                   () => {
+
                     this.meals[i - 1].carb = carbs;
                     this.meals[i - 1].fats = fats;
                     this.meals[i - 1].ids = _id;
                     this.meals[i - 1].proteins = proteins;
                     this.meals[i - 1].kcal = kcal;
+                    this.summ[0].today += kcal;
+                    this.summ[2].today += fats;
+                    this.summ[1].today += proteins;
+                    this.summ[3].today += carbs;
+                    this.userService.summ.next(this.summ);
+                    this.loading = false;
                   }
                 );
               }
@@ -165,21 +218,36 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
           return data;
         }
       }
-
     );
-    if (_.isEmpty(this.todayHistory)) {
-      this.newUserHistory.date = new Date().getTime();
+    if (this.todayHistory === undefined) {
+      this.newUserHistory.date = this.currentDay.time;
       this.newUserHistory.idUser = this.userId;
       this.foodService.postUserHistory(this.newUserHistory).subscribe(
         history => {
+          this.todayHistory = history.createdExercise;
+          // ustaw nawodnienie
+          this.userWater = 0;
+          // zapisz id historii
+          this.historyId = history.id;
         },
         error => {
         },
         () => {
-          this.loadMealHistory();
+          this.loading = false;
         }
       );
+      for (let i = 1; i < 7; i++) {
+        this.meals[i - 1].carb = 0;
+        this.meals[i - 1].fats = 0;
+        this.meals[i - 1].ids = 0;
+        this.meals[i - 1].proteins = 0;
+        this.meals[i - 1].kcal = 0;
+      }
     }
+    this.loading = false;
+    this.userService.summ.next(
+      this.summ
+    );
   }
 
   // sprawdz params i ustaw podstronke. jezeli inna od dozwolonych przekieruj na glowna

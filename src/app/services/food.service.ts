@@ -139,7 +139,7 @@ export class FoodService {
   }
 
   postUserHistory(value) {
-    return this.http.post('http://localhost:3000/mealsHistory/', value);
+    return this.http.post<{createdExercise, id, message}>('http://localhost:3000/mealsHistory/', value);
   }
 
   isDecrease(idUser) {

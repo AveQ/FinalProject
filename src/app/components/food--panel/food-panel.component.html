@@ -60,9 +60,6 @@
         <li class="optionFoodPanel"><a [routerLink]="['/food-panel', 'water']" class="linkFoodPanel"
                                        [ngStyle]="{'color':activeMenuCategory === 1 ? '#dd0101' : 'black'}">NAWODNIENIE</a>
         </li>
-        <li class="optionFoodPanel"><a [routerLink]="['/food-panel', 'exercises']" class="linkFoodPanel"
-                                       [ngStyle]="{'color':activeMenuCategory === 2 ? '#dd0101' : 'black'}">TRENING</a>
-        </li>
         <li class="optionFoodPanel"><a [routerLink]="['/food-panel', 'summary']" class="linkFoodPanel"
                                        [ngStyle]="{'color':activeMenuCategory === 3 ? '#dd0101' : 'black'}">PODUMOWANIE
           DNIA</a></li>
@@ -71,7 +68,8 @@
     <!--
     meals
     -->
-    <div class="row  justify-content-center" [ngClass]="{'containerForMeals--open' : activeMenuCategory === 0, 'containerForMeals' : activeMenuCategory != 0 }">
+    <app-loading-spinner *ngIf="loading" class="loading-spinner"></app-loading-spinner>
+    <div *ngIf="!loading" class="row  justify-content-center" [ngClass]="{'containerForMeals--open' : activeMenuCategory === 0, 'containerForMeals' : activeMenuCategory != 0 }">
       <div
         (click)="changeMealStatus(true, i)" *ngFor="let meal of meals; let i = index;"
         class="col-md-3 col-12 boxForMeal">
@@ -79,7 +77,7 @@
         <div class="beam"></div>
         <div class="infoMeal">
           <span class="headingMeal">{{meal.name | uppercase}}</span>
-          <div class="basicInfoMeal">
+          <div class="basicInfoMeal ">
             <span class="basicInfoMeal-macro basicInfoMeal-kcal">
               <svg height="17" width="17" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -121,21 +119,15 @@
       </div>
     </div>
     <!--
-  TRAINING
--->
-    <div [ngClass]="{'containerForTraining--open' : activeMenuCategory === 2, 'containerForTraining' : activeMenuCategory != 2 }">
-      <app-training></app-training>
-    </div>
-    <!--
   STATS
 -->
-    <div [ngClass]="{'containerForStats--open' : activeMenuCategory === 3, 'containerForStats' : activeMenuCategory != 3 }">
+    <div *ngIf="!loading" [ngClass]="{'containerForStats--open' : activeMenuCategory === 3, 'containerForStats' : activeMenuCategory != 3 }">
       <app-stats></app-stats>
     </div>
     <!--
   WATER
 -->
-    <div class="container" [ngClass]="{'containerForWater--open' : activeMenuCategory === 1, 'containerForWater' : activeMenuCategory != 1 }">
+    <div class="container" *ngIf="!loading" [ngClass]="{'containerForWater--open' : activeMenuCategory === 1, 'containerForWater' : activeMenuCategory != 1 }">
       <div class="row">
         <div class="col-12 text-center boxForWater">
           <app-w-chart [waterData] = userWater [historyId]="historyId"></app-w-chart>
@@ -143,7 +135,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="updateMeal" class="updateMeal">
-    <app-meal  [arrayWithId] = 'arrayWithId' [objectFromParent] = 'objectToChild'></app-meal>
+  <div *ngIf="updateMeal && !loading" class="updateMeal">
+    <app-meal  (loadMealsAgain) = "loadMealHistory()" [arrayWithId] = 'arrayWithId' [objectFromParent] = 'objectToChild'></app-meal>
   </div>
 </div>

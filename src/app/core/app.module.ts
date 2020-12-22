@@ -12,10 +12,6 @@ import {WelcomePageComponent} from '../components/welcome-page/welcome-page.comp
 import {NavComponent} from '../components/nav/nav.component';
 import {FoodPanelNewComponent} from '../components/food--panel/food-panel.component';
 import {WChartComponent} from '../components/food--panel/wChart/wChart.component';
-import {TrainingComponent} from '../components/food--panel/training/training.component';
-import {
-  NgbdTableBasic
-} from '../components/food--panel/training/table/table.component';
 import {StatsComponent} from '../components/food--panel/stats/stats.component';
 import {MealComponent} from '../components/food--panel/meal/meal.component';
 import {NavigationService} from '../services/navigation.service';
@@ -27,6 +23,12 @@ import {AirComponent} from '../components/air/air.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NFLInterceptorService} from '../services/NFLInterceptorService.service';
 
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider
+} from 'angularx-social-login';
+import {LoadingSpinnerComponent} from '../loading-spinner/loading-spiner.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,15 +38,14 @@ import {NFLInterceptorService} from '../services/NFLInterceptorService.service';
     NavComponent,
     FoodPanelNewComponent,
     WChartComponent,
-    TrainingComponent,
-    NgbdTableBasic,
     StatsComponent,
     MealComponent,
     BMIComponent,
     TimelineExeComponent,
     AtlasComponent,
     SettingsComponent,
-    AirComponent
+    AirComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -53,10 +54,24 @@ import {NFLInterceptorService} from '../services/NFLInterceptorService.service';
     NgbModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    SocialLoginModule,
   ],
   providers: [
     NavigationService,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '737028786321-aan5aur7fdd54humj4enqqk9jndbvsn3.apps.googleusercontent.com'
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: NFLInterceptorService,

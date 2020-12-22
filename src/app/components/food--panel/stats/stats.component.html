@@ -9,7 +9,7 @@
         </div>
         <p class="text-center"><b>Utrzymując taki poziom jak tego dnia Twoja waga bedzie się zmniejszać!</b></p>
         <p class="text-center">Przyjęte kalorie z odliczeniem treningu: <b>2430 kcal</b></p>
-        <p class="text-center">Przyjęte kalorie bez treningu: <b>2800 kcal</b></p>
+        <p class="text-center">Przyjęte kalorie bez treningu: <b>{{ this.summ[0].today | number: '1.2-2' }} kcal</b></p>
       </div>
     </div>
     <div class="col-12 m-2 dataInfo">
@@ -18,11 +18,14 @@
       <p class="text-center m-0">Długość ćwiczeń: <b>60 min</b></p>
       <p class="text-center mb-4">Nawodnienie: <b>3200 ml</b></p>
       <div *ngFor="let bar of bars" class="part">
-        <ng-template #popContent>Zjedzono: <b>{{bar.value}}g</b><br>
-          Maksimum: <b>{{bar.max}}g</b>
+        <ng-template #popContent>Zjedzono: <b>{{bar.value | number: '1.2-2'}}g</b><br>
+          Maksimum: <b>{{bar.max | number: '1.2-2'}}g</b>
         </ng-template>
         <div [ngbPopover]="popContent" triggers="mouseenter:mouseleave">
-          <span class="barName">{{bar.name}} [{{bar.value}}g/{{bar.max}}g]</span>
+          <span class="barName">{{bar.name}} [{{bar.value | number: '1.2-2'}}
+            <span *ngIf="bar.name.toLowerCase() !== 'kalorie'">g</span>
+            <span *ngIf="bar.name.toLowerCase() === 'kalorie'">kcal</span>
+            / {{bar.max | number: '1.2-2'}}g]</span>
           <ngb-progressbar class="bar" [type]="bar.type" textType="white" [value]="bar.value"
                            height="20px"></ngb-progressbar>
         </div>

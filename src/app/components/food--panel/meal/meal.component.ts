@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NavigationService} from '../../../services/navigation.service';
 import {FoodService} from '../../../services/food.service';
@@ -48,6 +48,8 @@ export class MealComponent implements OnInit, OnDestroy {
   typeOfDB = null;
   @Input() arrayWithId;
   @Input() objectFromParent;
+  // zaladuj ponownie
+  @Output() loadMealsAgain = new EventEmitter<void>();
   paramsSubscription: Subscription;
   private userSubscription;
   private user;
@@ -88,6 +90,7 @@ export class MealComponent implements OnInit, OnDestroy {
   isThereUser() {
     return !!this.user;
   }
+
   changeTypeOfDataBase(value) {
     this.typeOfDB = value;
     switch (value) {
@@ -102,6 +105,7 @@ export class MealComponent implements OnInit, OnDestroy {
   navigate() {
     this.navigateService.changeMealSubject(false);
     this.router.navigate(['/food-panel/meals'], {queryParams: null});
+    this.loadMealsAgain.emit();
   }
 
   openSm(content, value) {
@@ -198,7 +202,8 @@ export class MealComponent implements OnInit, OnDestroy {
       error => {
       },
       () => {
-        const index = _.findLastIndex(tempMeal, {idMeal:
+        const index = _.findLastIndex(tempMeal, {
+          idMeal:
           objectMeal.id, mealAmong: objectMeal.amount / 100
         });
         tempMeal = tempMeal.slice(0, index).concat(tempMeal.slice(index + 1));

@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
 import {User} from '../model/user.model';
 import {BehaviorSubject} from 'rxjs';
+import {SocialUser} from 'angularx-social-login';
+import {CrossOrigin} from '@angular-devkit/build-angular/src/browser/schema';
 
 export interface AuthResponseData {
   id: string;
@@ -94,11 +96,5 @@ export class AuthService {
   logout() {
     this.user.next(null);
     localStorage.clear();
-  }
-
-  getUserFavExer() {
-    if (this.user) {
-      return this.user.getValue();
-    }
   }
 }

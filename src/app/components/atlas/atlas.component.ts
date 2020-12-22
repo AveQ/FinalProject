@@ -40,7 +40,8 @@ export class AtlasComponent implements OnInit, OnDestroy {
     musclePart: '0',
     image: '0',
     video: '0',
-    difficult: 0
+    difficult: 0,
+    kcalRatio: 0
   };
   counterExercises = 0;
   model: NgbDateStruct = {
@@ -255,6 +256,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
     this.openExer = true;
     this.exerciseService.getExercise(this.exerciseId).subscribe(
       data => {
+        console.log(this.selectedExercise);
         this.selectedExercise = data;
       },
       error => {
@@ -374,12 +376,15 @@ export class AtlasComponent implements OnInit, OnDestroy {
   sendDateToPatch() {
 
     const date = new Date(this.model.year + '-' + this.model.month + '-' + this.model.day);
-    const month = date.getMonth() + 1;
+
+    const month = date.getMonth();
     const day = date.getDate();
     const year = date.getFullYear();
+    console.log(month, day, year);
     if (this.model.year >= 2020 && this.model.year !== 0 ||
       this.model.day !== 0 || this.model.month !== 0 &&
       date.toString() !== 'Invalid date') {
+
       this.setSelectedHistory(day, month, year);
     } else {
       console.log('error');
@@ -390,14 +395,19 @@ export class AtlasComponent implements OnInit, OnDestroy {
     this.historyExercise = _.find(this.allUserHistory, data => {
       // ustaw posilki
       if (day === new Date(data.date).getDate() &&
-        month === new Date(data.date).getMonth() + 1 &&
+        month === new Date(data.date).getMonth() &&
         year === new Date(data.date).getFullYear()) {
-
+        console.log(data)
         return data;
       }
     });
+    console.log(this.historyExercise)
+    console.log(day === new Date(2020, 11, 21).getDate() &&
+      month === new Date(2020, 11, 21).getMonth() &&
+      year === new Date(2020, 11, 21).getFullYear());
+    console.log(new Date(1608661120083));
     if (_.isEmpty(this.historyExercise)) {
-      this.newUserHistory.date = new Date().getTime();
+      this.newUserHistory.date = new Date(year , month , day ).getTime();
       this.newUserHistory.idUser = this.userId;
       this.exercise.postUserHistory(this.newUserHistory).subscribe(
         history => {
@@ -405,11 +415,17 @@ export class AtlasComponent implements OnInit, OnDestroy {
         error => {
         },
         () => {
-          console.log('create new hisotry');
-          this.historyExercise = this.newUserHistory;
+          console.log('new history');
+          this.loadUserAllHistory();
+          this.setSelectedHistory(day, month, year);
         }
       );
+    } else {
+      this.patchNewExe();
     }
+
+  }
+  patchNewExe() {
     let tempArray = this.historyExercise.exercises;
     const newExercise = {
       kcal: 123,
@@ -435,7 +451,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
     );
     console.log(newExercise.idExercise);
   }
-
   loadUserAllHistory() {
     if (this.user) {
       this.exercise.loadUserAllHistory(this.userId).subscribe(

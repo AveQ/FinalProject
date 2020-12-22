@@ -254,6 +254,14 @@
 .basicInfoMeal {
   display: block;
   font-size: 13px;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+.loading-spinner {
+  display: block;
+  width: 100%;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  text-align: center;
 }
 .basicInfoMeal-macro {
   cursor: pointer;
