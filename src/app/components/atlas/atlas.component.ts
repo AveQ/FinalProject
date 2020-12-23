@@ -236,7 +236,9 @@ export class AtlasComponent implements OnInit, OnDestroy {
 
       },
       () => {
-        this.favUserExercises = this.user.user.userFavExercises;
+        if (this.user) {
+          this.favUserExercises = this.user.user.userFavExercises;
+        }
         for (const exer in this.allExercisesDb) {
           if (this.allExercisesDb.hasOwnProperty(exer)) {
             // sprawdz ktore cwiczenia sa ulubione i daj serduszko
@@ -397,17 +399,17 @@ export class AtlasComponent implements OnInit, OnDestroy {
       if (day === new Date(data.date).getDate() &&
         month === new Date(data.date).getMonth() &&
         year === new Date(data.date).getFullYear()) {
-        console.log(data)
+        console.log(data);
         return data;
       }
     });
-    console.log(this.historyExercise)
+    console.log(this.historyExercise);
     console.log(day === new Date(2020, 11, 21).getDate() &&
       month === new Date(2020, 11, 21).getMonth() &&
       year === new Date(2020, 11, 21).getFullYear());
     console.log(new Date(1608661120083));
     if (_.isEmpty(this.historyExercise)) {
-      this.newUserHistory.date = new Date(year , month , day ).getTime();
+      this.newUserHistory.date = new Date(year, month, day).getTime();
       this.newUserHistory.idUser = this.userId;
       this.exercise.postUserHistory(this.newUserHistory).subscribe(
         history => {
@@ -425,6 +427,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
     }
 
   }
+
   patchNewExe() {
     let tempArray = this.historyExercise.exercises;
     const newExercise = {
@@ -451,6 +454,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
     );
     console.log(newExercise.idExercise);
   }
+
   loadUserAllHistory() {
     if (this.user) {
       this.exercise.loadUserAllHistory(this.userId).subscribe(

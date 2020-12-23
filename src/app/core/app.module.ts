@@ -29,6 +29,8 @@ import {
   FacebookLoginProvider
 } from 'angularx-social-login';
 import {LoadingSpinnerComponent} from '../loading-spinner/loading-spiner.component';
+import {AuthGuard} from '../services/authGuard.service';
+import {FooterComponent} from '../components/footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +47,8 @@ import {LoadingSpinnerComponent} from '../loading-spinner/loading-spiner.compone
     AtlasComponent,
     SettingsComponent,
     AirComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,7 @@ import {LoadingSpinnerComponent} from '../loading-spinner/loading-spiner.compone
   ],
   providers: [
     NavigationService,
+    AuthGuard,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

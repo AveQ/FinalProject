@@ -96,12 +96,13 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
     this.previousDay = createDate[1];
     this.nextDay = createDate[2];
     this.initFoodComponent();
+    if(this.user) {
     this.ppm = this.userService.setPPM(this.user.user.gender,
       this.user.user.weight,
       this.user.user.height,
       this.user.user.age);
     this.cpm = this.userService.setCPM(this.user.user.physicalActivity, this.ppm) + (this.user.user.weeklyChange * 1000);
-
+    }
   }
 
   initFoodComponent() {
