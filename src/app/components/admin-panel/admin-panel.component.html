@@ -1,0 +1,105 @@
+<div class="container-fluid admin-panel">
+  <app-navb class="nav"></app-navb>
+  <!--uzytkownicy-->
+  <div class="users-panel text-center" style="margin: 0 auto;">
+    <h2 class="">LISTA UŻYTKOWNIKÓW</h2>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nick</th>
+        <th scope="col">Email</th>
+        <th scope="col">Waga</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of usersPadding; let i = index;">
+        <th scope="row">{{ userPage * 5 + i + 1 }}</th>
+        <td>
+          <b *ngIf="user.nick !== ''">{{ user.nick }}</b>
+          <b *ngIf="user.nick === ''">Brak</b>
+        </td>
+        <td>
+          <b>{{user.email}}</b>
+        </td>
+        <td><b>{{user.weight}}</b></td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="btn-group mb-3" role="group" aria-label="Basic example">
+      <button (click)="nextUser(false)" type="button" class="btn btn-dark">Cofnij</button>
+      <button type="button" class="btn btn-dark">{{userPage + 1}}</button>
+      <button (click)="nextUser(true)" type="button" class="btn btn-dark">Dalej</button>
+    </div>
+  </div>
+  <!--cwiczenia-->
+  <div class="exercises-panel text-center mt-3" style="margin: 0 auto;">
+    <h2 class="" >LISTA ĆWICZEŃ</h2>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Zaawansowanie</th>
+        <th scope="col">Usuń</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let exercise of exercisesPadding; let i = index;">
+        <th scope="row">{{ exercisePage * 5 + i + 1 }}</th>
+        <td>
+          <b>{{ exercise.name }}</b>
+        </td>
+        <td>
+          <b *ngIf="exercise.difficult === 0">Proste</b>
+          <b *ngIf="exercise.difficult === 1">Średnie</b>
+          <b *ngIf="exercise.difficult === 2">Trudne</b>
+        </td>
+        <td><input #inputExe type="checkbox" value="{{exercise.delete}}" (change)="allExercises[exercisePage * 5 + i].delete =inputExe.value"></td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="btn-group mb-3" role="group" aria-label="Basic example">
+      <button class="btn btn-dark add-meals">Dodaj</button>
+      <button class="btn btn-dark add-meals ">Usun</button>
+      <button (click)="nextExercises(false)" type="button" class="btn btn-dark">Cofnij</button>
+      <button type="button" class="btn btn-dark">{{exercisePage + 1}}</button>
+      <button (click)="nextExercises(true)" type="button" class="btn btn-dark">Dalej</button>
+    </div>
+  </div>
+  <!--posilki-->
+  <div class="meals-panel text-center mt-3" style="margin: 0 auto;">
+    <h2 class="" >LISTA POSIŁKÓW</h2>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Kcal</th>
+        <th scope="col">Usuń</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let meal of mealsPadding; let i = index;">
+        <th scope="row">{{ mealPage * 5 + i + 1 }}</th>
+        <td>
+          <b>{{ meal.name }}</b>
+        </td>
+        <td><b>{{ meal.kcal | number }}/{{meal.oneServing}}g</b></td>
+        <td><input #inputMeal type="checkbox" value="{{meal.delete}}" (change)="allMeals[mealPage * 5 + i].delete =inputMeal.value"></td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="btn-group mb-3" role="group" aria-label="Basic example">
+      <button class="btn btn-dark add-meals">Dodaj</button>
+      <button class="btn btn-dark add-meals ">Usun</button>
+      <button (click)="nextMeals(false)" type="button" class="btn btn-dark">Cofnij</button>
+      <button type="button" class="btn btn-dark">1</button>
+      <button (click)="nextMeals(true)" type="button" class="btn btn-dark">Dalej</button>
+    </div>
+    <div class="button-group">
+
+    </div>
+  </div>
+</div>

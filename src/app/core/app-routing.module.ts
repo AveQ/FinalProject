@@ -9,6 +9,7 @@ import {AtlasComponent} from '../components/atlas/atlas.component';
 import {SettingsComponent} from '../components/settings/settings.component';
 import {AirComponent} from '../components/air/air.component';
 import {AuthGuard} from '../services/authGuard.service';
+import {AdminPanelComponent} from '../components/admin-panel/admin-panel.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'bmi', component: BMIComponent},
   {path: 'air', component: AirComponent},
   {path: 'timeline-exercise', canActivate: [AuthGuard], component: TimelineExeComponent},
+  {path: 'admin-panel', component: AdminPanelComponent},
   {path: '', component: WelcomePageComponent},
 ];
 

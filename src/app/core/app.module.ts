@@ -31,6 +31,7 @@ import {
 import {LoadingSpinnerComponent} from '../loading-spinner/loading-spiner.component';
 import {AuthGuard} from '../services/authGuard.service';
 import {FooterComponent} from '../components/footer/footer.component';
+import {AdminPanelComponent} from '../components/admin-panel/admin-panel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,8 @@ import {FooterComponent} from '../components/footer/footer.component';
     SettingsComponent,
     AirComponent,
     LoadingSpinnerComponent,
-    FooterComponent
+    FooterComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,

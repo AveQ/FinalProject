@@ -184,7 +184,9 @@ export class UserService {
   getUserFavExercises(userId) {
     return this.http.get<AuthResponseData>('http://localhost:3000/users/' + userId);
   }
-
+  getAllUsers() {
+    return this.http.get<{count: number, users}>('http://localhost:3000/users/');
+  }
   // LOGIKA
   setPPM(gender, weight, height, age) {
     let ppm = 0;
