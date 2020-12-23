@@ -1,7 +1,68 @@
 <div class="container-fluid admin-panel">
+  <ng-template #contentExercise let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Dodaj ćwiczenie</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p class="text-center"><b>
+        ddsfsdf
+      </b>
+      </p>
+
+    </div>
+  </ng-template>
+  <ng-template #contentMeals let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Dodaj posiłek</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]='mealForm' (ngSubmit)="onSubmitMeal()">
+        <div class="form-group">
+          <label for="name" >Nazwa</label>
+          <input type="text" class="form-control" id="name" formControlName="name">
+        </div>
+        <div class="form-group">
+          <label for="oneServing" >Dane dla porcji:</label>
+          <input type="number" class="form-control" id="oneServing" formControlName="oneServing">
+        </div>
+        <div class="form-group">
+          <label for="kcal" >Kalorie</label>
+          <input type="number" class="form-control" id="kcal" formControlName="kcal">
+        </div>
+        <div class="form-group">
+          <label for="proteins" >Białko</label>
+          <input type="number" class="form-control" id="proteins" formControlName="proteins">
+        </div>
+        <div class="form-group">
+          <label for="carbs" >Węgle</label>
+          <input type="number" class="form-control" id="carbs" formControlName="carbs">
+        </div>
+        <div class="form-group">
+          <label for="fats" >Tłuszcze</label>
+          <input type="number" class="form-control" id="fats" formControlName="fats">
+        </div>
+        <div class="form-group">
+          <label for="salt" >Sól</label>
+          <input type="number" class="form-control" id="salt" formControlName="salt">
+        </div>
+        <div class="form-group">
+          <label for="fiber" >Błonnik</label>
+          <input type="number" class="form-control" id="fiber" formControlName="fiber">
+        </div>
+        <button type="submit" class="btn btn-light login" [disabled]="mealForm.invalid">Dodaj</button>
+      </form>
+    </div>
+  </ng-template>
   <app-navb class="nav"></app-navb>
   <!--uzytkownicy-->
-  <div class="users-panel text-center" style="margin: 0 auto;">
+  <h1 style="margin: auto"><b>ADMIN PANEL</b></h1>
+  <div class="users-panel text-center" style="margin-top: 30px">
     <h2 class="">LISTA UŻYTKOWNIKÓW</h2>
     <table class="table table-striped">
       <thead>
@@ -60,7 +121,7 @@
       </tbody>
     </table>
     <div class="btn-group mb-3" role="group" aria-label="Basic example">
-      <button class="btn btn-dark add-meals">Dodaj</button>
+      <button (click)="openSm(contentExercise)" class="btn btn-dark add-meals">Dodaj</button>
       <button class="btn btn-dark add-meals ">Usun</button>
       <button (click)="nextExercises(false)" type="button" class="btn btn-dark">Cofnij</button>
       <button type="button" class="btn btn-dark">{{exercisePage + 1}}</button>
@@ -92,7 +153,7 @@
       </tbody>
     </table>
     <div class="btn-group mb-3" role="group" aria-label="Basic example">
-      <button class="btn btn-dark add-meals">Dodaj</button>
+      <button (click)="openSm(contentMeals)" class="btn btn-dark add-meals">Dodaj</button>
       <button class="btn btn-dark add-meals ">Usun</button>
       <button (click)="nextMeals(false)" type="button" class="btn btn-dark">Cofnij</button>
       <button type="button" class="btn btn-dark">1</button>

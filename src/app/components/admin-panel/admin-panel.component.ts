@@ -7,6 +7,8 @@ import {Router} from '@angular/router';
 import {FoodService} from '../../services/food.service';
 import {ExerciseService} from '../../services/exercise.service';
 import {UserService} from '../../services/user.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
@@ -23,16 +25,35 @@ export class AdminPanelComponent implements OnInit {
   allUsers;
   usersPadding;
   userPage = 0;
+  mealForm: FormGroup;
 
   constructor(private foodService: FoodService,
               private exerciseService: ExerciseService,
-              private userService: UserService) {
+              private userService: UserService,
+              private modalService: NgbModal,) {
   }
 
   ngOnInit(): void {
     this.loadMeals();
     this.loadExercise();
     this.loadUsers();
+    this.mealForm = new FormGroup(
+      {
+        name: new FormControl(null, Validators.required),
+        oneServing: new FormControl(null, Validators.required),
+        kcal: new FormControl(null, Validators.required),
+        proteins: new FormControl(null, Validators.required),
+        carbs: new FormControl(null, Validators.required),
+        fats: new FormControl(null, Validators.required),
+        salt: new FormControl(null, Validators.required),
+        fiber: new FormControl(null, Validators.required)
+      }
+    );
+  }
+
+  openSm(content) {
+    this.modalService.open(content, {size: 'sm'});
+    // this.myMealProp = value;
   }
 
   loadMeals() {
@@ -50,6 +71,7 @@ export class AdminPanelComponent implements OnInit {
       }
     );
   }
+
   loadUsers() {
     this.userService.getAllUsers().subscribe(
       data => {
@@ -63,6 +85,7 @@ export class AdminPanelComponent implements OnInit {
       }
     );
   }
+
   loadExercise() {
     this.exerciseService.getAllExercises().subscribe(
       data => {
@@ -79,6 +102,21 @@ export class AdminPanelComponent implements OnInit {
     );
   }
 
+  onSubmitMeal() {
+    console.log(this.mealForm.value);
+    this.foodService.postMeal(this.mealForm.value).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+      },
+      () => {
+        this.loadMeals();
+        this.modalService.dismissAll();
+      }
+    );
+  }
+
   nextMeals(value) {
     if (value && this.isNext('meal')) {
       this.mealPage++;
@@ -87,6 +125,7 @@ export class AdminPanelComponent implements OnInit {
     }
     this.mealsPadding = this.allMeals.slice(this.mealPage * 5, this.mealPage * 5 + 5);
   }
+
   nextUser(value) {
     if (value && this.isNext('user')) {
       this.userPage++;
@@ -95,6 +134,7 @@ export class AdminPanelComponent implements OnInit {
     }
     this.usersPadding = this.allUsers.slice(this.userPage * 5, this.userPage * 5 + 5);
   }
+
   nextExercises(value) {
     if (value && this.isNext('exercise')) {
       this.exercisePage++;
