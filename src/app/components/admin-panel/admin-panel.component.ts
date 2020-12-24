@@ -26,6 +26,8 @@ export class AdminPanelComponent implements OnInit {
   usersPadding;
   userPage = 0;
   mealForm: FormGroup;
+  exerciseForm: FormGroup;
+  selectedFile: File = null;
 
   constructor(private foodService: FoodService,
               private exerciseService: ExerciseService,
@@ -49,9 +51,25 @@ export class AdminPanelComponent implements OnInit {
         fiber: new FormControl(null, Validators.required)
       }
     );
+    this.exerciseForm = new FormGroup(
+      {
+        name: new FormControl(null, Validators.required),
+        type: new FormControl(null, Validators.required),
+        description: new FormControl(null, Validators.required),
+        musclePart: new FormControl(null, Validators.required),
+        image: new FormControl(null, Validators.required),
+        difficult: new FormControl(null, Validators.required),
+        kcalRatio: new FormControl(null, Validators.required),
+      }
+    );
+  }
+
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0] as File;
   }
 
   openSm(content) {
+    console.log('xd');
     this.modalService.open(content, {size: 'sm'});
     // this.myMealProp = value;
   }
@@ -98,6 +116,28 @@ export class AdminPanelComponent implements OnInit {
       },
       () => {
         this.exercisesPadding = this.allExercises.slice(this.exercisePage * 5, this.exercisePage * 5 + 5);
+      }
+    );
+  }
+
+  onSubmitExercise() {
+    console.log(this.exerciseForm.value);
+    const uploadData = new FormData();
+    uploadData.append('name', this.exerciseForm.get('name').value);
+    uploadData.append('type', this.exerciseForm.get('type').value);
+    uploadData.append('description', this.exerciseForm.get('description').value);
+    uploadData.append('musclePart', this.exerciseForm.get('musclePart').value);
+    uploadData.append('difficult', this.exerciseForm.get('difficult').value);
+    uploadData.append('kcalRatio', this.exerciseForm.get('kcalRatio').value);
+    uploadData.append('image', this.selectedFile, this.selectedFile.name);
+    console.log(uploadData);
+    this.exerciseService.postExercise(uploadData).subscribe(
+      data => {
+      },
+      error => {
+      },
+      () => {
+        console.log('done');
       }
     );
   }

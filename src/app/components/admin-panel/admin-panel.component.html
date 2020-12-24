@@ -7,11 +7,54 @@
       </button>
     </div>
     <div class="modal-body">
-      <p class="text-center"><b>
-        ddsfsdf
-      </b>
-      </p>
-
+      <form [formGroup]='exerciseForm' (ngSubmit)="onSubmitExercise()">
+        <div class="form-group">
+          <label for="nameExercise" >Nazwa</label>
+          <input type="text" class="form-control" id="nameExercise" formControlName="name">
+        </div>
+        <div class="form-group">
+          <label for="type">Typ ćwiczenia</label>
+          <select class="form-control" id="type" formControlName="type">
+            <option value="cardio">Cardio</option>
+            <option value="weight">Siłowe</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="description" >Opis ćwiczenia:</label>
+          <textarea name="description" id="description" formControlName="description" cols="30" rows="2"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="musclePart">Typ ćwiczenia</label>
+          <select class="form-control" id="musclePart" formControlName="musclePart">
+            <option value="biceps">Biceps</option>
+            <option value="triceps">Triceps</option>
+            <option value="cardio">Cardio</option>
+            <option value="back">Plecy</option>
+            <option value="legs">Nogi</option>
+            <option value="chest">Klatka piersiowa</option>
+          </select>
+        </div>
+          <div class="col-7  form-group image">
+            <label class="panel-text">Zdjęcie</label>
+            <div class="">
+              <input type="file" class="custom-file-input" id="image" formControlName="image" (change)="onFileSelected($event)">
+              <label class="custom-file-label" for="image">Wybierz</label>
+            </div>
+          </div>
+        <div class="form-group">
+          <label for="musclePart">Poziom zaawansowania</label>
+          <select class="form-control" id="difficult" formControlName="difficult">
+            <option value="0">Łatwy</option>
+            <option value="1">Średni</option>
+            <option value="2">Trudny</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="kcalRatio" >Współczynnik ćwiczenia</label>
+          <input type="number" class="form-control" id="kcalRatio" formControlName="kcalRatio">
+        </div>
+        <button type="submit" class="btn btn-light login" [disabled]="exerciseForm.invalid">Dodaj</button>
+      </form>
     </div>
   </ng-template>
   <ng-template #contentMeals let-modal>

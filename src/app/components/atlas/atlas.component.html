@@ -48,7 +48,7 @@
                      class="fas fa-heart fa-sm"></i>
                 </div>
                 <div class="exercise-image">
-                  <img (click)="openExercise(exercise._id)" class="imageProp" src='assets/workout/DSC_3033.JPG' alt="">
+                  <img (click)="openExercise(exercise._id)" class="imageProp" [src]=(imageAddress+exercise.image) alt="">
                 </div>
                 <div (click)="openExercise(exercise._id)" class="exercise-muscles">
                   <em>{{exercise.type | uppercase}}</em></div>

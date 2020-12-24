@@ -1,18 +1,26 @@
 import {Injectable} from '@angular/core';
-import {HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {exhaustMap, take} from 'rxjs/operators';
+import {AuthService} from './auth.service';
 
 @Injectable()
 export class NFLInterceptorService implements HttpInterceptor {
-  constructor() {
+  constructor(private authService: AuthService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    req = req.clone({
-      setHeaders: {
-        'Access-Control-Allow-Methods': '*',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*'
-      }});
-    return next.handle(req);
+    return this.authService.user.pipe(take(1), exhaustMap(user => {
+      if (!user) {
+        return next.handle(req);
+      } else {
+        const modifiedReq = req.clone({
+            headers: new HttpHeaders({
+              'Authorization':  "Barer " + user.myToken
+            })
+          }
+        );
+        return next.handle(modifiedReq);
+      }
+    }));
   }
 }
