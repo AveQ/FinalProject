@@ -15,7 +15,8 @@ export class NFLInterceptorService implements HttpInterceptor {
       } else {
         const modifiedReq = req.clone({
             headers: new HttpHeaders({
-              'Authorization':  "Barer " + user.myToken
+              'Authorization':  "Barer " + user.myToken,
+              'Admin': '' + user.user.isAdmin
             })
           }
         );

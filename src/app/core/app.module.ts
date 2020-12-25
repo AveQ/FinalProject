@@ -32,6 +32,7 @@ import {LoadingSpinnerComponent} from '../loading-spinner/loading-spiner.compone
 import {AuthGuard} from '../services/authGuard.service';
 import {FooterComponent} from '../components/footer/footer.component';
 import {AdminPanelComponent} from '../components/admin-panel/admin-panel.component';
+import {AuthGuardAdmin} from '../services/authGuardAdmin.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +66,7 @@ import {AdminPanelComponent} from '../components/admin-panel/admin-panel.compone
   providers: [
     NavigationService,
     AuthGuard,
+    AuthGuardAdmin,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

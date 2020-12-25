@@ -22,7 +22,8 @@
         <li class="list" *ngIf="isAuthenticated"><a [routerLink]="['/food-panel', 'meals']" class="link-list" [ngStyle]="{'color' : selectRoute === 1 ? 'red' : 'white'}">PANEL ODŻYWIANIA</a></li>
         <li class="list" *ngIf="isAuthenticated"><a routerLink="/timeline-exercise" class="link-list" [ngStyle]="{'color' : selectRoute === 2 ? 'red' : 'white'}">DZIENNIK AKTYWNOŚCI</a></li>
         <li class="list" *ngIf="isAuthenticated"><a routerLink="/atlas" class="link-list" [ngStyle]="{'color' : selectRoute === 3 ? 'red' : 'white'}">ATLAS</a></li>
-        <li class="list" *ngIf="isAuthenticated"><a routerLink="/settings" class="link-list" [ngStyle]="{'color' : selectRoute === 5 ? 'red' : 'white'}">UŻYTKOWNIK</a></li>
+        <li class="list" *ngIf="isAuthenticated && !isAuthenticatedAdmin"><a routerLink="/settings" class="link-list" [ngStyle]="{'color' : selectRoute === 5 ? 'red' : 'white'}">UŻYTKOWNIK</a></li>
+        <li class="list" *ngIf="isAuthenticated && isAuthenticatedAdmin"><a routerLink="/admin-panel" class="link-list" [ngStyle]="{'color' : selectRoute === 7 ? 'red' : 'white'}">ADMIN</a></li>
         <li *ngIf="isAuthenticated" class="list listOther"><a class="link-list" [ngStyle]="{'color' : selectRoute === 4 ? 'red' : 'white'}">
           <span (click)="openOtherMenu()">INNE</span>
           <ul [ngStyle]="{'display' : otherMenu ? 'block' : 'none'}" class="menuOther">

@@ -14,6 +14,7 @@ export class NavComponent implements OnInit {
   // sprawdź czy użytkownik jest zalogowany
   userSub: Subscription;
   isAuthenticated = false;
+  isAuthenticatedAdmin = false;
   // inne - stylowanie
   rotateImage = false;
   name = 'User';
@@ -33,6 +34,7 @@ export class NavComponent implements OnInit {
     this.userSub = this.authService.user.subscribe(
       user => {
         this.isAuthenticated = !!user;
+        this.isAuthenticatedAdmin = user.user.isAdmin;
       }
     );
     this.name === 'Sign up' ? this.account = 'Sign up' : this.account = 'Account';

@@ -25,7 +25,8 @@ export class User {
       counterSignIn: number,
       ppm: number,
       cpm: number,
-      physicalActivity: number
+      physicalActivity: number,
+      isAdmin: boolean
     }
   ) {
   }

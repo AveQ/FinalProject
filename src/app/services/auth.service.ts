@@ -60,7 +60,8 @@ export class AuthService {
         counterSignIn: number,
         ppm: number,
         cpm: number,
-        physicalActivity: number
+        physicalActivity: number,
+        isAdmin: boolean
       }
     } = JSON.parse(localStorage.getItem('userData'));
     if (!userData) {
