@@ -9,11 +9,11 @@
     <div class="modal-body">
       <p class="text-center"><b>
         <span style="color: red">{{myMealProp.amount}}g</span> <br>
-        Węglowodany: {{myMealProp.carbs}} g <br>
-        Białko: {{myMealProp.proteins}} g <br>
-        Tłuszcze: {{myMealProp.fats}} g <br>
-        Sól: {{myMealProp.salt}} g <br>
-        Błonnik: {{myMealProp.fiber}} g <br>
+        Węglowodany: {{myMealProp.carbs | number : '1.2-2'}} g <br>
+        Białko: {{myMealProp.proteins | number : '1.2-2'}} g <br>
+        Tłuszcze: {{myMealProp.fats | number : '1.2-2'}} g <br>
+        Sól: {{myMealProp.salt | number : '1.2-2'}} g <br>
+        Błonnik: {{myMealProp.fiber | number : '1.2-2'}} g <br>
       </b>
       </p>
 
@@ -65,7 +65,7 @@
           <td>
             <p>
               <b>
-                {{myMeal.kcal}} kcal
+                {{myMeal.kcal | number : '1.2-2'}} kcal
               </b>
             </p>
 
@@ -110,7 +110,7 @@
             {{myMealDB.name}}
           </th>
           <td>
-            <b>{{myMealDB.kcal}} kcal</b>
+            <b>{{myMealDB.kcal | number : '1.2-2'}} kcal</b>
           </td>
           <td>
             <b style="cursor: pointer;" (click)="openSm(adding, myMealDB)">Dodaj</b>

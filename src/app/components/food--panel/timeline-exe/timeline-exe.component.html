@@ -70,7 +70,8 @@
 
 
     -->
-    <div class="row  justify-content-center"
+    <app-loading-spinner *ngIf="loading" class="loading-spinner"></app-loading-spinner>
+    <div *ngIf="finalExerciseArray.length > 0 && !loading" class="row  justify-content-center"
          [ngClass]="{'containerForMeals--open' : activeMenuCategory === 0, 'containerForMeals' : activeMenuCategory != 0 }">
       <div *ngFor="let meal of finalExerciseArray; let i = index;"
            class="col-md-4 col-10 boxForTimeline">
@@ -96,6 +97,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div *ngIf="finalExerciseArray.length === 0 && !loading" class="row  justify-content-center">
+      <span class="headingTimeline">Brak treningu</span>
     </div>
 
   </div>

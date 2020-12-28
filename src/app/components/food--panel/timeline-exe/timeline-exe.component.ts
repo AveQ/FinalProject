@@ -32,6 +32,7 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
   nextDay;
   previousDay;
   finalExerciseArray = [];
+  loading = true;
   private userSubscription;
   private user;
   private userId;
@@ -67,6 +68,12 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
   }
 
   initComponent() {
+    this.navigateService.changeNavSubject(2);
+    this.finalExerciseArray = this.exercises;
+    this.loadUserAllHistory();
+  }
+
+  generalSettings() {
     this.timeService.setMaxAndMinDate();
     const createDate = this.timeService.setDate(new Date().getTime());
     this.currentDay = createDate[0];
@@ -77,9 +84,6 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
         this.updateMeal = value;
       }
     );
-    this.navigateService.changeNavSubject(2);
-    this.finalExerciseArray = this.exercises;
-    this.loadUserAllHistory();
   }
 
   ngOnInit(): void {
@@ -91,6 +95,7 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
         }
       }
     );
+    this.generalSettings();
     this.initComponent();
   }
 
@@ -103,6 +108,9 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
     this.currentDay = createDate[0];
     this.previousDay = createDate[1];
     this.nextDay = createDate[2];
+    this.exercises = [];
+    this.loading = true;
+    this.initComponent();
   }
 
   navigateToExercises() {
@@ -110,6 +118,7 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
   }
 
   loadUserAllHistory() {
+    this.allUserHistory = [];
     if (this.user) {
       this.exercise.loadUserAllHistory(this.userId).subscribe(
         data => {
@@ -125,6 +134,7 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
   }
 
   setTodayHistory() {
+    this.todayHistory = [];
     this.todayHistory = _.find(this.allUserHistory, data => {
       // ustaw posilki
       if (new Date(this.currentDay.time).getDate() === new Date(data.date).getDate() &&
@@ -132,8 +142,8 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
         return data;
       }
     });
-    if (_.isEmpty(this.todayHistory)) {
-      this.newUserHistory.date = new Date().getTime();
+    if (this.todayHistory === undefined) {
+      this.newUserHistory.date = this.currentDay.time;
       this.newUserHistory.idUser = this.userId;
       this.exercise.postUserHistory(this.newUserHistory).subscribe(
         history => {
@@ -151,6 +161,7 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
   }
 
   configExercise() {
+
     const tempExercises = this.todayHistory.exercises;
     let tempObject = {};
     for (const exer in tempExercises) {
@@ -165,10 +176,18 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
               burn: tempExercises[exer].kcal
             };
             this.exercises.push(tempObject);
+          }, error => {
+          },
+          () => {
+            this.loading = false;
           }
         );
       }
     }
+    if (tempExercises.length === 0) {
+      this.loading = false;
+    }
+
   }
 
   ngOnDestroy(): void {

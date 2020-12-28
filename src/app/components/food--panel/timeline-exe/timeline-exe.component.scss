@@ -239,6 +239,7 @@
 }
 
 .headingTimeline {
+  font-family: "Libre Baskerville", serif;
   font-weight: bold;
   font-size: 20px;
   display: block;
@@ -289,6 +290,13 @@
 }
 .addExerciseButton:hover {
   transform: rotate(360deg);
+}
+.loading-spinner {
+  display: block;
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  text-align: center;
 }
 @keyframes showMePanel {
   0% {

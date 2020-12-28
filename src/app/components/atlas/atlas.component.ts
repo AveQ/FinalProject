@@ -224,10 +224,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
     this.exercises = this.filtersArray.slice(this.page * 6, this.page * 6 + 6);
   }
 
-  setExercisesPagination() {
-
-  }
-
   getExercises() {
     this.exerciseService.getAllExercises().subscribe(
       data => {
@@ -430,30 +426,45 @@ export class AtlasComponent implements OnInit, OnDestroy {
   }
 
   patchNewExe() {
+    let kcalRatio = 0;
+    let kcal = 0;
     let tempArray = this.historyExercise.exercises;
     const newExercise = {
-      kcal: 123,
-      time: this.timeModel,
-      idExercise: this.exerciseId
+      kcal: 0,
+      time: -1,
+      idExercise: ''
     };
-    // sprawdz czy juz taki rodzaj cwiczenia wystepuje w historii jak tak to ja update
-    console.log(this.exerciseId);
-    const indexTemp = _.findIndex(tempArray, ['idExercise', this.exerciseId]);
-    if (indexTemp !== -1) {
-      tempArray[indexTemp] = newExercise;
-    } else {
-      tempArray.push(newExercise);
-    }
-    this.exercise.patchUserHistory(this.historyExercise._id, 'exercises', tempArray).subscribe(
+    const weight = this.user.user.weight;
+    this.exerciseService.getExercise(this.exerciseId).subscribe(
       data => {
-      },
-      error => {
+        kcalRatio = data.kcalRatio;
+      }, error => {
       },
       () => {
-        console.log('Patch successful');
+        kcal = kcalRatio * this.timeModel / 10;
+        newExercise.kcal = kcal;
+        newExercise.time = this.timeModel;
+        newExercise.idExercise = this.exerciseId;
+        // sprawdz czy juz taki rodzaj cwiczenia wystepuje w historii jak tak to ja update
+        console.log(this.exerciseId);
+        const indexTemp = _.findIndex(tempArray, ['idExercise', this.exerciseId]);
+        if (indexTemp !== -1) {
+          tempArray[indexTemp] = newExercise;
+        } else {
+          tempArray.push(newExercise);
+        }
+        this.exercise.patchUserHistory(this.historyExercise._id, 'exercises', tempArray).subscribe(
+          data => {
+          },
+          error => {
+          },
+          () => {
+            console.log('Patch successful');
+          }
+        );
+        console.log(newExercise.idExercise);
       }
     );
-    console.log(newExercise.idExercise);
   }
 
   loadUserAllHistory() {

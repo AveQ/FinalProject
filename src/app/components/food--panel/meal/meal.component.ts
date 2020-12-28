@@ -71,8 +71,9 @@ export class MealComponent implements OnInit, OnDestroy {
         }
       }
     );
+
     this.loadMeals();
-    console.log(this.objectFromParent);
+
     this.router.navigate(
       ['/food-panel/meals'],
       {
@@ -114,6 +115,7 @@ export class MealComponent implements OnInit, OnDestroy {
   }
 
   loadMeals() {
+    this.meal = [];
     const ids = this.arrayWithId.ids;
     let mealTemp;
     for (const element in ids) {
@@ -135,11 +137,13 @@ export class MealComponent implements OnInit, OnDestroy {
             this.meal.push(mealTemp);
           }, error => {
           }, () => {
+
           }
         );
       }
     }
   }
+
 
   loadDBData() {
     this.foodService.getAllMeals().subscribe(
@@ -158,21 +162,34 @@ export class MealComponent implements OnInit, OnDestroy {
     const portion = +value.value / 100;
     if (portion !== null && portion >= 0) {
       console.log(mealObject._id);
-      let tempMeal;
       const name = 'meal_' + (this.objectFromParent.index + 1);
+      console.log(mealObject);
+      const tempMeal: Meal = {
+        amount: value.value + '',
+        carbs: mealObject.carbs * portion,
+        fats: mealObject.fats * portion,
+        fiber: mealObject.fiber * portion,
+        id: mealObject._id,
+        kcal: mealObject.kcal * portion,
+        name: mealObject.name,
+        proteins: mealObject.proteins * portion,
+        salt: mealObject.salt * portion
+      };
+      this.meal.push(tempMeal);
+      console.log(this.meal);
+      let tempEditMeal;
       this.foodService.loadDataHistoryMeal(this.objectFromParent.id).subscribe(
         data => {
-          tempMeal = data[name];
+          tempEditMeal = data[name];
         },
         error => {
         },
         () => {
-          tempMeal.push({
+          tempEditMeal.push({
             idMeal: mealObject._id,
             mealAmong: portion
           });
-          this.editUserMeal(name, tempMeal);
-          console.log(tempMeal);
+          this.editUserMeal(name, tempEditMeal);
         }
       );
     } else {
@@ -203,9 +220,13 @@ export class MealComponent implements OnInit, OnDestroy {
       },
       () => {
         const index = _.findLastIndex(tempMeal, {
-          idMeal:
-          objectMeal.id, mealAmong: objectMeal.amount / 100
+          idMeal: objectMeal.id, mealAmong: objectMeal.amount / 100
         });
+        const indexMealArray = _.findLastIndex(this.meal, {
+          id: objectMeal.id, amount: objectMeal.amount
+        });
+        console.log(indexMealArray);
+        this.meal = this.meal.slice(0, indexMealArray).concat(this.meal.slice(indexMealArray + 1));
         tempMeal = tempMeal.slice(0, index).concat(tempMeal.slice(index + 1));
         this.editUserMeal(name, tempMeal);
       }
