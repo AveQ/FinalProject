@@ -1,5 +1,7 @@
-import {AfterViewChecked, AfterViewInit, Component, DoCheck, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, DoCheck, Input, OnInit} from '@angular/core';
 import {UserService} from '../../../services/user.service';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-stats',
@@ -7,6 +9,7 @@ import {UserService} from '../../../services/user.service';
   styleUrls: ['./stats.component.scss']
 })
 export class StatsComponent implements OnInit, DoCheck {
+  @Input() currentDay;
   summ;
   wrongData = false;
   bars = [
@@ -61,6 +64,37 @@ export class StatsComponent implements OnInit, DoCheck {
 
   }
 
+  generatePDF() {
+
+    const arrayTitles = ['Kalorie', 'Bialko', 'Tluszcze', 'Weglowodany'];
+
+    const date = new Date(this.currentDay.time);
+    const pdf = new jsPDF();
+
+    pdf.setFont(' font-family: \'Roboto Condensed\', sans-serif;', 'font-weight: bold;');
+    pdf.setFontSize(24);
+    let textWidth = pdf.getStringUnitWidth('PODSUMOWANIE - ' + date.getDate() +
+      '.' + (date.getMonth() + 1) + '.' + date.getFullYear()) * pdf.getFontSize() / pdf.internal.scaleFactor;
+    let textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
+    pdf.text('PODSUMOWANIE - ' + date.getDate() +
+      '.' + (date.getMonth() + 1) + '.' + date.getFullYear(), textOffset, 10);
+    pdf.setFontSize(18);
+    for (let i = 0; i < 4; i++) {
+      textWidth = pdf.getStringUnitWidth(arrayTitles[i]) * pdf.getFontSize() / pdf.internal.scaleFactor;
+      textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
+      pdf.text(arrayTitles[i], textOffset, 25 * (i + 1));
+      textWidth = pdf.getStringUnitWidth(this.bars[i].value.toPrecision(4) +
+        'kcal / ' + this.bars[i].max.toPrecision(4) + 'kcal') * pdf.getFontSize() / pdf.internal.scaleFactor;
+      textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
+      pdf.text(this.bars[i].value.toPrecision(4) + 'kcal / ' + this.bars[i].max.toPrecision(4) + 'kcal', textOffset, (25 * (i + 1)) + 10);
+    }
+
+    textWidth = pdf.getStringUnitWidth('NFL - Center 2020') * pdf.getFontSize() / pdf.internal.scaleFactor;
+    textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
+    pdf.text('NFL - Center 2020', textOffset, 280);
+
+    pdf.save('File.pdf');
+  }
 
   ngDoCheck(): void {
 

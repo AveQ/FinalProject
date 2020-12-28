@@ -122,7 +122,7 @@
   STATS
 -->
     <div *ngIf="!loading" [ngClass]="{'containerForStats--open' : activeMenuCategory === 3, 'containerForStats' : activeMenuCategory != 3 }">
-      <app-stats></app-stats>
+      <app-stats [currentDay] = 'currentDay'></app-stats>
     </div>
     <!--
   WATER
