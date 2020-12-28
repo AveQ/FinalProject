@@ -178,14 +178,14 @@ export class UserService {
 
   // REST
   patchUserFavExercises(userId, toChange, newValue) {
-    return this.http.patch('http://localhost:3000/users/' + userId, [{'propName': toChange, 'value': newValue}]);
+    return this.http.patch('https://localhost:3000/users/' + userId, [{'propName': toChange, 'value': newValue}]);
   }
 
   getUserFavExercises(userId) {
-    return this.http.get<AuthResponseData>('http://localhost:3000/users/' + userId);
+    return this.http.get<AuthResponseData>('https://localhost:3000/users/' + userId);
   }
   getAllUsers() {
-    return this.http.get<{count: number, users}>('http://localhost:3000/users/');
+    return this.http.get<{count: number, users}>('https://localhost:3000/users/');
   }
   // LOGIKA
   setPPM(gender, weight, height, age) {

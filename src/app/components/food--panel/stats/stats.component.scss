@@ -36,6 +36,15 @@
   text-align: center;
   font-family: 'Roboto Condensed', sans-serif;
 }
+.wrongData {
+  font-family: 'Roboto Condensed', sans-serif;
+  text-align: center;
+  text-decoration: underline;
+  margin: 50px 0;
+  & h4 {
+    cursor: pointer;
+  }
+}
 @media all and (max-width: 1000px){
   .part, .optionStats {
     width: 100%;

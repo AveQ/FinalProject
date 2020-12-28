@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div *ngIf="!wrongData" class="row ">
     <div class="col-12 d-flex justify-content-center">
       <div class="forecast">
         <div class="progressIcon">
@@ -40,5 +40,8 @@
         <button class="btn btn-dark">Jeden dzień</button>
       </div>
     </div>
+  </div>
+  <div *ngIf="wrongData" class="wrongData">
+    <h4 routerLink="/settings">UZUPEŁNIJ DANE PROFILOWE</h4>
   </div>
 </div>

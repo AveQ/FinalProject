@@ -8,6 +8,7 @@ import {UserService} from '../../../services/user.service';
 })
 export class StatsComponent implements OnInit, DoCheck {
   summ;
+  wrongData = false;
   bars = [
     {
       value: 30,
@@ -46,6 +47,9 @@ export class StatsComponent implements OnInit, DoCheck {
             this.bars[i].type = 'danger';
           } else {
             this.bars[i].type = 'success';
+          }
+          if (this.bars[i].max === 0) {
+            this.wrongData = true;
           }
         }
       }

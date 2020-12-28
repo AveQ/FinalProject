@@ -119,33 +119,33 @@ export class FoodService {
   // metody do serwera
 
   getInfoMeal(id) {
-    return this.http.get<MealResponseData>('http://localhost:3000/meals/' + id);
+    return this.http.get<MealResponseData>('https://localhost:3000/meals/' + id);
   }
 
   loadData(id) {
-    return this.http.get<FoodResponseData>('http://localhost:3000/mealsHistory/users/' + id);
+    return this.http.get<FoodResponseData>('https://localhost:3000/mealsHistory/users/' + id);
   }
 
   loadDataHistoryMeal(id) {
-    return this.http.get<FoodResponseData>('http://localhost:3000/mealsHistory/meals/' + id);
+    return this.http.get<FoodResponseData>('https://localhost:3000/mealsHistory/meals/' + id);
   }
   postMeal(value) {
-    return this.http.post('http://localhost:3000/meals/', value);
+    return this.http.post('https://localhost:3000/meals/', value);
   }
   patchWaterData(id, toChange, newValue) {
-    return this.http.patch('http://localhost:3000/mealsHistory/' + id, [{'propName': toChange, 'value': newValue}]);
+    return this.http.patch('https://localhost:3000/mealsHistory/' + id, [{'propName': toChange, 'value': newValue}]);
   }
 
   getAllMeals() {
-    return this.http.get<MealResponseAllData>('http://localhost:3000/meals/');
+    return this.http.get<MealResponseAllData>('https://localhost:3000/meals/');
   }
 
   postUserHistory(value) {
-    return this.http.post<{createdExercise, id, message}>('http://localhost:3000/mealsHistory/', value);
+    return this.http.post<{createdExercise, id, message}>('https://localhost:3000/mealsHistory/', value);
   }
 
   isDecrease(idUser) {
-    this.http.get('http://localhost:3000/mealsHistory/users/' + idUser).subscribe(
+    this.http.get('https://localhost:3000/mealsHistory/users/' + idUser).subscribe(
       data => {
         console.log(data);
       }, error => {

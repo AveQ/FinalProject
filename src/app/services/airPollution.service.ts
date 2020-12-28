@@ -7,9 +7,9 @@ export class AirPollutionService {
   }
   // do serwera
   getStations() {
-    return this.http.get('http://localhost:3000/pollutions');
+    return this.http.get('https://localhost:3000/pollutions');
   }
   getStationsInfo(value) {
-    return this.http.get('http://localhost:3000/pollutions/' + value);
+    return this.http.get('https://localhost:3000/pollutions/' + value);
   }
 }

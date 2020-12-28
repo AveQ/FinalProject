@@ -12,30 +12,30 @@ export class ExerciseService {
   }
 
   getAllExercises() {
-    return this.http.get<AllExerciseModel>('http://localhost:3000/exercises/');
+    return this.http.get<AllExerciseModel>('https://localhost:3000/exercises/');
   }
 
   getExercise(exerciseId) {
-    return this.http.get<ExerciseModel>('http://localhost:3000/exercises/' + exerciseId);
+    return this.http.get<ExerciseModel>('https://localhost:3000/exercises/' + exerciseId);
   }
 
   loadTodayExercisesHistory() {
-    return this.http.get<ExerciseHistoryModel>('http://localhost:3000/userExercisesHistory/');
+    return this.http.get<ExerciseHistoryModel>('https://localhost:3000/userExercisesHistory/');
   }
 
   loadUserAllHistory(id) {
-    return this.http.get<ExerciseHistoryModel>('http://localhost:3000/userExercisesHistory/users/' + id);
+    return this.http.get<ExerciseHistoryModel>('https://localhost:3000/userExercisesHistory/users/' + id);
   }
 
   postUserHistory(newUserHistory) {
-    return this.http.post('http://localhost:3000/userExercisesHistory', newUserHistory);
+    return this.http.post('https://localhost:3000/userExercisesHistory', newUserHistory);
   }
 
   patchUserHistory(id, toChange, newValue) {
-    return this.http.patch('http://localhost:3000/userExercisesHistory/' + id, [{'propName': toChange, 'value': newValue}]);
+    return this.http.patch('https://localhost:3000/userExercisesHistory/' + id, [{'propName': toChange, 'value': newValue}]);
   }
 
   postExercise(exercise) {
-    return this.http.post('http://localhost:3000/exercises/', exercise);
+    return this.http.post('https://localhost:3000/exercises/', exercise);
   }
 }

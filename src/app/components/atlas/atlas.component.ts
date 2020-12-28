@@ -16,7 +16,7 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./atlas.component.scss']
 })
 export class AtlasComponent implements OnInit, OnDestroy {
-  imageAddress = 'http://localhost:3000/';
+  imageAddress = 'https://localhost:3000/';
   filtersHidden = true;
   partOfBody = 'Wybierz partię';
   isFront = false;
