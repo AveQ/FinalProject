@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavigationService} from '../../services/navigation.service';
 import {AuthService} from '../../services/auth.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
@@ -33,8 +33,10 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.userSub = this.authService.user.subscribe(
       user => {
-        this.isAuthenticated = !!user;
-        this.isAuthenticatedAdmin = user.user.isAdmin;
+        if (user) {
+          this.isAuthenticated = !!user;
+          this.isAuthenticatedAdmin = user.user.isAdmin;
+        }
       }
     );
     this.name === 'Sign up' ? this.account = 'Sign up' : this.account = 'Account';
@@ -55,6 +57,7 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
+    this.router.navigate(['./']);
     this.authService.logout();
   }
 }

@@ -1,6 +1,80 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- reduced for brevity -->
+
+  <!-- inline spinner styles to be able to display spinner right away -->
+  <style type="text/css">
+    body, html {
+      height: 100%;
+    }
+
+    .app-loading {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .app-loading .spinner {
+      height: 200px;
+      width: 200px;
+      transform-origin: center center;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+
+
+
+    .logo {
+      width: 150px;
+      height: 150px;
+      background: url(./assets/logo/aa.png) center center no-repeat;
+      background-size: cover;
+      animation: rotateAndPuls 1.5s ease-in-out infinite;
+    }
+
+    @keyframes rotateAndPuls {
+      0% {
+        transform: scale(1) rotate(0deg);
+      }
+      20% {
+        transform: scale(0.5) rotate(90deg);
+      }
+      40% {
+        transform: scale(0.8);
+      }
+      60% {
+        transform: scale(0.6);
+      }
+      80% {
+        transform: scale(0.7);
+      }
+      90% {
+        transform: scale(0.6);
+      }
+      100% {
+        transform: scale(1);
+
+      }
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+  </style>
   <meta charset="utf-8">
   <title>Application</title>
   <base href="/">
@@ -12,6 +86,15 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 </head>
 <body>
-  <app-root></app-root>
+<app-root>
+  <!-- loading layout replaced by app after startupp -->
+  <div class="app-loading">
+
+    <div class="logo"></div>
+    <svg class="spinner" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+    </svg>
+  </div>
+</app-root>
 </body>
 </html>
