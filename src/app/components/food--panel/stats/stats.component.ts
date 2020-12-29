@@ -2,6 +2,8 @@ import {Component, DoCheck, Input, OnInit} from '@angular/core';
 import {UserService} from '../../../services/user.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import {ExerciseService} from '../../../services/exercise.service';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-stats',
@@ -10,6 +12,7 @@ import 'jspdf-autotable';
 })
 export class StatsComponent implements OnInit, DoCheck {
   @Input() currentDay;
+  @Input() waterData;
   summ;
   wrongData = false;
   bars = [
@@ -38,8 +41,19 @@ export class StatsComponent implements OnInit, DoCheck {
       type: 'success'
     }
   ];
+  private user;
+  private userId;
+  exercisesTime = 0;
+  exercisesKcal = 0;
+  exercisesCounter = 0;
 
   ngOnInit(): void {
+    this.authService.user.subscribe(
+      data => {
+        this.user = data;
+        this.userId = this.user.user.id;
+      }
+    );
     this.userService.summ.subscribe(data => {
       if (data) {
         this.summ = data;
@@ -57,11 +71,47 @@ export class StatsComponent implements OnInit, DoCheck {
         }
       }
     });
+    this.getUserHistoryExercises();
+  }
+
+  constructor(private userService: UserService,
+              private exerciseService: ExerciseService,
+              private authService: AuthService) {
 
   }
 
-  constructor(private userService: UserService) {
+  getUserHistoryExercises() {
+    if (this.userId) {
+      this.exerciseService.loadUserAllHistory(this.userId).subscribe(
+        data => {
+          for (const element in data) {
+            // sprawdz czy data sie zgadza i czy istnieje
+            if (data.hasOwnProperty(element) &&
+              new Date(this.currentDay.time).getDate() === new Date(data[element].date).getDate() &&
+              new Date(this.currentDay.time).getMonth() === new Date(data[element].date).getMonth()) {
+              this.sumKcalAndTime(data[element].exercises);
+            }
+          }
+        }
+      );
+    }
+  }
 
+  sumKcalAndTime(exercises) {
+    console.log(exercises);
+    let kcal = 0;
+    let time = 0;
+    let counter = 0;
+    for (const point in exercises) {
+      if (exercises.hasOwnProperty(point)) {
+        kcal += exercises[point].kcal;
+        time += exercises[point].time;
+        counter ++;
+      }
+    }
+    this.exercisesTime = time;
+    this.exercisesKcal = kcal;
+    this.exercisesCounter = counter;
   }
 
   generatePDF() {
