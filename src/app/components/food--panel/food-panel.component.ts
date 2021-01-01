@@ -59,6 +59,8 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   ];
   cpm;
   ppm;
+  mealPDF = [];
+  counterPDF = 1;
 
   constructor(private navigateService: NavigationService,
               private authService: AuthService,
@@ -96,12 +98,12 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
     this.previousDay = createDate[1];
     this.nextDay = createDate[2];
     this.initFoodComponent();
-    if(this.user) {
-    this.ppm = this.userService.setPPM(this.user.user.gender,
-      this.user.user.weight,
-      this.user.user.height,
-      this.user.user.age);
-    this.cpm = this.userService.setCPM(this.user.user.physicalActivity, this.ppm) + (this.user.user.weeklyChange * 1000);
+    if (this.user) {
+      this.ppm = this.userService.setPPM(this.user.user.gender,
+        this.user.user.weight,
+        this.user.user.height,
+        this.user.user.age);
+      this.cpm = this.userService.setCPM(this.user.user.physicalActivity, this.ppm) + (this.user.user.weeklyChange * 1000);
     }
   }
 
@@ -144,6 +146,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
 
   // znajdz dzisiejsza historie i pobierz ja do zmiennej oraz ustaw wszsytkie posilki w jedna tablice
   setTodayHistory() {
+    this.mealPDF = [];
     this.summ[0].max = this.cpm;
     this.summ[1].max = this.userService.returnMacro(this.cpm)[0];
     this.summ[2].max = this.userService.returnMacro(this.cpm)[1];
@@ -195,6 +198,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
                     fiber += infoMeal.fiber * data['meal_' + i][element].mealAmong;
                     _id.push({id: infoMeal._id, amount: data['meal_' + i][element].mealAmong});
                     tempMeal = infoMeal;
+                    this.loadToPDF(infoMeal._id, data['meal_' + i][element].mealAmong);
                   },
                   error => {
                   },
@@ -245,10 +249,22 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
         this.meals[i - 1].kcal = 0;
       }
     }
+
     this.loading = false;
     this.userService.summ.next(
       this.summ
     );
+  }
+
+  loadToPDF(id, amount) {
+    // load pdf
+    this.foodService.getInfoMeal(id).subscribe(info => {
+        this.mealPDF.push(this.counterPDF + '. ' +
+          info.name + ', ilosc: ' + (amount * 100).toFixed(0) + 'g');
+      }, error => {
+      },
+      () => {
+      });
   }
 
   // sprawdz params i ustaw podstronke. jezeli inna od dozwolonych przekieruj na glowna
@@ -304,6 +320,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   loadMeals(value) {
     this.arrayWithId = this.meals[value];
   }
+
 
   // zwroc true-  jezeli uzytkownik jest zalogowany w przeciwnym wypadku false
   isThereUser() {

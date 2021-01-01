@@ -122,7 +122,7 @@
   STATS
 -->
     <div *ngIf="!loading" [ngClass]="{'containerForStats--open' : activeMenuCategory === 3, 'containerForStats' : activeMenuCategory != 3 }">
-      <app-stats [waterData] = userWater [currentDay] = 'currentDay'></app-stats>
+      <app-stats [mealPDF] = 'mealPDF' [meals]="meals" [waterData] = userWater [currentDay] = 'currentDay'></app-stats>
     </div>
     <!--
   WATER
@@ -136,7 +136,7 @@
     </div>
   </div>
   <div *ngIf="updateMeal && !loading" class="updateMeal">
-    <app-meal  (loadMealsAgain) = "loadMealHistory()" [arrayWithId] = 'arrayWithId' [objectFromParent] = 'objectToChild'></app-meal>
+    <app-meal [arrayWithId] = 'arrayWithId' (loadMealsAgain) = "loadMealHistory()"  [objectFromParent] = 'objectToChild'></app-meal>
   </div>
   <app-footer></app-footer>
 </div>

@@ -4,6 +4,8 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import {ExerciseService} from '../../../services/exercise.service';
 import {AuthService} from '../../../services/auth.service';
+import {FoodService} from '../../../services/food.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-stats',
@@ -13,6 +15,7 @@ import {AuthService} from '../../../services/auth.service';
 export class StatsComponent implements OnInit, DoCheck {
   @Input() currentDay;
   @Input() waterData;
+  @Input() meals;
   summ;
   wrongData = false;
   bars = [
@@ -46,6 +49,9 @@ export class StatsComponent implements OnInit, DoCheck {
   exercisesTime = 0;
   exercisesKcal = 0;
   exercisesCounter = 0;
+  todayExercises = [];
+  meal = [];
+  @Input() mealPDF;
 
   ngOnInit(): void {
     this.authService.user.subscribe(
@@ -72,11 +78,13 @@ export class StatsComponent implements OnInit, DoCheck {
       }
     });
     this.getUserHistoryExercises();
+
   }
 
   constructor(private userService: UserService,
               private exerciseService: ExerciseService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private foodService: FoodService) {
 
   }
 
@@ -92,6 +100,10 @@ export class StatsComponent implements OnInit, DoCheck {
               this.sumKcalAndTime(data[element].exercises);
             }
           }
+        }, error => {
+        },
+        () => {
+
         }
       );
     }
@@ -106,7 +118,21 @@ export class StatsComponent implements OnInit, DoCheck {
       if (exercises.hasOwnProperty(point)) {
         kcal += exercises[point].kcal;
         time += exercises[point].time;
-        counter ++;
+        counter++;
+        // przygotowania do PDF
+        this.exerciseService.getExercise(exercises[point].idExercise).subscribe(
+          data => {
+            this.todayExercises.push({
+              kcal: exercises[point].kcal,
+              time: exercises[point].time,
+              name: data.name
+            });
+          }, error => {
+          },
+          () => {
+
+          }
+        );
       }
     }
     this.exercisesTime = time;
@@ -114,8 +140,12 @@ export class StatsComponent implements OnInit, DoCheck {
     this.exercisesCounter = counter;
   }
 
-  generatePDF() {
+  async generatePDF() {
+    // fix bug UTF8
+    this.meals[0].name = 'Sniadanie';
+    this.meals[1].name = 'II Sniadanie';
 
+    let spaceY = 10;
     const arrayTitles = ['Kalorie', 'Bialko', 'Tluszcze', 'Weglowodany'];
 
     const date = new Date(this.currentDay.time);
@@ -123,28 +153,81 @@ export class StatsComponent implements OnInit, DoCheck {
 
     pdf.setFont(' font-family: \'Roboto Condensed\', sans-serif;', 'font-weight: bold;');
     pdf.setFontSize(24);
+    // TYTUL
     let textWidth = pdf.getStringUnitWidth('PODSUMOWANIE - ' + date.getDate() +
       '.' + (date.getMonth() + 1) + '.' + date.getFullYear()) * pdf.getFontSize() / pdf.internal.scaleFactor;
     let textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
     pdf.text('PODSUMOWANIE - ' + date.getDate() +
-      '.' + (date.getMonth() + 1) + '.' + date.getFullYear(), textOffset, 10);
+      '.' + (date.getMonth() + 1) + '.' + date.getFullYear(), textOffset, spaceY);
     pdf.setFontSize(18);
+    spaceY = spaceY + 20;
+    // KCAL I MACRO
     for (let i = 0; i < 4; i++) {
       textWidth = pdf.getStringUnitWidth(arrayTitles[i]) * pdf.getFontSize() / pdf.internal.scaleFactor;
       textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
-      pdf.text(arrayTitles[i], textOffset, 25 * (i + 1));
+      pdf.text(arrayTitles[i], textOffset, spaceY);
+      spaceY = spaceY + 8;
       textWidth = pdf.getStringUnitWidth(this.bars[i].value.toPrecision(4) +
-        'kcal / ' + this.bars[i].max.toPrecision(4) + 'kcal') * pdf.getFontSize() / pdf.internal.scaleFactor;
+        ' kcal / ' + this.bars[i].max.toPrecision(4) + ' kcal') * pdf.getFontSize() / pdf.internal.scaleFactor;
       textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
-      pdf.text(this.bars[i].value.toPrecision(4) + 'kcal / ' + this.bars[i].max.toPrecision(4) + 'kcal', textOffset, (25 * (i + 1)) + 10);
+      pdf.text(this.bars[i].value.toPrecision(4) + ' kcal / ' + this.bars[i].max.toPrecision(4) + ' kcal', textOffset, spaceY);
+      spaceY = spaceY + 10;
     }
-
-    textWidth = pdf.getStringUnitWidth('NFL - Center 2020') * pdf.getFontSize() / pdf.internal.scaleFactor;
+    spaceY = spaceY + 10;
+    // CWICZENIA
+    textWidth = pdf.getStringUnitWidth('Cwiczenia:') * pdf.getFontSize() / pdf.internal.scaleFactor;
     textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
-    pdf.text('NFL - Center 2020', textOffset, 280);
+    pdf.text('Cwiczenia:', textOffset, spaceY);
+    spaceY = spaceY + 10;
 
-    pdf.save('File.pdf');
+    let counter = 1;
+    for (const exer in this.todayExercises) {
+      if (this.todayExercises.hasOwnProperty(exer)) {
+        counter++;
+        textWidth = pdf.getStringUnitWidth(counter + ': ' + this.todayExercises[exer].name + ', czas: '
+          + this.todayExercises[exer].time + ' min, spalone kcal: '
+          + this.todayExercises[exer].kcal + ' kcal')
+          * pdf.getFontSize() / pdf.internal.scaleFactor;
+
+        textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
+
+        pdf.text(counter + ': ' + this.todayExercises[exer].name + ', czas: '
+          + this.todayExercises[exer].time + ' min, spalone kcal: '
+          + this.todayExercises[exer].kcal + ' kcal', textOffset, spaceY);
+        spaceY = spaceY + 10;
+      }
+    }
+    if (counter === 1) {
+      counter++;
+      textWidth = pdf.getStringUnitWidth('Brak cwiczen') * pdf.getFontSize() / pdf.internal.scaleFactor;
+      textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
+      pdf.text('Brak cwiczen', textOffset, spaceY);
+    }
+    spaceY = spaceY + 10;
+    // POSILKI
+    textWidth = pdf.getStringUnitWidth('Posilki:') * pdf.getFontSize() / pdf.internal.scaleFactor;
+    textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
+    pdf.text('Posilki:', textOffset, spaceY);
+    spaceY = spaceY + 10;
+    for (const text of this.mealPDF) {
+      textWidth = pdf.getStringUnitWidth(unescape(encodeURIComponent(text))) * pdf.getFontSize() / pdf.internal.scaleFactor;
+      textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
+      pdf.text(unescape(encodeURIComponent(text)), textOffset, spaceY);
+      spaceY = spaceY + 10;
+    }
+    if (_.isEmpty(this.mealPDF)) {
+      textWidth = pdf.getStringUnitWidth('Brak Posilków') * pdf.getFontSize() / pdf.internal.scaleFactor;
+      textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
+      pdf.text('Brak Posilków', textOffset, spaceY);
+      spaceY = spaceY + 10;
+    }
+    spaceY = spaceY + 50;
+
+    pdf.text('Admin NFL Center', 10, spaceY);
+
+    pdf.save('Bilans.pdf');
   }
+
 
   ngDoCheck(): void {
 

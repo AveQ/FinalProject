@@ -114,34 +114,10 @@ export class MealComponent implements OnInit, OnDestroy {
     this.myMealProp = value;
   }
 
-  loadMeals() {
-    this.meal = [];
-    const ids = this.arrayWithId.ids;
-    let mealTemp;
-    for (const element in ids) {
-      if (ids.hasOwnProperty(element)) {
-        const amountTemp = ids[element].amount;
-        this.foodService.getInfoMeal(ids[element].id).subscribe(
-          data => {
-            mealTemp = {
-              carbs: data.carbs * amountTemp,
-              fats: data.fats * amountTemp,
-              fiber: data.fiber * amountTemp,
-              kcal: data.kcal * amountTemp,
-              name: data.name,
-              proteins: data.proteins * amountTemp,
-              salt: data.salt * amountTemp,
-              id: data._id,
-              amount: 100 * amountTemp,
-            };
-            this.meal.push(mealTemp);
-          }, error => {
-          }, () => {
+  async loadMeals() {
 
-          }
-        );
-      }
-    }
+    this.meal = await this.foodService.loadMeals(this.arrayWithId, this.meal);
+
   }
 
 

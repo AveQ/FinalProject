@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MealHistory} from '../model/mealHistory.model';
+import {async} from 'rxjs/internal/scheduler/async';
 
 export interface FoodResponseData {
   count: number;
@@ -129,9 +130,11 @@ export class FoodService {
   loadDataHistoryMeal(id) {
     return this.http.get<FoodResponseData>('https://localhost:3000/mealsHistory/meals/' + id);
   }
+
   postMeal(value) {
     return this.http.post('https://localhost:3000/meals/', value);
   }
+
   patchWaterData(id, toChange, newValue) {
     return this.http.patch('https://localhost:3000/mealsHistory/' + id, [{'propName': toChange, 'value': newValue}]);
   }
@@ -141,7 +144,7 @@ export class FoodService {
   }
 
   postUserHistory(value) {
-    return this.http.post<{createdExercise, id, message}>('https://localhost:3000/mealsHistory/', value);
+    return this.http.post<{ createdExercise, id, message }>('https://localhost:3000/mealsHistory/', value);
   }
 
   isDecrease(idUser) {
@@ -159,5 +162,36 @@ export class FoodService {
 
   getMeal() {
     return this.meal;
+  }
+
+  async loadMeals(arrayWithId, meal) {
+    meal = [];
+    const ids = arrayWithId.ids;
+    let mealTemp;
+    for (const element in ids) {
+      if (ids.hasOwnProperty(element)) {
+        const amountTemp = ids[element].amount;
+        await this.getInfoMeal(ids[element].id).subscribe(
+          data => {
+            mealTemp = {
+              carbs: data.carbs * amountTemp,
+              fats: data.fats * amountTemp,
+              fiber: data.fiber * amountTemp,
+              kcal: data.kcal * amountTemp,
+              name: data.name,
+              proteins: data.proteins * amountTemp,
+              salt: data.salt * amountTemp,
+              id: data._id,
+              amount: (100 * amountTemp).toFixed(1),
+            };
+            meal.push(mealTemp);
+          }, error => {
+          }, () => {
+
+          }
+        );
+      }
+    }
+    return meal;
   }
 }

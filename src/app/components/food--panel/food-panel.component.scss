@@ -195,6 +195,9 @@
   ), url("src/assets/pictures-meal/breakfast.jpg") no-repeat center center;
   background-size: cover;
 }
+.imageMeal-zoom {
+  transition: linear transform 0.3s;
+}
 .boxForMeal:hover .imageMeal-zoom{
     transition: linear transform 0.3s;
     transform: scale(1.2);
