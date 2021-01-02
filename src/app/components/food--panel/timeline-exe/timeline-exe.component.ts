@@ -16,6 +16,20 @@ import {AtlasComponent} from '../../atlas/atlas.component';
   styleUrls: ['./timeline-exe.component.scss']
 })
 export class TimelineExeComponent implements OnInit, OnDestroy {
+  timelineMenu = [
+    {
+      name: 'Wszystkie',
+      on: true
+    },
+    {
+      name: 'ćwiczenia',
+      on: false
+    },
+    {
+      name: 'siłowe',
+      on: false
+    },
+  ];
   activeMenuCategory = 0;
   updateMeal = false;
   myNavSubject: Subscription;
@@ -46,7 +60,7 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
               private route: Router) {
   }
 
-  setFilter(value) {
+  setFilter(value, index) {
     this.finalExerciseArray = [];
     if (value === 'all') {
       this.finalExerciseArray = this.exercises;
@@ -57,6 +71,10 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
         }
       });
     }
+    this.timelineMenu.map(x => {
+      x.on = false;
+    });
+    this.timelineMenu[index].on = true;
   }
 
   deleteExer(value) {

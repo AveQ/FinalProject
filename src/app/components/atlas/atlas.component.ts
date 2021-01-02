@@ -51,6 +51,8 @@ export class AtlasComponent implements OnInit, OnDestroy {
     day: 0
   };
   timeModel = 30;
+  isLoading = true;
+  hideForm = true;
 
   constructor(
     private navigationService: NavigationService,
@@ -99,7 +101,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
   private allUserHistory;
 
   ngOnInit(): void {
-
+    this.setRoute();
     // pobierz dane o użytkowniku
     this.authService.user.subscribe(
       data => {
@@ -117,12 +119,12 @@ export class AtlasComponent implements OnInit, OnDestroy {
     // pobierz cwiczenia
     this.getExercises();
     // sledz sciezke
-    this.paramsSubscription = this.route.queryParams.subscribe(
-      (params: Params) => {
-        this.exerciseId = params.exerciseId;
-      }
-    );
-    if (this.exerciseId !== undefined) {
+    // this.paramsSubscription = this.route.queryParams.subscribe(
+    //   (params: Params) => {
+    //     this.exerciseId = params.exerciseId;
+    //   }
+    // );
+    if (this.exerciseId !== undefined && this.exerciseId !== '0') {
       this.loadExercise();
     }
     this.navigationService.changeNavSubject(3);
@@ -130,6 +132,20 @@ export class AtlasComponent implements OnInit, OnDestroy {
     if (this.user) {
       this.loadUserAllHistory();
     }
+  }
+
+  // sprawdz params i ustaw podstronke. jezeli inna od dozwolonych przekieruj na glowna
+  setRoute() {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      console.log(params.get('active'));
+      if (params.get('active') === null) {
+        this.router.navigate(['atlas/']);
+      } else {
+        this.exerciseId = params.get('active');
+        this.router.navigate(['atlas/' + params.get('active')]);
+        this.loadExercise();
+      }
+    });
   }
 
   // zmiana sortowania
@@ -252,6 +268,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
   }
 
   loadExercise() {
+    this.isLoading = true;
     this.openExer = true;
     this.exerciseService.getExercise(this.exerciseId).subscribe(
       data => {
@@ -259,23 +276,13 @@ export class AtlasComponent implements OnInit, OnDestroy {
         this.selectedExercise = data;
       },
       error => {
+        this.router.navigate(['/atlas']);
       },
       () => {
         this.checkDifficulty();
+        this.isLoading = false;
       }
     );
-  }
-
-  openExercise(value) {
-    console.log(value);
-    this.router.navigate(
-      ['/atlas'],
-      {
-        queryParams: {exerciseId: value},
-        queryParamsHandling: 'merge'
-      });
-    this.exerciseId = value;
-    this.loadExercise();
   }
 
   closeExercise() {
@@ -435,6 +442,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
       idExercise: ''
     };
     const weight = this.user.user.weight;
+    console.log(this.exerciseId);
     this.exerciseService.getExercise(this.exerciseId).subscribe(
       data => {
         kcalRatio = data.kcalRatio;

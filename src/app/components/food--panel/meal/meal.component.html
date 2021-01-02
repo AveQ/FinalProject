@@ -8,7 +8,7 @@
     </div>
     <div class="modal-body">
       <p class="text-center"><b>
-        <span style="color: red">{{myMealProp.amount}}g</span> <br>
+        <span>Na 100 g</span> <br>
         Węglowodany: {{myMealProp.carbs | number : '1.2-2'}} g <br>
         Białko: {{myMealProp.proteins | number : '1.2-2'}} g <br>
         Tłuszcze: {{myMealProp.fats | number : '1.2-2'}} g <br>
@@ -19,7 +19,7 @@
 
     </div>
   </ng-template>
-<!--  dodawanie posilku -->
+  <!--  dodawanie posilku -->
   <ng-template #adding let-modal>
     <div class="modal-header">
       <h4 class="modal-title">{{myMealProp.name}}</h4>
@@ -36,7 +36,7 @@
   <!--
     TABLE
   -->
-  <div class="row">
+  <div class="row mealClass">
     <div class="col-12">
       <h3 class="header">Spersonalizuj {{nameOfMeal}}</h3>
       <p class="text-center">Kalorie łącznie: {{arrayWithId.kcal}}</p>
@@ -82,17 +82,16 @@
     </div>
   </div>
   <div class="col-12 text-center">
-    <button (click)="changeTypeOfDataBase('application')" class="btn btn-outline-dark mr-1 btnFir">Posiłek z <b>bazy</b></button>
+    <button (click)="changeTypeOfDataBase('application')" class="btn btn-outline-dark mr-1 btnFir">Posiłek z <b>bazy</b>
+    </button>
     <button (click)="navigate()" class="btn btn-outline-dark ml-1 btnFir"><b>Powrót</b></button>
-    <button (click)="changeTypeOfDataBase('user')" class="btn btn-outline-dark ml-1 btnFir">Posiłek <b>własny</b></button>
   </div>
   <div *ngIf="typeOfDB!=null" class="col-12 foodDBContainer p-0 mt-5">
     <p class="text-center">
-      <b *ngIf="typeOfDB==='user'">Szukaj z bazy użytkownika</b>
       <b *ngIf="typeOfDB==='application'">Szukaj z bazy aplikacji</b>
     </p>
     <div class="searchProduct d-flex justify-content-around">
-      <input class="form-control inputFood" type="text">
+      <input #element (input)="searchMeal(element)" class="form-control inputFood" type="text">
       <button class="btn btn-dark btnSec">Szukaj</button>
     </div>
     <div class="col-12 p-0 mt-5 containerForDB">
@@ -105,7 +104,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let myMealDB of mealDB; index as i">
+        <tr *ngFor="let myMealDB of paginationArray; index as i">
           <th scope="row">
             {{myMealDB.name}}
           </th>
@@ -119,10 +118,19 @@
         </tr>
         </tbody>
       </table>
-      <div class="pagination d-flex justify-content-center">
-        <ngb-pagination class="" [collectionSize]="50" [(page)]="page" [maxSize]="3" [rotate]="true" [ellipses]="false"
-                        [boundaryLinks]="false"></ngb-pagination>
-      </div>
+      <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+          <li style="cursor: pointer" [ngClass]="{'disabled' : page === 0}" class="page-item">
+            <a (click)="otherPage(false)" class="text-dark page-link" tabindex="-1">Poprzednie</a>
+          </li>
+          <li class="page-item active">
+            <a class="page-link" style="background-color: black; border: gray 1px solid">{{page + 1}}</a>
+          </li>
+          <li style="cursor: pointer" [ngClass]="{'disabled' : !isNext()}" class="page-item">
+            <a (click)="otherPage(true)" class="text-dark page-link">Następne</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>

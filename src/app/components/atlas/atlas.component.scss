@@ -164,8 +164,8 @@
 }
 .exercise {
   padding: 0;
-  margin: 0;
-  margin-bottom: 20px;
+  margin-top: 10px!important;
+  margin-bottom: 10px!important;
 }
 .heart {
   height: 20px;
@@ -403,13 +403,16 @@
 }
 // exercise modal
 
+.exercise-selected {
+  font-family: "Libre Baskerville", serif;
+}
+
 .sportPanelContainer {
   position: absolute;
   top: 60px;
   left: 50%;
   bottom: 0;
   transform: translate(-50%, 0%);
-  font-family: 'Libre Baskerville', serif;
   overflow-x: hidden;
 }
 
@@ -417,8 +420,24 @@
   margin: 0;
   padding: 0;
 }
-.mainCoint {
+.exerciseContainer {
   min-width: 1200px;
+  padding-top: 60px;
+}
+.colImage {
+  text-align: center;
+}
+.selectedExerciseImage {
+  width: 500px;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+}
+.descriptionExercise {
+  text-align: center;
+}
+.descriptionExerciseTitle {
+  font-weight: bold;
 }
 .sportPanelTitle {
   margin-top: 20px;
@@ -474,33 +493,6 @@
   margin: 10px 0;
 }
 
-.contForVid {
-  padding: 0 10px;
-}
-.video-box {
-  margin: 20px 0;
-  //background-color: black;
-  //min-height: 280px;
-  //border-radius: 10px;
-  //position: relative;
-  width: 100%;
-}
-.video-box--video {
-  //position: absolute;
-  //left: 50%;
-  //top:50%;
-  //transform: translate(-50%,-50%);
-  //height: 100%;
-  //min-height: 200px;
-  //width: 100%;
-  display: block;
-  height: 200px;
-  width: 500px;
-  margin: 0 auto;
-  border: 1px solid black;
-  border-radius: 10px;
-}
-
 .addExercise {
   text-align: center;
   margin: 10px 5px 0;
@@ -523,7 +515,7 @@
 .addExercise-button {
   font-weight: bold;
   display: block;
-  margin-top: 0px;
+  margin-top: 0;
 }
 .addExercise-button-text {
   position: relative;
@@ -549,6 +541,16 @@
   margin: 0 auto;
   margin-top: 20px;
 }
+
+// spinner
+.loading-spinner {
+  display: block;
+  width: 100%;
+  margin-top: 300px;
+  margin-bottom: 100px;
+  text-align: center;
+}
+
 @media(max-width: 600px) {
   .sportPanelTitle {
     font-size: 24px;
@@ -686,6 +688,9 @@
 
 // MEDIAS
 @media(max-width: 1250px) {
+  .selectedExerciseImage {
+    width: 300px;
+  }
   .atlas-heading {
     height: 175px;
     background-color: #373737;
@@ -717,7 +722,15 @@
       font-size: 20px;
     }
   }
-
+  .descriptionExerciseTitle {
+   font-size: 26px;
+  }
+  .descriptionExerciseTitleSec {
+    font-size: 16px;
+  }
+  .exerciseContainer {
+    padding-top: 30px;
+  }
 }
 
 @media(max-width: 400px) {
@@ -738,7 +751,7 @@
   }
 }
 @media (max-width: 1200px) {
-  .mainCoint {
+  .exerciseContainer {
     min-width: auto;
   }
 }

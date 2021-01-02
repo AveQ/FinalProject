@@ -1,7 +1,10 @@
 .container {
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Libre Baskerville', serif;
 }
-
+// meal classes
+.mealClass {
+  font-family: 'Libre Baskerville', serif;
+}
 .header {
   text-align: center;
   margin: 50px 0;
@@ -22,5 +25,19 @@
   .btnSec {
     font-size: 14px;
   }
-
+}
+@media all and (max-width: 400px) {
+  table {
+    font-size: 11px;
+    th{
+      padding: 6px;
+    }
+  }
+  .btnFir {
+    padding: 2px;
+    font-size: 10px;
+  }
+  .btnSec {
+    font-size: 12px;
+  }
 }

@@ -44,7 +44,7 @@ export class MealComponent implements OnInit, OnDestroy {
   myMealProp: Meal;
   meal: Meal[] = [];
   mealDB: MealDB[] = [];
-  page = 1;
+  page = 0;
   typeOfDB = null;
   @Input() arrayWithId;
   @Input() objectFromParent;
@@ -53,6 +53,17 @@ export class MealComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   private userSubscription;
   private user;
+  private arrayMealName = [
+    'śniadanie',
+    'II śniadanie',
+    'obiad',
+    'podwieczorek',
+    'kolacja',
+    'dodatkowe'
+  ];
+  emptyFlag = true;
+  tempArray = [];
+  paginationArray = [];
 
   constructor(
     private modalService: NgbModal,
@@ -83,15 +94,54 @@ export class MealComponent implements OnInit, OnDestroy {
 
     this.paramsSubscription = this.route.queryParams.subscribe(
       (params: Params) => {
-        console.log(params.active);
+        this.setMealName(params.active);
       }
     );
+
+  }
+
+  searchMeal(name) {
+    this.page = 0;
+    this.tempArray = this.mealDB.filter(mel => {
+      if (mel.name.toUpperCase().includes(name.value.toUpperCase())) {
+        return mel;
+      }
+    });
+    this.createTable();
+    name.value === '' ? this.emptyFlag = true : this.emptyFlag = false;
+  }
+
+  createTable() {
+    this.paginationArray = [];
+    const firstElement = this.page * 2;
+    if (firstElement < this.tempArray.length) {
+      this.paginationArray = this.tempArray.slice(this.page * 2, this.page * 2 + 2);
+    }
+  }
+
+  isNext() {
+    return (this.page * 2 + 3) <= this.tempArray.length;
+  }
+
+  otherPage(value) {
+    if (value && this.isNext()) {
+      this.page++;
+      this.createTable();
+    } else if (!value) { // poprzednia strona
+      this.page--;
+      this.createTable();
+    }
+  }
+
+  setMealName(param) {
+    this.nameOfMeal = this.arrayMealName[param];
   }
 
   isThereUser() {
     return !!this.user;
   }
 
+  // zmienic tylko na 1 tryb
   changeTypeOfDataBase(value) {
     this.typeOfDB = value;
     switch (value) {
@@ -117,7 +167,6 @@ export class MealComponent implements OnInit, OnDestroy {
   async loadMeals() {
 
     this.meal = await this.foodService.loadMeals(this.arrayWithId, this.meal);
-
   }
 
 
@@ -129,6 +178,8 @@ export class MealComponent implements OnInit, OnDestroy {
       error => {
       },
       () => {
+        this.tempArray = this.mealDB;
+        this.createTable();
       }
     );
   }

@@ -1,5 +1,5 @@
 {
-  "name": "application",
+  "name": "nfl-center",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
