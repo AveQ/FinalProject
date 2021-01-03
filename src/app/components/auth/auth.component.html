@@ -42,13 +42,6 @@
           class="form__control form__input"
           formControlName="password">
       </div>
-      <div *ngIf="!signup" class="form-check rememberMe">
-        <div (click)="rememberMe = !rememberMe" class="checkbox-style" id="rememberMe">
-          <div *ngIf="rememberMe" class="checkbox-mark-one"></div>
-          <div *ngIf="rememberMe" class="checkbox-mark-two"></div>
-        </div>
-        <label class="form-check-label label-remember-me" for="rememberMe">Zapamiętaj mnie</label>
-      </div>
       <div class="button-gr d-flex justify-content-between">
         <button
           type="submit"
