@@ -7,9 +7,9 @@ export class AirPollutionService {
   }
   // do serwera
   getStations() {
-    return this.http.get('https://localhost:3000/pollutions');
+    return this.http.get('https://nfl-center-api.herokuapp.com/pollutions');
   }
   getStationsInfo(value) {
-    return this.http.get('https://localhost:3000/pollutions/' + value);
+    return this.http.get('https://nfl-center-api.herokuapp.com/pollutions/' + value);
   }
 }

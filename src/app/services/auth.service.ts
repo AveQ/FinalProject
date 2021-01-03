@@ -76,11 +76,11 @@ export class AuthService {
   }
 
   signup(value) {
-    return this.http.post<AuthResponseData>('https://localhost:3000/users/signup', value);
+    return this.http.post<AuthResponseData>('https://nfl-center-api.herokuapp.com/users/signup', value);
   }
 
   login(value) {
-    return this.http.post<AuthResponseData>('https://localhost:3000/users/login', value).pipe(
+    return this.http.post<AuthResponseData>('https://nfl-center-api.herokuapp.com/users/login', value).pipe(
       tap(resData => {
         this.handleAuthentication(resData.id, resData.email, resData.token, resData.expirationDate, resData.user);
       })
