@@ -1,5 +1,5 @@
 {
-  "/api": {
+  "/api*": {
     "target": "https://nfl-center-api.herokuapp.com",
     "secure": false,
     "logLevel": "debug",
