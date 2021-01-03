@@ -3,8 +3,6 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthResponseData, AuthService} from '../../services/auth.service';
 import {Observable} from 'rxjs';
-import {SocialAuthService, SocialUser} from 'angularx-social-login';
-import {GoogleLoginProvider} from 'angularx-social-login';
 
 @Component({
   selector: 'app-auth',
@@ -29,20 +27,11 @@ export class AuthComponent implements OnInit {
     private ele: ElementRef,
     private ren: Renderer2,
     private router: Router,
-    private authService: AuthService,
-    private socialAuthService: SocialAuthService) {
+    private authService: AuthService) {
   }
 
-  user: SocialUser;
 
   ngOnInit(): void {
-    this.socialAuthService.authState.subscribe((user) => {
-        console.log(user);
-        this.user = user;
-      }, error => {
-      },
-      () => {
-      });
     this.signinForm = new FormGroup(
       {
         email: new FormControl(null, [Validators.required, Validators.email]),

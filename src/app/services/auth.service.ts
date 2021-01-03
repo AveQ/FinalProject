@@ -90,6 +90,7 @@ export class AuthService {
   private handleAuthentication(id, email, token, expirationDate, use) {
     const expDate = new Date(new Date().getTime() + +expirationDate * 1000); // one hour expiration
     const user = new User(id, email, token, expDate, use);
+    console.log(user)
     this.user.next(user);
     localStorage.setItem('userData', JSON.stringify(user));
   }

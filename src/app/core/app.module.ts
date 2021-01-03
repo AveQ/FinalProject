@@ -23,10 +23,6 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NFLInterceptorService} from '../services/NFLInterceptorService.service';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
-import {
-  GoogleLoginProvider,
-  FacebookLoginProvider
-} from 'angularx-social-login';
 import {LoadingSpinnerComponent} from '../loading-spinner/loading-spiner.component';
 import {AuthGuard} from '../services/authGuard.service';
 import {FooterComponent} from '../components/footer/footer.component';
@@ -59,25 +55,11 @@ import {AuthGuardAdmin} from '../services/authGuardAdmin.service';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    SocialLoginModule,
   ],
   providers: [
     NavigationService,
     AuthGuard,
     AuthGuardAdmin,
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '737028786321-aan5aur7fdd54humj4enqqk9jndbvsn3.apps.googleusercontent.com'
-            )
-          }
-        ]
-      } as SocialAuthServiceConfig,
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: NFLInterceptorService,

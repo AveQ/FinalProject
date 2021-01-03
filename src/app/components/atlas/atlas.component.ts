@@ -16,7 +16,7 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./atlas.component.scss']
 })
 export class AtlasComponent implements OnInit, OnDestroy {
-  imageAddress = 'https://localhost:3000/';
+  imageAddress = 'https://nfl-center-api.herokuapp.com/';
   filtersHidden = true;
   partOfBody = 'Wybierz partię';
   isFront = false;
