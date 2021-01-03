@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavigationService} from '../../services/navigation.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {AirPollutionService} from '../../services/airPollution.service';
-
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-bmi',
@@ -63,10 +63,10 @@ export class AirComponent implements OnInit, OnDestroy {
     this.page = 0;
     this.filteredStations = [];
     this.arrayWithCity = [];
-    this.filteredStations = this.stations.filter(stat => {
-      if (stat.city.name.toUpperCase().includes(city.value.toUpperCase())) {
-        return stat;
-      }
+    this.filteredStations = _.filter(this.stations, stat => {
+        if (stat.city !== null && stat.city.name.toUpperCase().includes(city.value.toUpperCase())) {
+          return stat;
+        }
     });
     this.createTable();
     city.value === '' ? this.emptyFlag = true : this.emptyFlag = false;
@@ -173,6 +173,7 @@ export class AirComponent implements OnInit, OnDestroy {
       return 'Brak danych';
     }
   }
+
   ngOnDestroy(): void {
   }
 }
