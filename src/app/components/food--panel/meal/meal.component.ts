@@ -97,7 +97,6 @@ export class MealComponent implements OnInit, OnDestroy {
         this.setMealName(params.active);
       }
     );
-
   }
 
   searchMeal(name) {

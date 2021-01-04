@@ -59,5 +59,8 @@ export class NavComponent implements OnInit {
   logout() {
     this.router.navigate(['./']);
     this.authService.logout();
+    if (this.selectRoute === 0) {
+      window.location.reload();
+    }
   }
 }

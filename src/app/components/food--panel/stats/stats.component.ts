@@ -56,8 +56,10 @@ export class StatsComponent implements OnInit, DoCheck {
   ngOnInit(): void {
     this.authService.user.subscribe(
       data => {
-        this.user = data;
-        this.userId = this.user.user.id;
+        if (data) {
+          this.user = data;
+          this.userId = this.user.user.id;
+        }
       }
     );
     this.userService.summ.subscribe(data => {

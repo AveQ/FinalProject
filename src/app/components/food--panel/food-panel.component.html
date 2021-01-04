@@ -52,7 +52,7 @@
     <!--
   water / food / stats
 -->
-    <div class="col-12">
+    <div class="col-12 p-0">
       <ul class="menuFoodPanel">
         <li class="optionFoodPanel"><a [routerLink]="['/food-panel', 'meals']" class="linkFoodPanel"
                                        [ngStyle]="{'color':activeMenuCategory === 0 ? '#dd0101' : 'black'}">POSIŁKI</a>
@@ -138,5 +138,5 @@
   <div *ngIf="updateMeal && !loading" class="updateMeal">
     <app-meal [arrayWithId] = 'arrayWithId' (loadMealsAgain) = "loadMealHistory()"  [objectFromParent] = 'objectToChild'></app-meal>
   </div>
-  <app-footer></app-footer>
+  <app-footer *ngIf="!updateMeal"></app-footer>
 </div>

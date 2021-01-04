@@ -61,6 +61,11 @@ export class AuthComponent implements OnInit {
         }
       },
       () => {
+        if (this.signup) {
+          this.authService.modalMessage.next('signup');
+        } else {
+          this.authService.modalMessage.next('login');
+        }
         this.router.navigate(['../']);
         console.log('xd');
       }

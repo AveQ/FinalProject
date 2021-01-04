@@ -308,6 +308,17 @@
           </ngb-progressbar>
         </p>
       </div>
+      <!--ocena cwiczenia-->
+      <div class="rate">
+        <div class="stars startAnimation">
+          <h5 class="m-0">Ocena ćwiczenia</h5>
+          <i *ngFor="let numofyellow of createArrayForYellowStars(this.selectedExercise.rate)"
+             class="fas fa-star  fa-star--mod"></i>
+          <i *ngFor="let numofyellow of createArrayForGreyStars(this.selectedExercise.rate)"
+             class="fas fa-star "></i>
+        </div>
+
+      </div>
       <!--główna partia-->
       <div class="col-12">
         <p style="text-align: center">
@@ -327,16 +338,15 @@
       </div>
       <!--wlacznik dodawania cwiczenia-->
       <div class="col-12 text-center">
-        <span (click)="hideForm = !hideForm" class="d-inline-block" style="cursor: pointer; text-decoration: underline">Dodaj ćwiczenie!</span>
-<!--        <span (click)="hideForm = !hideForm" class="d-inline-block" style="cursor: pointer; text-decoration: underline">Oceń ćwiczenie!</span>-->
+        <span (click)="hideForm = !hideForm" class="d-inline-block" style="cursor: pointer; text-decoration: underline"><b>Dodaj ćwiczenie!</b></span>
       </div>
       <!--formularz-->
-      <div *ngIf="!hideForm" class="col-12 text-center">
-        <form class="form-inline row justify-content-center">
-          <small class="addExercise-small">Wprowadź dzień trenignu:</small>
-          <div class="form-group calendar col-12">
+      <div *ngIf="!hideForm" class="col-10 text-center form-data-form">
+        <div class="d-block">Wybierz <b>date</b></div>
+        <form class="form-inline">
+          <div class="form-group calendar">
             <div class="input-group ">
-              <input id="calendarInput" class="form-control" placeholder="yyyy-mm-dd"
+              <input (click)="d.toggle()" class="form-control calendar-data-form" placeholder="Data"
                      name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i
@@ -344,10 +354,12 @@
               </div>
             </div>
           </div>
-          <small class="addExercise-small">Wprowadź czas trenignu:</small>
-          <div class="form-group calendar col-12">
+        </form>
+        <div class="d-block">Ustaw <b>czas</b> treningu [min]</div>
+        <form class="form-inline">
+          <div class="form-group calendar">
             <div class="input-group ">
-              <input id="numberInput" class="form-control"
+              <input id="numberInput" class="form-control calendar-data-form"
                      name="dp" [(ngModel)]="timeModel" type="number">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button"><i class="far fa-clock"></i></button>
@@ -355,76 +367,33 @@
             </div>
           </div>
         </form>
-        <small class="addExercise-button">
-          <button class="btn btn-dark addExercise-button-text"><em>ZAMKNIJ</em></button>
-          <button (click)="sendDateToPatch()" class="btn btn-dark addExercise-button-text"><em>DODAJ</em></button>
-        </small>
+        <p *ngIf="error" class="d-block" style="margin: 0 auto; color: #9c0000">Błędna wartość</p>
+        <div (click)="sendDateToPatch()" class="addExercise-button-text"><b>DODAJ</b></div>
+      </div>
+      <!--ocena cwiczenia-->
+      <div *ngIf="isRated" class="rate mb-3">
+        <hr>
+        <h5><b>Dziękujemy za ocenę!</b></h5>
+      </div>
+
+      <div *ngIf="!isRated" class="rate mb-3">
+        <hr>
+        <h5>Twoja opinia jest dla nas najważniejsza!</h5>
+        <p>Oceń ćwiczenie dla innych użytkowników!</p>
+        <span style="cursor: pointer" *ngFor="let stars of createArrayForYellowStars(5); let i = index">
+          <!--yellow-->
+          <i *ngIf="myRate > i" (click)="changeRate(i)"
+             class="fas fa-star fa-star--mod fa-2x"></i>
+          <i *ngIf="myRate <= i" (click)="changeRate(i)"
+             class="fas fa-star fa-2x"></i>
+
+        </span>
+        <button class="btn btn-dark mb-3 mt-3 d-block" style="margin: 0 auto;" id="fullComment-add" type="button"
+                (click)="sendComment()">Dodaj
+        </button>
       </div>
     </div>
 
-    <!--    <div *ngIf="!isLoading" class="row justify-content-center mainCoint">-->
-    <!--      <div class="col-12">-->
-    <!--        <h2 class="sportPanelTitle">{{this.selectedExercise.name}}</h2>-->
-    <!--        <div class="panelSport-options">-->
-    <!--          <ul class="panelSport-list">-->
-    <!--            <li class="panelSport-pointList">-->
-    <!--              <span class="opt">Główna partia mięsniowa: <b>{{this.selectedExercise.musclePart}}</b></span>-->
-    <!--            </li>-->
-    <!--          </ul>-->
-    <!--        </div>-->
-    <!--        <hr class="underline-sportPanel">-->
-    <!--        <div class="burnKcal">-->
-    <!--          <div class="addExercise">-->
-    <!--            <h5 class="addExercise-heading">Dodaj ćwiczenie do Dziennika Aktywności</h5>-->
-    <!--            <form class="form-inline row justify-content-center">-->
-    <!--              <small class="addExercise-small">Wprowadź dzień trenignu:</small>-->
-    <!--              <div class="form-group calendar col-12">-->
-    <!--                <div class="input-group ">-->
-    <!--                  <input id="calendarInput" class="form-control" placeholder="yyyy-mm-dd"-->
-    <!--                         name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">-->
-    <!--                  <div class="input-group-append">-->
-    <!--                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="far fa-calendar-alt "></i></button>-->
-    <!--                  </div>-->
-    <!--                </div>-->
-    <!--              </div>-->
-    <!--              <small class="addExercise-small">Wprowadź czas trenignu:</small>-->
-    <!--              <div class="form-group calendar col-12">-->
-    <!--                <div class="input-group ">-->
-    <!--                  <input id="numberInput" class="form-control"-->
-    <!--                         name="dp" [(ngModel)]="timeModel" type="number">-->
-    <!--                  <div class="input-group-append">-->
-    <!--                    <button class="btn btn-outline-secondary" type="button"><i class="far fa-clock"></i></button>-->
-    <!--                  </div>-->
-    <!--                </div>-->
-    <!--              </div>-->
-    <!--            </form>-->
-    <!--            <small class="addExercise-button">-->
-    <!--              <span (click)="sendDateToPatch()" class="btn btn-dark addExercise-button-text"><em>DODAJ</em></span>-->
-    <!--            </small>-->
-    <!--            <hr/>-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--        <div class="description">-->
-
-    <!--          <p class="theScaleOfDifficulty">-->
-    <!--            <span class="theScaleOfDifficulty-name"><em>Poziom trudności - <b>{{lvlOfDifficulty}}</b></em></span>-->
-    <!--            <ngb-progressbar-->
-    <!--              class="theScaleOfDifficulty-bar"-->
-    <!--              [type]="colorOfDifficulty" textType="white"-->
-    <!--              [value]="scaleOfDifficulty"-->
-    <!--              height="10px"-->
-    <!--            >-->
-    <!--            </ngb-progressbar>-->
-    <!--          </p>-->
-    <!--          <p class="description-text">-->
-    <!--            <span>{{this.selectedExercise.description}}</span>-->
-    <!--          </p>-->
-    <!--        </div>-->
-    <!--        <button class="btn btn-dark back-button addExercise-button-text" (click)="closeExercise()"><em>POWRÓT</em></button>-->
-    <!--      </div>-->
-    <!--    </div>-->
-
   </div>
-
 </div>
 

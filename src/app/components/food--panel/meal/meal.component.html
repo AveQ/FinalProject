@@ -1,7 +1,7 @@
 <div class="container">
   <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title">{{myMealProp.name}}</h4>
+      <h4 class="modal-title"><em>{{myMealProp.name}}</em></h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -39,12 +39,12 @@
   <div class="row mealClass">
     <div class="col-12">
       <h3 class="header">Spersonalizuj {{nameOfMeal}}</h3>
-      <p class="text-center">Kalorie łącznie: {{arrayWithId.kcal}}</p>
+      <p *ngIf="isThereUser() && meal.length !== 0" class="text-center">Kalorie łącznie: <b>{{arrayWithId.kcal}} kcal</b></p>
     </div>
     <div class="col-12 p-0">
-      <p class="textTable text-center mt-4 mb-4">Dodane posiłki</p>
+      <p *ngIf="isThereUser() && meal.length !== 0" class="textTable text-center mt-4 mb-4">Dodane posiłki</p>
 
-      <table *ngIf="isThereUser()" class="table table-striped text-center">
+      <table *ngIf="isThereUser() && meal.length !== 0" class="table table-striped text-center">
         <thead>
         <tr>
           <th scope="col">Ilość</th>
@@ -79,6 +79,9 @@
         </tr>
         </tbody>
       </table>
+      <div *ngIf="meal.length === 0" class="textTable text-center mt-4 mb-4">
+        <em>Brak dodanych posiłków.</em>
+      </div>
     </div>
   </div>
   <div class="col-12 text-center">

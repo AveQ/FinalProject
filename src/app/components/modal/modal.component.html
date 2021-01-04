@@ -1,0 +1,11 @@
+<div class="boxModal">
+  <div class="windowModal">
+    <div class="textModal">
+      <h4 class="modalTitle">{{activeMessage | uppercase}}</h4>
+      <img class="modalLogo" src="assets/logo/aa.png" alt="">
+      <p>{{activeMessageSec}} <b *ngIf="activeStatus === 'login'">{{userName}}</b></p>
+      <hr class="underlineModal">
+      <button (click)="closeModal()" class="btn btn-dark">Ok</button>
+    </div>
+  </div>
+</div>

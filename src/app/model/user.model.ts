@@ -26,7 +26,8 @@ export class User {
       ppm: number,
       cpm: number,
       physicalActivity: number,
-      isAdmin: boolean
+      isAdmin: boolean,
+      isRated: []
     }
   ) {
   }

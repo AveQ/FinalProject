@@ -7,6 +7,8 @@ import {BehaviorSubject} from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
+  private urlLocal = 'http://localhost:3000';
+  private urlHeroku = 'https://nfl-center-api.herokuapp.com';
 
   constructor(private http: HttpClient) {
   }
@@ -178,14 +180,14 @@ export class UserService {
 
   // REST
   patchUserFavExercises(userId, toChange, newValue) {
-    return this.http.patch('https://nfl-center-api.herokuapp.com/api/users/' + userId, [{'propName': toChange, 'value': newValue}]);
+    return this.http.patch(this.urlLocal + '/api/users/' + userId, [{'propName': toChange, 'value': newValue}]);
   }
 
   getUserFavExercises(userId) {
-    return this.http.get<AuthResponseData>('https://nfl-center-api.herokuapp.com/api/users/' + userId);
+    return this.http.get<AuthResponseData>(this.urlLocal + '/api/users/' + userId);
   }
   getAllUsers() {
-    return this.http.get<{count: number, users}>('https://nfl-center-api.herokuapp.com/api/users/');
+    return this.http.get<{count: number, users}>(this.urlLocal + '/api/users/');
   }
   // LOGIKA
   setPPM(gender, weight, height, age) {

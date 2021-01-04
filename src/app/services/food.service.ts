@@ -55,6 +55,8 @@ export interface MealResponseAllData {
   providedIn: 'root'
 })
 export class FoodService {
+  private urlLocal = 'http://localhost:3000';
+  private urlHeroku = 'https://nfl-center-api.herokuapp.com';
 
   constructor(private http: HttpClient) {
   }
@@ -120,35 +122,35 @@ export class FoodService {
   // metody do serwera
 
   getInfoMeal(id) {
-    return this.http.get<MealResponseData>('https://nfl-center-api.herokuapp.com/api/meals/' + id);
+    return this.http.get<MealResponseData>(this.urlLocal + '/api/meals/' + id);
   }
 
   loadData(id) {
-    return this.http.get<FoodResponseData>('https://nfl-center-api.herokuapp.com/api/mealsHistory/users/' + id);
+    return this.http.get<FoodResponseData>(this.urlLocal + '/api/mealsHistory/users/' + id);
   }
 
   loadDataHistoryMeal(id) {
-    return this.http.get<FoodResponseData>('https://nfl-center-api.herokuapp.com/api/mealsHistory/meals/' + id);
+    return this.http.get<FoodResponseData>(this.urlLocal + '/api/mealsHistory/meals/' + id);
   }
 
   postMeal(value) {
-    return this.http.post('https://nfl-center-api.herokuapp.com/api/meals/', value);
+    return this.http.post(this.urlLocal + '/api/meals/', value);
   }
 
   patchWaterData(id, toChange, newValue) {
-    return this.http.patch('https://nfl-center-api.herokuapp.com/api/mealsHistory/' + id, [{'propName': toChange, 'value': newValue}]);
+    return this.http.patch(this.urlLocal + '/api/mealsHistory/' + id, [{'propName': toChange, 'value': newValue}]);
   }
 
   getAllMeals() {
-    return this.http.get<MealResponseAllData>('https://nfl-center-api.herokuapp.com/api/meals/');
+    return this.http.get<MealResponseAllData>(this.urlLocal + '/api/meals/');
   }
 
   postUserHistory(value) {
-    return this.http.post<{ createdExercise, id, message }>('https://nfl-center-api.herokuapp.com/api/mealsHistory/', value);
+    return this.http.post<{ createdExercise, id, message }>(this.urlLocal + '/api/mealsHistory/', value);
   }
 
   isDecrease(idUser) {
-    this.http.get('https://nfl-center-api.herokuapp.com/api/mealsHistory/users/' + idUser).subscribe(
+    this.http.get(this.urlLocal + '/api/mealsHistory/users/' + idUser).subscribe(
       data => {
         console.log(data);
       }, error => {

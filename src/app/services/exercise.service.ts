@@ -7,35 +7,37 @@ import {ExerciseHistoryModel} from '../model/exerciseHistory.model';
   providedIn: 'root'
 })
 export class ExerciseService {
+  private urlLocal = 'http://localhost:3000';
+  private urlHeroku = 'https://nfl-center-api.herokuapp.com';
 
   constructor(private http: HttpClient) {
   }
 
   getAllExercises() {
-    return this.http.get<AllExerciseModel>('https://nfl-center-api.herokuapp.com/api/exercises/');
+    return this.http.get<AllExerciseModel>(this.urlLocal + '/api/exercises/');
   }
 
   getExercise(exerciseId) {
-    return this.http.get<ExerciseModel>('https://nfl-center-api.herokuapp.com/api/exercises/' + exerciseId);
+    return this.http.get<ExerciseModel>(this.urlLocal + '/api/exercises/' + exerciseId);
   }
 
   loadTodayExercisesHistory() {
-    return this.http.get<ExerciseHistoryModel>('https://nfl-center-api.herokuapp.com/api/userExercisesHistory/');
+    return this.http.get<ExerciseHistoryModel>(this.urlLocal + '/api/userExercisesHistory/');
   }
 
   loadUserAllHistory(id) {
-    return this.http.get<ExerciseHistoryModel>('https://nfl-center-api.herokuapp.com/api/userExercisesHistory/users/' + id);
+    return this.http.get<ExerciseHistoryModel>(this.urlLocal + '/api/userExercisesHistory/users/' + id);
   }
 
   postUserHistory(newUserHistory) {
-    return this.http.post('https://nfl-center-api.herokuapp.com/api/userExercisesHistory', newUserHistory);
+    return this.http.post(this.urlLocal + '/api/userExercisesHistory', newUserHistory);
   }
 
   patchUserHistory(id, toChange, newValue) {
-    return this.http.patch('https://nfl-center-api.herokuapp.com/api/userExercisesHistory/' + id, [{'propName': toChange, 'value': newValue}]);
+    return this.http.patch(this.urlLocal + '/api/userExercisesHistory/' + id, [{'propName': toChange, 'value': newValue}]);
   }
 
   postExercise(exercise) {
-    return this.http.post('https://nfl-center-api.herokuapp.com/api/exercises/', exercise);
+    return this.http.post(this.urlLocal + '/api/exercises/', exercise);
   }
 }

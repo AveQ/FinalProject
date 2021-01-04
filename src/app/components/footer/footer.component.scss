@@ -2,3 +2,10 @@
   margin: 20px 0;
   font-family: "Libre Baskerville", serif;
 }
+.sources {
+  margin-top: 5px;
+  font-size: 10px;
+  & a {
+    color: black;
+  }
+}

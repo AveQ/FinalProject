@@ -28,6 +28,7 @@ import {AuthGuard} from '../services/authGuard.service';
 import {FooterComponent} from '../components/footer/footer.component';
 import {AdminPanelComponent} from '../components/admin-panel/admin-panel.component';
 import {AuthGuardAdmin} from '../services/authGuardAdmin.service';
+import {ModalComponent} from '../components/modal/modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,8 @@ import {AuthGuardAdmin} from '../services/authGuardAdmin.service';
     AirComponent,
     LoadingSpinnerComponent,
     FooterComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,14 @@
       [ngStyle]="{'color' : signup ? '#9c0000' : 'white'}"
       class="change__mode-reg">REJESTRACJA</span>
     </div>
+    <!--
+    registration form
+    TODO:
+    -waga,
+    -wzrost,
+    -plec,
+
+    -->
     <form autocomplete="off" [formGroup]='signinForm' (ngSubmit)="onSubmit()" class="auth__box">
       <div class="form-group">
         <label
@@ -42,14 +50,12 @@
           class="form__control form__input"
           formControlName="password">
       </div>
-      <div class="button-gr d-flex justify-content-between">
+      <div class="button-gr d-flex justify-content-center">
         <button
           type="submit"
           class="btn btn-light login"
           [disabled]="signinForm.invalid"
         >{{signup ? 'Zarejestruj' : 'Zaloguj'}}</button>
-        <button class="btn btn-outline-light btn-fb">Fb</button>
-        <button type="button" class="btn btn-outline-light btn-gpls">G+</button>
       </div>
     </form>
     <p class="text-center">

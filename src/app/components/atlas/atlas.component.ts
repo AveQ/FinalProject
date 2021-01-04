@@ -24,6 +24,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
   safeSrc: SafeResourceUrl;
   videoURL = 'https://www.youtube.com/embed/3vJHQjiEp1w';
   openExer = false;
+  isRated = false;
   private newUserHistory = {
     idUser: '',
     date: 0,
@@ -52,7 +53,8 @@ export class AtlasComponent implements OnInit, OnDestroy {
   };
   timeModel = 30;
   isLoading = true;
-  hideForm = true;
+  hideForm = false;
+  error = false;
 
   constructor(
     private navigationService: NavigationService,
@@ -99,6 +101,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
   userId;
   favUserExercises = [];
   private allUserHistory;
+  myRate = 1;
 
   ngOnInit(): void {
     this.setRoute();
@@ -137,7 +140,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
   // sprawdz params i ustaw podstronke. jezeli inna od dozwolonych przekieruj na glowna
   setRoute() {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      console.log(params.get('active'));
       if (params.get('active') === null) {
         this.router.navigate(['atlas/']);
       } else {
@@ -382,19 +384,23 @@ export class AtlasComponent implements OnInit, OnDestroy {
   sendDateToPatch() {
 
     const date = new Date(this.model.year + '-' + this.model.month + '-' + this.model.day);
+    if (!isNaN(date.getTime()) && (this.timeModel > 0)) {
 
-    const month = date.getMonth();
-    const day = date.getDate();
-    const year = date.getFullYear();
-    console.log(month, day, year);
-    if (this.model.year >= 2020 && this.model.year !== 0 ||
-      this.model.day !== 0 || this.model.month !== 0 &&
-      date.toString() !== 'Invalid date') {
-
-      this.setSelectedHistory(day, month, year);
+      const month = date.getMonth();
+      const day = date.getDate();
+      const year = date.getFullYear();
+      console.log(month, day, year);
+      if (this.model.year >= 2020 && this.model.year !== 0 ||
+        this.model.day !== 0 || this.model.month !== 0 &&
+        date.toString() !== 'Invalid date') {
+        this.setSelectedHistory(day, month, year);
+      } else {
+        this.error = true;
+      }
     } else {
-      console.log('error');
+      this.error = true;
     }
+
   }
 
   setSelectedHistory(day, month, year) {
@@ -487,6 +493,30 @@ export class AtlasComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  createArrayForYellowStars(n: number): any[] {
+    if (n) {
+      return Array(n);
+    } else {
+      return Array(0);
+    }
+  }
+
+  createArrayForGreyStars(n: number): any[] {
+
+    if (n) {
+      return Array(5 - n);
+    } else {
+      return Array(5);
+    }
+  }
+  changeRate(stars) {
+    this.myRate = stars + 1;
+  }
+
+  sendComment() {
+
   }
 
   ngOnDestroy(): void {

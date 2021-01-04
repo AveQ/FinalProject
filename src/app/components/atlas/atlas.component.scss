@@ -505,11 +505,21 @@
   font-size: 24px;
   margin: 10px 0;
 }
+.calendar {
+  width: 100%;
+}
+.form-data-form {
+  margin:15px 0;
+}
+.calendar-data-form {
+  padding: 0!important;
+  width: 100px!important;
+}
 .addExercise-small {
   display: block;
   text-align: center;
   letter-spacing: 1px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
 }
 .addExercise-button {
@@ -520,10 +530,14 @@
 .addExercise-button-text {
   position: relative;
   font-size: 13px;
+  padding: 5px;
   letter-spacing: 2px;
   font-weight: bold;
   border-radius: 10px;
   cursor: pointer;
+  display: inline-block;
+  margin: 0 auto;
+  text-decoration: underline;
 }
 .input-group, .minutes{
   margin: 10px auto;
@@ -541,7 +555,10 @@
   margin: 0 auto;
   margin-top: 20px;
 }
-
+.btn-calendar{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 // spinner
 .loading-spinner {
   display: block;
@@ -576,7 +593,15 @@
   }
 }
 
+.rate {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
 
+.fa-star--mod {
+  color: #ddc016;
+}
 
 
 

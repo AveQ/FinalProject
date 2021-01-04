@@ -14,6 +14,9 @@
 }
 .containerForDB {
 }
+.modal-header, .modal-title, .modal-body {
+  font-family: "Roboto Condensed", sans-serif;
+}
 @media all and (max-width: 400px) {
   table {
     font-size: 12px;

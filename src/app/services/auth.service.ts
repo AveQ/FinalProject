@@ -32,6 +32,9 @@ export interface AuthResponseData {
 })
 export class AuthService {
   user = new BehaviorSubject<User>(null);
+  modalMessage = new BehaviorSubject<string>(null);
+  private urlLocal = 'http://localhost:3000';
+  private urlHeroku = 'https://nfl-center-api.herokuapp.com';
 
   constructor(private http: HttpClient) {
   }
@@ -61,7 +64,8 @@ export class AuthService {
         ppm: number,
         cpm: number,
         physicalActivity: number,
-        isAdmin: boolean
+        isAdmin: boolean,
+        isRated: []
       }
     } = JSON.parse(localStorage.getItem('userData'));
     if (!userData) {
@@ -76,11 +80,11 @@ export class AuthService {
   }
 
   signup(value) {
-    return this.http.post<AuthResponseData>('https://nfl-center-api.herokuapp.com/api/users/signup', value);
+    return this.http.post<AuthResponseData>(this.urlLocal + '/api/users/signup', value);
   }
 
   login(value) {
-    return this.http.post<AuthResponseData>('https://nfl-center-api.herokuapp.com/api/users/login', value).pipe(
+    return this.http.post<AuthResponseData>(this.urlLocal + '/api/users/login', value).pipe(
       tap(resData => {
         this.handleAuthentication(resData.id, resData.email, resData.token, resData.expirationDate, resData.user);
       })
@@ -90,13 +94,17 @@ export class AuthService {
   private handleAuthentication(id, email, token, expirationDate, use) {
     const expDate = new Date(new Date().getTime() + +expirationDate * 1000); // one hour expiration
     const user = new User(id, email, token, expDate, use);
-    console.log(user)
+    console.log(user);
     this.user.next(user);
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
   logout() {
+    this.modalMessage.next('logout');
     this.user.next(null);
     localStorage.clear();
+  }
+  closeModal() {
+    this.modalMessage.next(null);
   }
 }

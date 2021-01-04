@@ -8,11 +8,17 @@ import {AuthService} from '../services/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'NFL Center';
+  modalStatus = null;
 
   constructor(private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.authService.autoLogin();
+    this.authService.modalMessage.subscribe(
+      data => {
+        this.modalStatus = data;
+      }
+    );
   }
 }
