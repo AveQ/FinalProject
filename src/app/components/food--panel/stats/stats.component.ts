@@ -182,18 +182,25 @@ export class StatsComponent implements OnInit, DoCheck {
     pdf.text('Cwiczenia:', textOffset, spaceY);
     spaceY = spaceY + 10;
 
-    let counter = 1;
+    let counter = 0;
     for (const exer in this.todayExercises) {
       if (this.todayExercises.hasOwnProperty(exer)) {
         counter++;
-        textWidth = pdf.getStringUnitWidth(counter + ': ' + this.todayExercises[exer].name + ', czas: '
+        textWidth = pdf.getStringUnitWidth(counter + '. ' + this.todayExercises[exer].name)
+          * pdf.getFontSize() / pdf.internal.scaleFactor;
+        textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
+
+        pdf.text(counter + '. ' + this.todayExercises[exer].name, textOffset, spaceY);
+        spaceY = spaceY + 10;
+
+        textWidth = pdf.getStringUnitWidth('Czas: '
           + this.todayExercises[exer].time + ' min, spalone kcal: '
           + this.todayExercises[exer].kcal + ' kcal')
           * pdf.getFontSize() / pdf.internal.scaleFactor;
 
         textOffset = (pdf.internal.pageSize.width - textWidth) / 2;
 
-        pdf.text(counter + ': ' + this.todayExercises[exer].name + ', czas: '
+        pdf.text('Czas: '
           + this.todayExercises[exer].time + ' min, spalone kcal: '
           + this.todayExercises[exer].kcal + ' kcal', textOffset, spaceY);
         spaceY = spaceY + 10;

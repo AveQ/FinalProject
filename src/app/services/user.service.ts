@@ -8,8 +8,7 @@ import {ExerciseModel} from '../model/exercise.model';
   providedIn: 'root'
 })
 export class UserService {
-  private urlLocal = 'http://localhost:3000';
-  private urlHeroku = 'https://nfl-center-api.herokuapp.com';
+  private urlLocal = 'https://nfl-center-api.herokuapp.com';
 
   constructor(private http: HttpClient) {
   }

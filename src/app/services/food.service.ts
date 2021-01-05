@@ -55,8 +55,7 @@ export interface MealResponseAllData {
   providedIn: 'root'
 })
 export class FoodService {
-  private urlLocal = 'http://localhost:3000';
-  private urlHeroku = 'https://nfl-center-api.herokuapp.com';
+  private urlLocal = 'https://nfl-center-api.herokuapp.com';
 
   constructor(private http: HttpClient) {
   }

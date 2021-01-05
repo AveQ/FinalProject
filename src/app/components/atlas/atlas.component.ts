@@ -16,6 +16,7 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./atlas.component.scss']
 })
 export class AtlasComponent implements OnInit, OnDestroy {
+  /*http://localhost:3000/*/
   imageAddress = 'https://nfl-center-api.herokuapp.com/';
   filtersHidden = true;
   partOfBody = 'Wybierz partię';
@@ -137,16 +138,10 @@ export class AtlasComponent implements OnInit, OnDestroy {
 
   // sprawdź czy id cwiczenia znajduje sie w liscie ocenionych id przez uzytkownika
   checkIsRated() {
-    console.log(this.selectedExercise._id);
-    console.log(_.findIndex(this.user.user.isRated, data => {
-      return data === this.selectedExercise._id;
-    }));
     // ustaw flage jezeli wystepuje w tablicy
     this.isRated = this.user.user.isRated.length !== 0 && (_.findIndex(this.user.user.isRated, data => {
       return data === this.selectedExercise._id;
     }) !== -1);
-
-    console.log('flag= ' + this.isRated);
   }
 
   // sprawdz params i ustaw podstronke. jezeli inna od dozwolonych przekieruj na glowna
@@ -164,6 +159,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
 
   // zmiana sortowania
   changeSortType(value, type) {
+    this.page = 0;
     this.filters[type] = value;
     this.searchAndSortExercises();
   }
@@ -198,7 +194,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
       for (const exercise in tempArray) {
         // jezeli idFav bedzie takie jak cwiczenia dodaj
         if (tempArray.hasOwnProperty(exercise)) {
-          console.log(this.favUserExercises);
           if (this.favUserExercises.find(id => id === tempArray[exercise]._id)) {
             partArray.push(tempArray[exercise]);
           }
@@ -248,7 +243,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
     if (value && this.isNext()) {
       this.page++;
     } else if (!value && !(this.page <= 0)) { // poprzednia strona
-      console.log(value);
       this.page--;
     }
     this.exercises = this.filtersArray.slice(this.page * 6, this.page * 6 + 6);
@@ -287,7 +281,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
     this.exerciseService.getExercise(this.exerciseId).subscribe(
       data => {
         if (data) {
-          console.log(this.selectedExercise);
           this.selectedExercise = data;
           this.checkIsRated();
           this.patchPopularValue();
@@ -321,7 +314,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
       this.updateDataFavExercise();
     } else {
       this.favUserExercises.splice(index, 1);
-      console.log(this.favUserExercises);
       this.updateDataFavExercise();
     }
     // zeby aktualizowac dane przechowywane lokalnie
@@ -354,7 +346,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
   }
 
   updateDataFavExercise() {
-    console.log(this.favUserExercises);
     this.userService.patchUserFavExercises(this.user.user.id, 'userFavExercises', this.favUserExercises)
       .subscribe(
         data => {
@@ -372,7 +363,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
   }
 
   sayMyName(value) {
-    console.log(value);
     this.partOfBody = value;
   }
 
@@ -411,7 +401,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
       const month = date.getMonth();
       const day = date.getDate();
       const year = date.getFullYear();
-      console.log(month, day, year);
       if (this.model.year >= 2020 && this.model.year !== 0 ||
         this.model.day !== 0 || this.model.month !== 0 &&
         date.toString() !== 'Invalid date') {
@@ -431,15 +420,9 @@ export class AtlasComponent implements OnInit, OnDestroy {
       if (day === new Date(data.date).getDate() &&
         month === new Date(data.date).getMonth() &&
         year === new Date(data.date).getFullYear()) {
-        console.log(data);
         return data;
       }
     });
-    console.log(this.historyExercise);
-    console.log(day === new Date(2020, 11, 21).getDate() &&
-      month === new Date(2020, 11, 21).getMonth() &&
-      year === new Date(2020, 11, 21).getFullYear());
-    console.log(new Date(1608661120083));
     if (_.isEmpty(this.historyExercise)) {
       this.newUserHistory.date = new Date(year, month, day).getTime();
       this.newUserHistory.idUser = this.userId;
@@ -470,19 +453,17 @@ export class AtlasComponent implements OnInit, OnDestroy {
       idExercise: ''
     };
     const weight = this.user.user.weight;
-    console.log(this.exerciseId);
     this.exerciseService.getExercise(this.exerciseId).subscribe(
       data => {
         kcalRatio = data.kcalRatio;
       }, error => {
       },
       () => {
-        kcal = kcalRatio * this.timeModel / 10;
-        newExercise.kcal = kcal;
+        kcal = kcalRatio * this.timeModel * weight;
+        newExercise.kcal = +kcal.toFixed(2);
         newExercise.time = this.timeModel;
         newExercise.idExercise = this.exerciseId;
         // sprawdz czy juz taki rodzaj cwiczenia wystepuje w historii jak tak to ja update
-        console.log(this.exerciseId);
         const indexTemp = _.findIndex(tempArray, ['idExercise', this.exerciseId]);
         if (indexTemp !== -1) {
           tempArray[indexTemp] = newExercise;
@@ -496,9 +477,10 @@ export class AtlasComponent implements OnInit, OnDestroy {
           },
           () => {
             console.log('Patch successful');
+
+            this.router.navigate(['./timeline-exercise']);
           }
         );
-        console.log(newExercise.idExercise);
       }
     );
   }

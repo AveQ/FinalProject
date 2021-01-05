@@ -33,8 +33,7 @@ export interface AuthResponseData {
 export class AuthService {
   user = new BehaviorSubject<User>(null);
   modalMessage = new BehaviorSubject<string>(null);
-  private urlLocal = 'http://localhost:3000';
-  private urlHeroku = 'https://nfl-center-api.herokuapp.com';
+  private urlLocal = 'https://nfl-center-api.herokuapp.com';
 
   constructor(private http: HttpClient) {
   }
