@@ -40,4 +40,9 @@ export class ExerciseService {
   postExercise(exercise) {
     return this.http.post(this.urlLocal + '/api/exercises/', exercise);
   }
+
+  patchExercise(id, toChange, newValue) {
+    return this.http.patch(this.urlLocal + '/api/exercises/' + id, [{'propName': toChange, 'value': newValue}]);
+  }
+
 }

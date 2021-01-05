@@ -33,11 +33,15 @@ export class AtlasComponent implements OnInit, OnDestroy {
     exercises: []
   };
   selectedExercise: ExerciseModel = {
-    id: '0',
+    _id: '0',
     name: '0',
     type: '0',
     description: '0',
-    rate: 0,
+    rate: {
+      counter: 0,
+      sum: 0,
+      rate: 0
+    },
     popular: 0,
     musclePart: '0',
     image: '0',
@@ -121,12 +125,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
     );
     // pobierz cwiczenia
     this.getExercises();
-    // sledz sciezke
-    // this.paramsSubscription = this.route.queryParams.subscribe(
-    //   (params: Params) => {
-    //     this.exerciseId = params.exerciseId;
-    //   }
-    // );
     if (this.exerciseId !== undefined && this.exerciseId !== '0') {
       this.loadExercise();
     }
@@ -135,6 +133,20 @@ export class AtlasComponent implements OnInit, OnDestroy {
     if (this.user) {
       this.loadUserAllHistory();
     }
+  }
+
+  // sprawdź czy id cwiczenia znajduje sie w liscie ocenionych id przez uzytkownika
+  checkIsRated() {
+    console.log(this.selectedExercise._id);
+    console.log(_.findIndex(this.user.user.isRated, data => {
+      return data === this.selectedExercise._id;
+    }));
+    // ustaw flage jezeli wystepuje w tablicy
+    this.isRated = this.user.user.isRated.length !== 0 && (_.findIndex(this.user.user.isRated, data => {
+      return data === this.selectedExercise._id;
+    }) !== -1);
+
+    console.log('flag= ' + this.isRated);
   }
 
   // sprawdz params i ustaw podstronke. jezeli inna od dozwolonych przekieruj na glowna
@@ -274,8 +286,12 @@ export class AtlasComponent implements OnInit, OnDestroy {
     this.openExer = true;
     this.exerciseService.getExercise(this.exerciseId).subscribe(
       data => {
-        console.log(this.selectedExercise);
-        this.selectedExercise = data;
+        if (data) {
+          console.log(this.selectedExercise);
+          this.selectedExercise = data;
+          this.checkIsRated();
+          this.patchPopularValue();
+        }
       },
       error => {
         this.router.navigate(['/atlas']);
@@ -285,6 +301,12 @@ export class AtlasComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     );
+
+  }
+
+  patchPopularValue() {
+    this.selectedExercise.popular ++;
+    this.exerciseService.patchExercise(this.selectedExercise._id, 'popular', this.selectedExercise.popular).subscribe();
   }
 
   closeExercise() {
@@ -511,12 +533,25 @@ export class AtlasComponent implements OnInit, OnDestroy {
       return Array(5);
     }
   }
+
   changeRate(stars) {
     this.myRate = stars + 1;
   }
 
   sendComment() {
-
+    if (!this.isRated) {
+      const newRate = this.selectedExercise.rate;
+      newRate.counter++;
+      newRate.sum = newRate.sum + this.myRate;
+      newRate.rate = +(newRate.sum / newRate.counter).toFixed(0);
+      this.user.user.isRated.push(this.selectedExercise._id);
+      this.exerciseService.patchExercise(this.selectedExercise._id, 'rate', newRate).subscribe(
+        data => {
+        }
+      );
+      this.userService.patchUserFavExercises(this.userId, 'isRated', this.user.user.isRated).subscribe();
+      this.isRated = true;
+    }
   }
 
   ngOnDestroy(): void {

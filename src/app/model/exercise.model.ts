@@ -20,11 +20,15 @@ export class AllExerciseModel {
 }
 
 export class ExerciseModel {
-  id: string;
+  _id: string;
   name: string;
   type: string;
   description: string;
-  rate: number;
+  rate: {
+    counter: number,
+    sum: number,
+    rate: number
+  };
   popular: number;
   musclePart: string;
   image: string;

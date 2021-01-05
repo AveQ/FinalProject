@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AuthResponseData} from './auth.service';
 import {BehaviorSubject} from 'rxjs';
+import {ExerciseModel} from '../model/exercise.model';
 
 @Injectable({
   providedIn: 'root'

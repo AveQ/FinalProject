@@ -63,8 +63,11 @@
                   <div class="video">
                     <i class="fas fa-film"></i>
                   </div>
-                  <div class="rateOfExer d-inline-block">
-                    <i class="far fa-star"></i> {{exercise.rate | number: '1.1-2'}}
+                  <div *ngIf="exercise.rate.rate === 0" class="rateOfExer d-inline-block">
+                    <i  class="far fa-star"></i> <em>Brak</em>
+                  </div>
+                  <div *ngIf="exercise.rate.rate > 0 " class="rateOfExer d-inline-block">
+                    <i  class="far fa-star"></i> {{exercise.rate.rate | number: '1.1-2'}}
                   </div>
                 </div>
               </div>
@@ -312,9 +315,9 @@
       <div class="rate">
         <div class="stars startAnimation">
           <h5 class="m-0">Ocena ćwiczenia</h5>
-          <i *ngFor="let numofyellow of createArrayForYellowStars(this.selectedExercise.rate)"
+          <i *ngFor="let numofyellow of createArrayForYellowStars(this.selectedExercise.rate.rate)"
              class="fas fa-star  fa-star--mod"></i>
-          <i *ngFor="let numofyellow of createArrayForGreyStars(this.selectedExercise.rate)"
+          <i *ngFor="let numofyellow of createArrayForGreyStars(this.selectedExercise.rate.rate)"
              class="fas fa-star "></i>
         </div>
 
@@ -326,6 +329,13 @@
             class="theScaleOfDifficulty-name">Główna partia mięsniowa: <b
             class="">{{this.selectedExercise.musclePart}}</b></span>
           <small class="d-block">(Dowiedz się więcej)</small>
+        </p>
+      </div>
+      <div class="col-12">
+        <p style="text-align: center">
+          <small
+            class="theScaleOfDifficulty-name">To ćwiczenie zostało wyświetlone: <b
+            class="">{{this.selectedExercise.popular}}</b></small>
         </p>
         <hr>
       </div>
@@ -389,7 +399,7 @@
 
         </span>
         <button class="btn btn-dark mb-3 mt-3 d-block" style="margin: 0 auto;" id="fullComment-add" type="button"
-                (click)="sendComment()">Dodaj
+                (click)="sendComment()">Oceń
         </button>
       </div>
     </div>
