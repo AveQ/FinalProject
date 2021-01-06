@@ -11,14 +11,19 @@ import {AirComponent} from '../components/air/air.component';
 import {AuthGuard} from '../services/authGuard.service';
 import {AuthGuardAdmin} from '../services/authGuardAdmin.service';
 import {AdminPanelComponent} from '../components/admin-panel/admin-panel.component';
+import {ExerciseComponent} from '../components/atlas/exercise/exercise.component';
+import {KnowledgeComponent} from '../components/atlas/knowledge/knowledge.component';
 
 
 const routes: Routes = [
   // {path: 'food-panel', component: FoodPanelNewComponent},
   {path: 'food-panel/:active', canActivate: [AuthGuard], component: FoodPanelNewComponent},
   {path: 'authorisation', component: AuthComponent},
-  {path: 'atlas', canActivate: [AuthGuard], component: AtlasComponent},
-  {path: 'atlas/:active', canActivate: [AuthGuard], component: AtlasComponent},
+  {path: 'atlas/exercises/:page', canActivate: [AuthGuard], component: AtlasComponent },
+  {path: 'atlas/knowledge', canActivate: [AuthGuard], component: KnowledgeComponent, children: [
+      {path: ':part', canActivate: [AuthGuard], component: KnowledgeComponent}
+    ] },
+  {path: 'exercise/:active', canActivate: [AuthGuard], component: ExerciseComponent},
   {path: 'settings', component: SettingsComponent},
   {path: 'bmi', component: BMIComponent},
   {path: 'air', component: AirComponent},

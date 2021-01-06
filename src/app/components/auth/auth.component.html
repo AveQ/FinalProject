@@ -13,14 +13,6 @@
       [ngStyle]="{'color' : signup ? '#9c0000' : 'white'}"
       class="change__mode-reg">REJESTRACJA</span>
     </div>
-    <!--
-    registration form
-    TODO:
-    -waga,
-    -wzrost,
-    -plec,
-
-    -->
     <form autocomplete="off" [formGroup]='signinForm' (ngSubmit)="onSubmit()" class="auth__box">
       <div class="form-group">
         <label

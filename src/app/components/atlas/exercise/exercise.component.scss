@@ -1,0 +1,181 @@
+// nav
+.navigation {
+  height: 100px;
+}
+
+.naviagtion-title {
+  height: 155px;
+  padding-top: 50px;
+  letter-spacing: 2px;
+  width: 100vw;
+  text-align: center;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+}
+.containerForAtlas {
+  overflow: hidden;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+.atlas-heading {
+  height: 255px;
+  font-family: 'Roboto Condensed', sans-serif;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+  ), url("src/assets/welcome-page/bg2.jpg") no-repeat top center fixed;
+  background-size: cover;
+}
+
+// exercise
+.exercise-selected {
+  font-family: "Libre Baskerville", serif;
+}
+
+.exerciseContainer {
+  min-width: 1200px;
+  padding-top: 60px;
+}
+
+.descriptionExercise {
+  text-align: center;
+}
+
+.descriptionExerciseTitle {
+  font-weight: bold;
+}
+
+.colImage {
+  text-align: center;
+}
+
+.selectedExerciseImage {
+  width: 500px;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.theScaleOfDifficulty {
+  width: 240px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+
+  & .theScaleOfDifficulty-name {
+    text-align: center;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+}
+
+// rate
+.rate {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.fa-star--mod {
+  color: #ddc016;
+}
+
+// form
+.form-data-form {
+  margin: 15px 0;
+}
+
+.calendar {
+  width: 100%;
+}
+
+.calendar-data-form {
+  padding: 0 !important;
+  width: 100px !important;
+}
+
+.input-group, .minutes {
+  margin: 10px auto;
+  height: 30px;
+
+  & .form-control, & .input-group-append {
+    height: 30px;
+    text-align: center;
+  }
+}
+
+.addExercise-button-text {
+  position: relative;
+  font-size: 13px;
+  padding: 5px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 auto;
+  text-decoration: underline;
+}
+.btn-outline-secondary {
+  line-height: 0;
+}
+
+// spinner
+.loading-spinner {
+  display: block;
+  width: 100%;
+  margin-top: 300px;
+  margin-bottom: 100px;
+  text-align: center;
+}
+
+// medias
+
+@media(max-width: 1250px) {
+  .naviagtion-title {
+    height: 75px;
+    padding-top: 10px;
+    letter-spacing: 1px;
+    width: 100vw;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  .selectedExerciseImage {
+    width: 300px;
+  }
+  .atlas-heading {
+    height: 175px;
+    background-color: #373737;
+    font-family: 'Roboto Condensed', sans-serif;
+  }
+  .navigation {
+    height: 100px;
+  }
+  .exerciseContainer {
+    padding-top: 30px;
+  }
+  .descriptionExerciseTitle {
+    font-size: 26px;
+  }
+  .descriptionExerciseTitleSec {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .exerciseContainer {
+    min-width: auto;
+  }
+}
+
+@media(max-width: 600px) {
+  .theScaleOfDifficulty {
+    width: 200px;
+
+    & .theScaleOfDifficulty-name {
+      font-size: 12px;
+    }
+  }
+}

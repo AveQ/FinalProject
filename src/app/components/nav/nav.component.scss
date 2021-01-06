@@ -179,7 +179,19 @@ nav {
 .menu--open {
   animation: openMenu linear .7s forwards;
 }
-
+// kategoria
+.naviagtion-title {
+  font-family: 'Roboto Condensed', sans-serif;
+  height: 155px;
+  padding-top: 50px;
+  letter-spacing: 2px;
+  width: 100vw;
+  text-align: center;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  z-index: 2;
+}
 @keyframes openMenu {
   0% {
     top: -500px;
@@ -236,6 +248,24 @@ nav {
     border-radius: 0;
     text-align: center;
     transform: translateX(0);
+  }
+  .nav-panel-heading {
+    height: 175px !important;
+    background-color: #373737;
+    font-family: 'Roboto Condensed', sans-serif;
+  }
+  .navigation {
+    height: 100px;
+  }
+  .naviagtion-title {
+    height: 75px;
+    padding-top: 10px;
+    letter-spacing: 1px;
+    width: 100vw;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
   }
 }
 

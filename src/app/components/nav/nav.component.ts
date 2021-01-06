@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NavigationService} from '../../services/navigation.service';
 import {AuthService} from '../../services/auth.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
@@ -8,9 +8,22 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'app-navb',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.scss']
+  styleUrls: ['./nav.component.scss'],
+  // styles: [
+  //   '.atlas-heading {\n' +
+  //   '  height: 255px;\n' +
+  //   '  font-family: \'Roboto Condensed\', sans-serif;\n' +
+  //   '  background: linear-gradient(\n' +
+  //   '      rgba(0, 0, 0, 0.5),\n' +
+  //   '      rgba(0, 0, 0, 0.5)\n' +
+  //   '  ), url(' + navImage + ') no-repeat top center fixed;\n' +
+  //   '  background-size: cover;\n' +
+  //   '}'
+  // ]
 })
 export class NavComponent implements OnInit {
+  @Input() navImage = '';
+  @Input() category = '';
   // sprawdź czy użytkownik jest zalogowany
   userSub: Subscription;
   isAuthenticated = false;
@@ -28,6 +41,7 @@ export class NavComponent implements OnInit {
     private authService: AuthService,
     private router: Router
   ) {
+
   }
 
   ngOnInit(): void {
@@ -45,6 +59,18 @@ export class NavComponent implements OnInit {
         this.selectRoute = value;
       }
     );
+  }
+
+  getClassImg() {
+    return {
+      height: '255px',
+      fontFamily: '\'Roboto Condensed\', sans-serif;',
+      background: 'linear-gradient(\n' +
+        '      rgba(0, 0, 0, 0.5),\n' +
+        '      rgba(0, 0, 0, 0.5)\n' +
+        '  ), url(' + this.navImage + ') no-repeat top center fixed\n',
+      backgroundSize: 'cover'
+    };
   }
 
   openOtherMenu() {

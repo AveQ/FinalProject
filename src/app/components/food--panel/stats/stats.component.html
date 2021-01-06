@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="col-12 m-2 dataInfo">
-      <p class="text-center"><b>Przedstawienie dnia:</b></p>
+      <p class="text-center"><b>Przedstawienie danych:</b></p>
       <p class="text-center m-0">Liczba wykonanych ćwiczeń: <b>{{exercisesCounter}}</b></p>
       <p class="text-center m-0">Długość ćwiczeń: <b>{{exercisesTime}} min</b></p>
       <p class="text-center mb-4">Nawodnienie: <b>{{waterData}} ml</b></p>
@@ -36,12 +36,9 @@
       </div>
     </div>
     <div class="col-12 optionStats">
-      <p class="text-center"><b>Opcje</b></p>
       <p><b>Generwoanie jadłospisu:</b></p>
       <div class="button-group d-flex justify-content-around">
-        <button class="btn btn-dark">Tydzień</button>
-        <button class="btn btn-dark">Miesiąc</button>
-        <button class="btn btn-dark" (click)="generatePDF()">Jeden dzień</button>
+        <button class="btn btn-dark" (click)="generatePDF()">Generuj</button>
       </div>
     </div>
   </div>

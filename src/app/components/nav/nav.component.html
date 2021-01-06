@@ -1,50 +1,68 @@
-<!---
-  #TODO:
-   -NAPRAWIĆ OTWIERANIE POBOCZNEGO MENU.
--->
-<nav class="d-flex align-content-center flex-wrap">
-  <div class="row contForAll d-flex justify-content-between">
-    <div class="logo-wrapper">
-      <div class="image-wrapper">
-        <img class="image d-flex align-content-center flex-wrap" src="assets/logo/aa.png" alt="NFC"
-             (mouseenter)="rotateImage = true" (mouseout)="rotateImage = false"
-             [ngClass]="{'rotateImage': rotateImage}">
-        <div class="logo_txt d-flex align-content-center flex-wrap"><span (mouseenter)="rotateImage = true"
-                                                                          (mouseout)="rotateImage = false">NFL Center</span>
+<div [ngStyle]="getClassImg()" class="atlas-heading nav-panel-heading">
+  <div class="navigation">
+    <nav class="d-flex align-content-center flex-wrap">
+      <div class="row contForAll d-flex justify-content-between">
+        <div class="logo-wrapper">
+          <div class="image-wrapper">
+            <img class="image d-flex align-content-center flex-wrap" src="assets/logo/aa.png" alt="NFC"
+                 (mouseenter)="rotateImage = true" (mouseout)="rotateImage = false"
+                 [ngClass]="{'rotateImage': rotateImage}">
+            <div class="logo_txt d-flex align-content-center flex-wrap"><span (mouseenter)="rotateImage = true"
+                                                                              (mouseout)="rotateImage = false">NFL Center</span>
+            </div>
+          </div>
+
+        </div>
+        <div [ngClass]="{'menu--open' : menuOpen === 1, 'menu--close' : menuOpen === 2}" class="contForMenu">
+          <ul class="menu ">
+            <li class="list"><a routerLink="/" class="link-list"
+                                [ngStyle]="{'color' : selectRoute === 0 ? 'red' : 'white'}">HOME</a></li>
+            <li class="list" *ngIf="isAuthenticated"><a [routerLink]="['/food-panel', 'meals']" class="link-list"
+                                                        [ngStyle]="{'color' : selectRoute === 1 ? 'red' : 'white'}">PANEL
+              ODŻYWIANIA</a></li>
+            <li class="list" *ngIf="isAuthenticated"><a routerLink="/timeline-exercise" class="link-list"
+                                                        [ngStyle]="{'color' : selectRoute === 2 ? 'red' : 'white'}">DZIENNIK
+              AKTYWNOŚCI</a></li>
+            <li class="list" *ngIf="isAuthenticated"><a [routerLink]="['/atlas/exercises', 1]" class="link-list"
+                                                        [ngStyle]="{'color' : selectRoute === 3 ? 'red' : 'white'}">ATLAS</a>
+            </li>
+            <li class="list" *ngIf="isAuthenticated && !isAuthenticatedAdmin"><a routerLink="/settings"
+                                                                                 class="link-list"
+                                                                                 [ngStyle]="{'color' : selectRoute === 5 ? 'red' : 'white'}">UŻYTKOWNIK</a>
+            </li>
+            <li class="list" *ngIf="isAuthenticated && isAuthenticatedAdmin"><a routerLink="/admin-panel"
+                                                                                class="link-list"
+                                                                                [ngStyle]="{'color' : selectRoute === 7 ? 'red' : 'white'}">ADMIN</a>
+            </li>
+            <li *ngIf="isAuthenticated" class="list listOther"><a class="link-list"
+                                                                  [ngStyle]="{'color' : selectRoute === 4 ? 'red' : 'white'}">
+              <span (click)="openOtherMenu()">INNE</span>
+              <ul [ngStyle]="{'display' : otherMenu ? 'block' : 'none'}" class="menuOther">
+                <li routerLink="/bmi" class="bmi" style="color: white"><span class="textOther">BMI</span></li>
+                <li routerLink="/air" class="air" style="color: white"><span class="textOther">POWIETRZE</span></li>
+                <li routerLink="/atlas/knowledge" class="air" style="color: white"><span
+                  class="textOther">MIĘŚNIE</span></li>
+              </ul>
+            </a></li>
+            <li class="list">
+              <a *ngIf="!isAuthenticated" routerLink="/authorisation" class="link-list joinToUs">DOŁĄCZ</a>
+              <a *ngIf="isAuthenticated" (click)="logout()" class="link-list joinToUs">WYLOGUJ</a>
+            </li>
+            <li class="list list-hamburger" (click)="menuExit()"><a class="link-list link-list-hamburger">ZWIŃ</a>
+            </li>
+          </ul>
+        </div>
+        <div class="contForHamb" (click)="menuOpen = 1">
+          <div class="box">
+            <div class="firstHamb"></div>
+            <div class="secHamb"></div>
+            <div class="centerHamb"></div>
+          </div>
         </div>
       </div>
-
-    </div>
-    <div [ngClass]="{'menu--open' : menuOpen === 1, 'menu--close' : menuOpen === 2}" class="contForMenu">
-      <ul class="menu ">
-        <li class="list"><a routerLink="/" class="link-list"
-                            [ngStyle]="{'color' : selectRoute === 0 ? 'red' : 'white'}">HOME</a></li>
-        <li class="list" *ngIf="isAuthenticated"><a [routerLink]="['/food-panel', 'meals']" class="link-list" [ngStyle]="{'color' : selectRoute === 1 ? 'red' : 'white'}">PANEL ODŻYWIANIA</a></li>
-        <li class="list" *ngIf="isAuthenticated"><a routerLink="/timeline-exercise" class="link-list" [ngStyle]="{'color' : selectRoute === 2 ? 'red' : 'white'}">DZIENNIK AKTYWNOŚCI</a></li>
-        <li class="list" *ngIf="isAuthenticated"><a routerLink="/atlas" class="link-list" [ngStyle]="{'color' : selectRoute === 3 ? 'red' : 'white'}">ATLAS</a></li>
-        <li class="list" *ngIf="isAuthenticated && !isAuthenticatedAdmin"><a routerLink="/settings" class="link-list" [ngStyle]="{'color' : selectRoute === 5 ? 'red' : 'white'}">UŻYTKOWNIK</a></li>
-        <li class="list" *ngIf="isAuthenticated && isAuthenticatedAdmin"><a routerLink="/admin-panel" class="link-list" [ngStyle]="{'color' : selectRoute === 7 ? 'red' : 'white'}">ADMIN</a></li>
-        <li *ngIf="isAuthenticated" class="list listOther"><a class="link-list" [ngStyle]="{'color' : selectRoute === 4 ? 'red' : 'white'}">
-          <span (click)="openOtherMenu()">INNE</span>
-          <ul [ngStyle]="{'display' : otherMenu ? 'block' : 'none'}" class="menuOther">
-            <li routerLink="/bmi" class="bmi" style="color: white"><span class="textOther">BMI</span></li>
-            <li routerLink="/air" class="air" style="color: white"><span class="textOther">POWIETRZE</span></li>
-          </ul>
-        </a></li>
-        <li class="list">
-          <a *ngIf="!isAuthenticated" routerLink="/authorisation" class="link-list joinToUs">DOŁĄCZ</a>
-          <a *ngIf="isAuthenticated" (click)="logout()" class="link-list joinToUs">WYLOGUJ</a>
-        </li>
-        <li class="list list-hamburger" (click)="menuExit()"><a class="link-list link-list-hamburger">ZWIŃ</a>
-        </li>
-      </ul>
-    </div>
-    <div class="contForHamb" (click)="menuOpen = 1">
-      <div class="box" >
-      <div class="firstHamb"></div>
-      <div class="secHamb"></div>
-      <div class="centerHamb"></div>
-      </div>
+    </nav>
+    <div class="naviagtion-title">
+      {{category}}
     </div>
   </div>
-</nav>
+</div>

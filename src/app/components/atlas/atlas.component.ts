@@ -19,47 +19,15 @@ export class AtlasComponent implements OnInit, OnDestroy {
   /*http://localhost:3000/*/
   imageAddress = 'https://nfl-center-api.herokuapp.com/';
   filtersHidden = true;
-  partOfBody = 'Wybierz partię';
-  isFront = false;
+
   heartAnimation = false;
   safeSrc: SafeResourceUrl;
   videoURL = 'https://www.youtube.com/embed/3vJHQjiEp1w';
   openExer = false;
   isRated = false;
-  private newUserHistory = {
-    idUser: '',
-    date: 0,
-    kcal: 0,
-    time: 666,
-    exercises: []
-  };
-  selectedExercise: ExerciseModel = {
-    _id: '0',
-    name: '0',
-    type: '0',
-    description: '0',
-    rate: {
-      counter: 0,
-      sum: 0,
-      rate: 0
-    },
-    popular: 0,
-    musclePart: '0',
-    image: '0',
-    video: '0',
-    difficult: 0,
-    kcalRatio: 0
-  };
   counterExercises = 0;
-  model: NgbDateStruct = {
-    year: 0,
-    month: 0,
-    day: 0
-  };
-  timeModel = 30;
   isLoading = true;
-  hideForm = false;
-  error = false;
+
 
   constructor(
     private navigationService: NavigationService,
@@ -68,7 +36,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private exercise: ExerciseService,
     private userService: UserService) {
   }
 
@@ -77,10 +44,12 @@ export class AtlasComponent implements OnInit, OnDestroy {
   basicSportMenu = [
     {
       name: 'Wiedza podstawowa',
+      route: '/atlas/knowledge',
       on: false
     },
     {
       name: 'Ćwiczenia',
+      route: '/atlas/exercises/1',
       on: true
     },
   ];
@@ -95,18 +64,13 @@ export class AtlasComponent implements OnInit, OnDestroy {
     part: '',
     sort: ''
   };
-
-  scaleOfDifficulty = 66;
-  lvlOfDifficulty = 'Expert';
-  colorOfDifficulty = 'success';
-  kcal15min = 125;
+  private allUserHistory;
   exerciseId = '0';
   paramsSubscription: Subscription;
   user;
   userId;
   favUserExercises = [];
-  private allUserHistory;
-  myRate = 1;
+
 
   ngOnInit(): void {
     this.setRoute();
@@ -126,35 +90,27 @@ export class AtlasComponent implements OnInit, OnDestroy {
     );
     // pobierz cwiczenia
     this.getExercises();
-    if (this.exerciseId !== undefined && this.exerciseId !== '0') {
-      this.loadExercise();
-    }
+    // if (this.exerciseId !== undefined && this.exerciseId !== '0') {
+    //   this.loadExercise();
+    // }
     this.navigationService.changeNavSubject(3);
-    this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoURL);
     if (this.user) {
       this.loadUserAllHistory();
     }
   }
 
-  // sprawdź czy id cwiczenia znajduje sie w liscie ocenionych id przez uzytkownika
-  checkIsRated() {
-    // ustaw flage jezeli wystepuje w tablicy
-    this.isRated = this.user.user.isRated.length !== 0 && (_.findIndex(this.user.user.isRated, data => {
-      return data === this.selectedExercise._id;
-    }) !== -1);
-  }
-
   // sprawdz params i ustaw podstronke. jezeli inna od dozwolonych przekieruj na glowna
   setRoute() {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      if (params.get('active') === null) {
-        this.router.navigate(['atlas/']);
-      } else {
-        this.exerciseId = params.get('active');
-        this.router.navigate(['atlas/' + params.get('active')]);
-        this.loadExercise();
+    console.log(this.route.snapshot.params.active);
+    this.route.params.subscribe(
+      (params: Params) => {
+        if (params) {
+          this.page = params.page - 1;
+        } else {
+          this.router.navigate(['/atlas', this.page + 1]);
+        }
       }
-    });
+    );
   }
 
   // zmiana sortowania
@@ -242,8 +198,10 @@ export class AtlasComponent implements OnInit, OnDestroy {
 
     if (value && this.isNext()) {
       this.page++;
+      this.router.navigate(['/atlas/exercises', (this.page + 1)]);
     } else if (!value && !(this.page <= 0)) { // poprzednia strona
       this.page--;
+      this.router.navigate(['/atlas/exercises', (this.page + 1)]);
     }
     this.exercises = this.filtersArray.slice(this.page * 6, this.page * 6 + 6);
   }
@@ -273,38 +231,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
         this.counterExercises = this.allExercisesDb.length;
       }
     );
-  }
-
-  loadExercise() {
-    this.isLoading = true;
-    this.openExer = true;
-    this.exerciseService.getExercise(this.exerciseId).subscribe(
-      data => {
-        if (data) {
-          this.selectedExercise = data;
-          this.checkIsRated();
-          this.patchPopularValue();
-        }
-      },
-      error => {
-        this.router.navigate(['/atlas']);
-      },
-      () => {
-        this.checkDifficulty();
-        this.isLoading = false;
-      }
-    );
-
-  }
-
-  patchPopularValue() {
-    this.selectedExercise.popular ++;
-    this.exerciseService.patchExercise(this.selectedExercise._id, 'popular', this.selectedExercise.popular).subscribe();
-  }
-
-  closeExercise() {
-    this.router.navigate(['/atlas']);
-    this.openExer = !this.openExer;
   }
 
   animationHeart(element: HTMLElement, exerciseId) {
@@ -360,134 +286,19 @@ export class AtlasComponent implements OnInit, OnDestroy {
       x.on = false;
     });
     this.basicSportMenu[index].on = true;
-  }
-
-  sayMyName(value) {
-    this.partOfBody = value;
-  }
-
-
-  checkDifficulty() {
-    switch (this.selectedExercise.difficult) {
-      case 0: {
-        this.setDifficulty('success', 33, 'Łatwy');
-        break;
-      }
-      case 1: {
-        this.setDifficulty('warning', 66, 'Trudny');
-        break;
-      }
-      case 2: {
-        this.setDifficulty('danger', 100, 'Expert');
-        break;
-      }
-      default: {
-        this.setDifficulty('success', 33, 'Łatwy');
-      }
+    console.log(this.basicSportMenu[index].route);
+    if (index === 1) {
+      this.page = 0;
+      this.getExercises();
     }
+    this.router.navigate([this.basicSportMenu[index].route], { relativeTo: this.route });
   }
 
-  setDifficulty(color, scale, lvl) {
-    this.scaleOfDifficulty = scale;
-    this.lvlOfDifficulty = lvl;
-    this.colorOfDifficulty = color;
-  }
 
-  sendDateToPatch() {
-
-    const date = new Date(this.model.year + '-' + this.model.month + '-' + this.model.day);
-    if (!isNaN(date.getTime()) && (this.timeModel > 0)) {
-
-      const month = date.getMonth();
-      const day = date.getDate();
-      const year = date.getFullYear();
-      if (this.model.year >= 2020 && this.model.year !== 0 ||
-        this.model.day !== 0 || this.model.month !== 0 &&
-        date.toString() !== 'Invalid date') {
-        this.setSelectedHistory(day, month, year);
-      } else {
-        this.error = true;
-      }
-    } else {
-      this.error = true;
-    }
-
-  }
-
-  setSelectedHistory(day, month, year) {
-    this.historyExercise = _.find(this.allUserHistory, data => {
-      // ustaw posilki
-      if (day === new Date(data.date).getDate() &&
-        month === new Date(data.date).getMonth() &&
-        year === new Date(data.date).getFullYear()) {
-        return data;
-      }
-    });
-    if (_.isEmpty(this.historyExercise)) {
-      this.newUserHistory.date = new Date(year, month, day).getTime();
-      this.newUserHistory.idUser = this.userId;
-      this.exercise.postUserHistory(this.newUserHistory).subscribe(
-        history => {
-        },
-        error => {
-        },
-        () => {
-          console.log('new history');
-          this.loadUserAllHistory();
-          this.setSelectedHistory(day, month, year);
-        }
-      );
-    } else {
-      this.patchNewExe();
-    }
-
-  }
-
-  patchNewExe() {
-    let kcalRatio = 0;
-    let kcal = 0;
-    let tempArray = this.historyExercise.exercises;
-    const newExercise = {
-      kcal: 0,
-      time: -1,
-      idExercise: ''
-    };
-    const weight = this.user.user.weight;
-    this.exerciseService.getExercise(this.exerciseId).subscribe(
-      data => {
-        kcalRatio = data.kcalRatio;
-      }, error => {
-      },
-      () => {
-        kcal = kcalRatio * this.timeModel * weight;
-        newExercise.kcal = +kcal.toFixed(2);
-        newExercise.time = this.timeModel;
-        newExercise.idExercise = this.exerciseId;
-        // sprawdz czy juz taki rodzaj cwiczenia wystepuje w historii jak tak to ja update
-        const indexTemp = _.findIndex(tempArray, ['idExercise', this.exerciseId]);
-        if (indexTemp !== -1) {
-          tempArray[indexTemp] = newExercise;
-        } else {
-          tempArray.push(newExercise);
-        }
-        this.exercise.patchUserHistory(this.historyExercise._id, 'exercises', tempArray).subscribe(
-          data => {
-          },
-          error => {
-          },
-          () => {
-            console.log('Patch successful');
-
-            this.router.navigate(['./timeline-exercise']);
-          }
-        );
-      }
-    );
-  }
 
   loadUserAllHistory() {
     if (this.user) {
-      this.exercise.loadUserAllHistory(this.userId).subscribe(
+      this.exerciseService.loadUserAllHistory(this.userId).subscribe(
         data => {
           this.allUserHistory = data;
         },
@@ -499,42 +310,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
     }
   }
 
-  createArrayForYellowStars(n: number): any[] {
-    if (n) {
-      return Array(n);
-    } else {
-      return Array(0);
-    }
-  }
-
-  createArrayForGreyStars(n: number): any[] {
-
-    if (n) {
-      return Array(5 - n);
-    } else {
-      return Array(5);
-    }
-  }
-
-  changeRate(stars) {
-    this.myRate = stars + 1;
-  }
-
-  sendComment() {
-    if (!this.isRated) {
-      const newRate = this.selectedExercise.rate;
-      newRate.counter++;
-      newRate.sum = newRate.sum + this.myRate;
-      newRate.rate = +(newRate.sum / newRate.counter).toFixed(0);
-      this.user.user.isRated.push(this.selectedExercise._id);
-      this.exerciseService.patchExercise(this.selectedExercise._id, 'rate', newRate).subscribe(
-        data => {
-        }
-      );
-      this.userService.patchUserFavExercises(this.userId, 'isRated', this.user.user.isRated).subscribe();
-      this.isRated = true;
-    }
-  }
 
   ngOnDestroy(): void {
   }

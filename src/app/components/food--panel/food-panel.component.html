@@ -3,14 +3,7 @@
       NAV AND TITLE
     -->
 <div class="containerForFoodPanel">
-  <div class="food-panel-heading">
-    <div class="navigation">
-      <app-navb></app-navb>
-      <div class="naviagtion-title">
-        ODŻYWIANIE
-      </div>
-    </div>
-  </div>
+      <app-navb [navImage]='"/assets/welcome-page/bg2.jpg"' [category] = '"ODŻYWIANIE"'></app-navb>
   <div *ngIf="!updateMeal" class=" container-fluid boxFoodPanel">
     <!--
       TEXT BEFORE DATE

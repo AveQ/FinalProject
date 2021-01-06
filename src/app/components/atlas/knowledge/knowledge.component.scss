@@ -1,0 +1,184 @@
+.containerForAtlas {
+  overflow: hidden;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.infoExer {
+  color: gray;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.col-12, .row {
+  margin: 0;
+  padding: 0;
+}
+
+.selectPart {
+  display: block;
+}
+
+.correctPart {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.body {
+  display: inline-block;
+  width: 254px;
+  height: 290px;
+  position: relative;
+}
+
+.partOfBody {
+  position: absolute;
+  cursor: pointer;
+
+  &:after {
+  }
+
+  &:before {
+    opacity: 0;
+    position: absolute;
+    content: '';
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.51);
+    top: 50%;
+    left: 50%;
+    height: 100%;
+    border-radius: 20px;
+    width: 100%;
+  }
+
+  &:hover:after {
+    background-color: #7c0000;
+  }
+
+  &:hover:before {
+    animation: zoomPart linear forwards 0.4s;
+  }
+}
+
+
+.biceps-one, .biceps-two {
+  width: 25px;
+  height: 13px;
+  top: 50px;
+}
+
+.biceps-one {
+  left: 70px;
+}
+
+.biceps-two {
+  right: 70px;
+}
+
+.shoulders-one, .shoulders-two {
+  width: 18px;
+  height: 13px;
+  top: 50px;
+  z-index: 2;
+}
+
+.shoulders-one {
+  left: 90px;
+}
+
+.shoulders-two {
+  right: 90px;
+}
+
+.triceps-one, .triceps-two {
+  width: 25px;
+  height: 10px;
+  top: 57px;
+}
+
+.triceps-one {
+  left: 80px;
+}
+
+.triceps-two {
+  right: 80px;
+}
+
+.forearm-one, .forearm-two {
+  width: 40px;
+  height: 21px;
+  top: 53px;
+}
+
+.forearm-one {
+  left: 33px;
+}
+
+.forearm-two {
+  right: 33px;
+}
+
+.chest {
+  z-index: 1;
+  width: 55px;
+  left: 100px;
+  height: 40px;
+  top: 50px;
+}
+
+.stomach {
+  z-index: 1;
+  width: 55px;
+  left: 100px;
+  height: 43px;
+  top: 90px;
+}
+
+.quadriceps-one, .quadriceps-two {
+  width: 30px;
+  height: 41px;
+  top: 145px;
+}
+
+.quadriceps-one {
+  left: 128px;
+}
+
+.quadriceps-two {
+  right: 128px;
+}
+
+
+
+.back {
+  width: 50px;
+  height: 81px;
+  left: 102px;
+  top: 56px;
+}
+
+.gluteus {
+  width: 57px;
+  height: 30px;
+  left: 99px;
+  top: 125px;
+}
+
+.tileBody {
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 20px;
+  margin: 20px 0;
+}
+
+// animations
+@keyframes zoomPart {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

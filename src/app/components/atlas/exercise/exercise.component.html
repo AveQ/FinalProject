@@ -1,0 +1,143 @@
+<!--
+      NAV AND TITLE
+    -->
+<div class="containerForAtlas">
+  <div class="atlas-heading">
+    <div class="navigation">
+      <app-navb></app-navb>
+      <div class="naviagtion-title">
+        ATLAS
+      </div>
+    </div>
+  </div>
+  <div class=" container-fluid">
+  </div>
+  <div class="row justify-content-center exercise-selected">
+    <app-loading-spinner *ngIf="isLoading" class="loading-spinner"></app-loading-spinner>
+    <div *ngIf="!isLoading" class="row justify-content-center exerciseContainer">
+      <!--tytul-->
+      <div class=" col-12 descriptionExercise">
+        <h2 class="descriptionExerciseTitle" style="font-weight: bold;">OPIS ĆWICZENIA</h2>
+        <h5 class="descriptionExerciseTitle descriptionExerciseTitleSec"
+            style="font-weight: bold;">{{this.selectedExercise.name | uppercase}}</h5>
+        <hr>
+      </div>
+      <!--obrazek-->
+      <div class="col-12 colImage">
+        <h5 class="descriptionExerciseTitle descriptionExerciseTitleSec"
+            style="font-weight: bold; margin-bottom: 10px;">DANE</h5>
+        <img [src]=(imageAddress+selectedExercise.image) alt="" class="selectedExerciseImage">
+      </div>
+      <!--poziom trudnosci-->
+      <div class="col-12" style="margin-top: 10px;">
+        <p class="theScaleOfDifficulty">
+          <span class="theScaleOfDifficulty-name"><em>Poziom trudności - <b>{{lvlOfDifficulty}}</b></em></span>
+          <ngb-progressbar
+            class="theScaleOfDifficulty-bar"
+            [type]="colorOfDifficulty" textType="white"
+            [value]="scaleOfDifficulty"
+            height="10px">
+          </ngb-progressbar>
+        </p>
+      </div>
+      <!--ocena cwiczenia-->
+      <div class="rate">
+        <div *ngIf="selectedExercise.rate.rate !== 0">
+          <h5 class="m-0">Ocena ćwiczenia</h5>
+          <i *ngFor="let numofyellow of createArrayForYellowStars(this.selectedExercise.rate.rate)"
+             class="fas fa-star  fa-star--mod"></i>
+          <i *ngFor="let numofyellow of createArrayForGreyStars(this.selectedExercise.rate.rate)"
+             class="fas fa-star "></i>
+        </div>
+        <div *ngIf="selectedExercise.rate.rate === 0">
+          <h5 >Ocena ćwiczenia</h5>
+          <span><em><b>Nieoceniono</b></em></span>
+        </div>
+
+      </div>
+      <!--główna partia-->
+      <div class="col-12">
+        <p style="text-align: center">
+          <span
+            class="theScaleOfDifficulty-name">Główna partia mięsniowa: <b>{{this.selectedExercise.musclePart}}</b></span>
+          <small class="d-block">(Dowiedz się więcej)</small>
+        </p>
+      </div>
+      <div class="col-12">
+        <p style="text-align: center">
+          <small
+            class="theScaleOfDifficulty-name">To ćwiczenie zostało wyświetlone: <b
+            class="">{{this.selectedExercise.popular}}</b></small>
+        </p>
+        <hr>
+      </div>
+      <div class="col-12 col-lg-8 text-center" style="padding: 10px">
+        <h5 class="descriptionExerciseTitle descriptionExerciseTitleSec"
+            style="font-weight: bold;">OPIS ĆWICZENIA</h5>
+        <p class="text-center">
+          {{this.selectedExercise.description}}
+        </p>
+      </div>
+      <!--wlacznik dodawania cwiczenia-->
+      <div class="col-12 text-center">
+        <span (click)="hideForm = !hideForm" class="d-inline-block" style="cursor: pointer; text-decoration: underline"><b>Dodaj ćwiczenie!</b></span>
+      </div>
+      <!--formularz-->
+      <div *ngIf="hideForm" class="col-10 text-center form-data-form">
+        <div class="d-block">Wybierz <b>date</b></div>
+        <form class="form-inline">
+          <div class="form-group calendar">
+            <div class="input-group ">
+              <input (click)="d.toggle()" class="form-control calendar-data-form" placeholder="Data"
+                     name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i
+                  class="far fa-calendar-alt "></i></button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="d-block">Ustaw <b>czas</b> treningu [min]</div>
+        <form class="form-inline">
+          <div class="form-group calendar">
+            <div class="input-group ">
+              <input id="numberInput" class="form-control calendar-data-form"
+                     name="dp" [(ngModel)]="timeModel" type="number">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button"><i class="far fa-clock"></i></button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <p *ngIf="error" class="d-block" style="margin: 0 auto; color: #9c0000">Błędna wartość</p>
+        <div (click)="sendDateToPatch()" class="addExercise-button-text"><b>DODAJ</b></div>
+      </div>
+      <!--wlacznik dodawania oceny-->
+      <div class="col-12 text-center mb-2">
+        <hr>
+        <span (click)="hideRate = !hideRate" class="d-inline-block" style="cursor: pointer; text-decoration: underline"><b>Oceń ćwiczenie!</b></span>
+      </div>
+      <!--ocena cwiczenia-->
+      <div *ngIf="isRated && hideRate" class="rate mb-3">
+        <h5><b>Dziękujemy za ocenę!</b></h5>
+      </div>
+
+      <div *ngIf="!isRated && hideRate" class="rate mb-3">
+        <h5>Twoja opinia jest dla nas najważniejsza!</h5>
+        <p>Oceń ćwiczenie dla innych użytkowników!</p>
+        <span style="cursor: pointer" *ngFor="let stars of createArrayForYellowStars(5); let i = index">
+          <!--yellow-->
+          <i *ngIf="myRate > i" (click)="changeRate(i)"
+             class="fas fa-star fa-star--mod fa-2x"></i>
+          <i *ngIf="myRate <= i" (click)="changeRate(i)"
+             class="fas fa-star fa-2x"></i>
+
+        </span>
+        <button class="btn btn-dark mb-3 mt-3 d-block" style="margin: 0 auto;" id="fullComment-add" type="button"
+                (click)="sendComment()">Oceń
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,6 +1,8 @@
-.forecast {
-  box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.75);
+.container {
   font-family: 'Roboto Condensed', sans-serif;
+}
+.forecast {
+  box-shadow: 1px 1px 6px 0 rgba(0,0,0,0.75);
   margin-top: 30px;
   display: inline-block;
   padding: 10px;
@@ -21,7 +23,6 @@
 }
 .part {
   font-weight: bold;
-  font-family: 'Roboto Condensed', sans-serif;
   padding-bottom: 20px;
   width: 80%;
   text-align: center;
@@ -34,10 +35,8 @@
 .optionStats {
   width: 80%;
   text-align: center;
-  font-family: 'Roboto Condensed', sans-serif;
 }
 .wrongData {
-  font-family: 'Roboto Condensed', sans-serif;
   text-align: center;
   text-decoration: underline;
   margin: 50px 0;

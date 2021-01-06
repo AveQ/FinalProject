@@ -29,6 +29,8 @@ import {FooterComponent} from '../components/footer/footer.component';
 import {AdminPanelComponent} from '../components/admin-panel/admin-panel.component';
 import {AuthGuardAdmin} from '../services/authGuardAdmin.service';
 import {ModalComponent} from '../components/modal/modal.component';
+import {ExerciseComponent} from '../components/atlas/exercise/exercise.component';
+import {KnowledgeComponent} from '../components/atlas/knowledge/knowledge.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +49,9 @@ import {ModalComponent} from '../components/modal/modal.component';
     LoadingSpinnerComponent,
     FooterComponent,
     AdminPanelComponent,
-    ModalComponent
+    ModalComponent,
+    ExerciseComponent,
+    KnowledgeComponent
   ],
   imports: [
     BrowserModule,

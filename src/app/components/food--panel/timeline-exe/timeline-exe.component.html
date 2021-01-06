@@ -1,16 +1,8 @@
-<!--<app-navb></app-navb>-->
 <!--
       NAV AND TITLE
     -->
 <div class="containerForTimeline">
-  <div class="timeline-heading">
-    <div class="navigation">
-      <app-navb></app-navb>
-      <div class="naviagtion-title">
-        DZIENNIK
-      </div>
-    </div>
-  </div>
+  <app-navb [navImage]='"/assets/welcome-page/bg4.jpg"' [category]='"DZIENNIK"'></app-navb>
   <div *ngIf="!updateMeal" class=" container-fluid">
     <!--
       TEXT BEFORE DATE
