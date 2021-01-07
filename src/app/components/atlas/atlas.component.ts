@@ -9,6 +9,7 @@ import {AuthService} from '../../services/auth.service';
 import {UserService} from '../../services/user.service';
 import * as _ from 'lodash';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-atlas',
@@ -27,7 +28,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
   isRated = false;
   counterExercises = 0;
   isLoading = true;
-
+  language;
 
   constructor(
     private navigationService: NavigationService,
@@ -36,7 +37,8 @@ export class AtlasComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService) {
+    private userService: UserService,
+    private translate: TranslateService) {
   }
 
 // wyszukana historia
@@ -73,6 +75,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.language = this.translate.currentLang;
     this.setRoute();
     // pobierz dane o użytkowniku
     this.authService.user.subscribe(

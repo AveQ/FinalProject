@@ -6,6 +6,7 @@ import {ExerciseService} from '../../../services/exercise.service';
 import {AuthService} from '../../../services/auth.service';
 import {FoodService} from '../../../services/food.service';
 import * as _ from 'lodash';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-stats',
@@ -23,24 +24,28 @@ export class StatsComponent implements OnInit, DoCheck {
       value: 30,
       max: 100,
       name: 'Kalorie',
+      nameEn: 'Calories',
       type: 'success'
     },
     {
       value: 50,
       max: 100,
-      name: 'Proteiny',
+      name: 'Białka',
+      nameEn: 'Proteins',
       type: 'success'
     },
     {
       value: 40,
       max: 100,
       name: 'Tłuszcze',
+      nameEn: 'Fats',
       type: 'success'
     },
     {
       value: 10,
       max: 100,
       name: 'Węglowodany',
+      nameEn: 'Carbohydrates',
       type: 'success'
     }
   ];
@@ -51,9 +56,11 @@ export class StatsComponent implements OnInit, DoCheck {
   exercisesCounter = 0;
   todayExercises = [];
   meal = [];
+  language = 'PL';
   @Input() mealPDF;
 
   ngOnInit(): void {
+    this.language = this.translate.currentLang;
     this.authService.user.subscribe(
       data => {
         if (data) {
@@ -86,7 +93,8 @@ export class StatsComponent implements OnInit, DoCheck {
   constructor(private userService: UserService,
               private exerciseService: ExerciseService,
               private authService: AuthService,
-              private foodService: FoodService) {
+              private foodService: FoodService,
+              private translate: TranslateService) {
 
   }
 

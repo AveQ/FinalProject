@@ -3,6 +3,7 @@ import {NavigationService} from '../../services/navigation.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {AirPollutionService} from '../../services/airPollution.service';
 import * as _ from 'lodash';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-bmi',
@@ -29,7 +30,7 @@ export class AirComponent implements OnInit, OnDestroy {
   // wyzeruj tablice jak string === ''
   emptyFlag = true;
 
-  constructor(private navigateService: NavigationService, private airPollutionService: AirPollutionService) {
+  constructor(private navigateService: NavigationService, private translate: TranslateService, private airPollutionService: AirPollutionService) {
   }
 
   ngOnInit(): void {
@@ -64,9 +65,9 @@ export class AirComponent implements OnInit, OnDestroy {
     this.filteredStations = [];
     this.arrayWithCity = [];
     this.filteredStations = _.filter(this.stations, stat => {
-        if (stat.city !== null && stat.city.name.toUpperCase().includes(city.value.toUpperCase())) {
-          return stat;
-        }
+      if (stat.city !== null && stat.city.name.toUpperCase().includes(city.value.toUpperCase())) {
+        return stat;
+      }
     });
     this.createTable();
     city.value === '' ? this.emptyFlag = true : this.emptyFlag = false;
@@ -171,6 +172,36 @@ export class AirComponent implements OnInit, OnDestroy {
       return 'NO2';
     } else {
       return 'Brak danych';
+    }
+  }
+
+  translateStatus(status) {
+    if (this.translate.currentLang !== 'pl') {
+      switch (status) {
+        case 'Dobry': {
+          return 'Good';
+        }
+        case 'Bardzo dobry': {
+          return 'Very good';
+        }
+        case 'Dostateczny': {
+          return 'Sufficient';
+        }
+        case 'Zły': {
+          return 'Bad';
+        }
+        case 'Bardzo zły': {
+          return 'Very bad';
+        }
+        case 'Brak danych': {
+          return 'No data';
+        }
+        case 'Umiarkowany': {
+          return 'Temperate';
+        }
+      }
+    } else {
+      return status;
     }
   }
 

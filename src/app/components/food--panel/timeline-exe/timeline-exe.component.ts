@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 import {AtlasComponent} from '../../atlas/atlas.component';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-timeline',
@@ -52,18 +53,21 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
   private userId;
   private allUserHistory;
   private userHistoryId;
+  language = 'pl';
 
   constructor(private navigateService: NavigationService,
               private timeService: TimeService,
               private exercise: ExerciseService,
               private authService: AuthService,
-              private route: Router) {
+              private route: Router,
+              private translate: TranslateService) {
   }
 
   setFilter(value, index) {
     this.finalExerciseArray = [];
     if (value === 'all') {
       this.finalExerciseArray = this.exercises;
+      console.log(this.finalExerciseArray)
     } else {
       this.exercises.find(element => {
         if (element.kind === value) {
@@ -105,6 +109,7 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.language = this.translate.currentLang;
     this.userSubscription = this.authService.user.subscribe(
       user => {
         if (user) {
@@ -188,6 +193,7 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
           data => {
             tempObject = {
               id: tempExercises[exer].idExercise,
+              namePL: data.namePL,
               name: data.name,
               kind: data.type,
               time: tempExercises[exer].time,

@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {TranslationService} from './translation.service';
+import {TranslateService} from '@ngx-translate/core';
 
 class Day {
   name: string;
@@ -15,6 +17,15 @@ enum Days {
   'Czwartek' = 4,
   'Piątek' = 5,
   'Sobota' = 6
+}
+enum DaysEN {
+  'Sunday' = 0,
+  'Monday' = 1,
+  'Tuesday' = 2,
+  'Wednesday' = 3,
+  'Thursday' = 4,
+  'Friday' = 5,
+  'Saturday' = 6
 }
 
 @Injectable({
@@ -42,7 +53,8 @@ export class TimeService {
   maxDate;
   minDate;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private translate: TranslateService) {
   }
 
   // ustaw date maksymalna do odtworzenia - 30 dni w lewo i 30 w prawo
@@ -56,7 +68,8 @@ export class TimeService {
   setDate(date) {
     // if date is not bigger or smaller than current date do it
     // enum
-    const days = Days;
+    let days;
+    this.translate.currentLang === 'pl' ? days = Days : days = DaysEN;
     // time
     this.currentDay.time = new Date(date).getTime();
     this.nextDay.time = this.currentDay.time + 86400000;

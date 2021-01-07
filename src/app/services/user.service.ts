@@ -17,70 +17,95 @@ export class UserService {
   settings = [
     {
       name: 'Nick',
+      nameEN: 'Nick',
       name_value: 'Brak',
+      name_value_EN: 'None',
       formInfo: 'text',
       dbName: 'nick',
       class_icon: 'fas fa-user-circle fa-3x '
     },
     {
       name: 'Waga',
+      nameEN: 'Weight',
       name_value: 60,
+      name_value_EN: 60,
       formInfo: 'number',
       dbName: 'weight',
       class_icon: 'fas fa-weight fa-3x account'
     },
     {
       name: 'Wzrost',
+      nameEN: 'Height',
       name_value: 170,
+      name_value_EN: 170,
       formInfo: 'number',
       dbName: 'height',
       class_icon: 'fas fa-arrows-alt-v fa-3x'
     },
     {
       name: 'Płeć',
+      nameEN: 'Gender',
       name_value: 'Brak',
+      name_value_EN: 'None',
       formInfo: 'select',
-      options_value: ['Male', 'Female'],
+      options_value: ['Mezczyzna', 'Kobieta'],
+      options_value_EN: ['Male', 'Female'],
       dbName: 'gender',
       class_icon: 'fas fa-venus-mars fa-3x account'
     },
     {
       name: 'Tygodniowa zmiana',
+      nameEN: 'Weekly change',
       name_value: '0kg',
+      name_value_EN: '0kg',
       formInfo: 'number',
       dbName: 'weeklyChange',
       class_icon: 'fas fa-exchange-alt fa-3x'
     },
     {
       name: 'Aktywność fizyczna',
+      nameEN: 'Physical activity',
       name_value: 'Brak Danych',
+      name_value_EN: 'None',
       options_value: [
         {value: 2.2, name: 'Wyczynowa'},
         {value: 2.0, name: 'Duża'},
         {value: 1.8, name: 'Średnia'},
         {value: 1.5, name: 'Mała'}],
+      options_value_EN: [
+        {value: 2.2, name: 'Very high'},
+        {value: 2.0, name: 'High '},
+        {value: 1.8, name: 'Medium'},
+        {value: 1.5, name: 'Small'}],
       formInfo: 'select',
       dbName: 'physicalActivity',
       class_icon: 'fas fa-globe-americas fa-3x account'
     },
     {
       name: 'Wiek',
+      nameEN: 'Age',
       name_value: 50,
+      name_value_EN: 50,
       formInfo: 'number',
       dbName: 'age',
       class_icon: 'fas fa-birthday-cake fa-3x'
     },
     {
       name: 'Język',
+      nameEN: 'Language',
       name_value: 'PL',
+      name_value_EN: 'EN',
       options_value: ['PL', 'EN'],
+      options_value_EN: ['PL', 'EN'],
       formInfo: 'select',
       dbName: 'language',
       class_icon: 'fas fa-language fa-3x account'
     },
     {
       name: 'Waga docelowa',
+      nameEN: 'Goal',
       name_value: 85,
+      name_value_EN: 85,
       formInfo: 'number',
       dbName: 'finalWeight',
       class_icon: 'fas fa-weight fa-3x'
@@ -89,83 +114,111 @@ export class UserService {
   dietInfo = [
     {
       name: 'Prognoza wagi',
+      nameEN: 'Weight forecast',
       name_value: 'Spadek',
+      name_value_EN: 'Decrease',
       class_icon: 'fas fa-chart-line fa-3x account-green'
     },
     {
       name: 'PPM',
+      nameEN: 'BM',
       name_value: '0 kcal',
+      name_value_EN: '0 kcal',
       class_icon: 'fa-3x fas fa-utensils account'
     },
     {
       name: 'CPM',
+      nameEN: 'CM',
       name_value: '0 kcal',
+      name_value_EN: '0 kcal',
       class_icon: 'fa-3x fas fa-utensils'
     },
     {
       name: 'Białko',
+      nameEN: 'Proteins',
       name_value: '0 g',
+      name_value_EN: '0 g',
       class_icon: 'fas fa-drumstick-bite fa-3x account'
     },
     {
       name: 'Węglowodany',
+      nameEN: 'Carbohydrates',
       name_value: '0 g',
+      name_value_EN: '0 g',
       class_icon: 'fas fa-bread-slice fa-3x '
     },
     {
       name: 'Tłuszcze',
+      nameEN: 'Fats',
       name_value: '0 g',
+      name_value_EN: '0 g',
       class_icon: 'fas fa-bacon fa-3x account'
     }
   ];
   goal = [
     {
       name: 'Dziennie',
+      nameEN: 'Daily',
       name_value: 'Brak danych',
+      name_value_EN: 'No data',
       class_icon: 'fa-3x fas fa-utensils'
     },
     {
       name: 'Białko',
+      nameEN: 'Proteins',
       name_value: '0 g',
+      name_value_EN: '0 g',
       class_icon: 'fas fa-drumstick-bite fa-3x account'
     },
     {
       name: 'Węglowodany',
+      nameEN: 'Carbohydrates',
       name_value: '0 g',
+      name_value_EN: '0 g',
       class_icon: 'fas fa-bread-slice fa-3x '
     },
     {
       name: 'Tłuszcze',
+      nameEN: 'Fats',
       name_value: '0 g',
+      name_value_EN: '0 g',
       class_icon: 'fas fa-bacon fa-3x account'
     }
   ];
   achievements = [
     {
       name: 'Systematyczność z NFL',
+      nameEN: 'Regularity with the NFL',
       color_gradient: 'card-body-gradient-brown',
       name_value: '1 dzień',
+      name_valueEN: '1 day',
       class_icon: 'fas fa-medal fa-3x account-brown',
       unblock: false
     },
     {
       name: 'Systematyczność z NFL',
+      nameEN: 'Regularity with the NFL',
       color_gradient: 'card-body-gradient-silver',
       name_value: '5 dni',
+      name_valueEN: '5 days',
       class_icon: 'fas fa-medal fa-3x account-silver',
       unblock: false
     },
     {
       name: 'Systematyczność z NFL',
+      nameEN: 'Regularity with the NFL',
       color_gradient: 'card-body-gradient-gold',
       name_value: '10 dni',
+      name_valueEN: '10 days',
       class_icon: 'fas fa-medal fa-3x account-gold',
       unblock: false
     },
     {
       name: 'Systematyczność z NFL',
+      nameEN: 'Regularity with the NFL',
       color_gradient: 'card-body-gradient-diamond',
       name_value: 'Miesiąc',
+      name_valueEN: 'Month',
       class_icon: 'fas fa-trophy fa-3x account-diamond',
       unblock: false
     },

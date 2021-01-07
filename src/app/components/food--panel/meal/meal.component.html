@@ -8,12 +8,12 @@
     </div>
     <div class="modal-body">
       <p class="text-center"><b>
-        <span>Na 100 g</span> <br>
-        Węglowodany: {{myMealProp.carbs | number : '1.2-2'}} g <br>
-        Białko: {{myMealProp.proteins | number : '1.2-2'}} g <br>
-        Tłuszcze: {{myMealProp.fats | number : '1.2-2'}} g <br>
-        Sól: {{myMealProp.salt | number : '1.2-2'}} g <br>
-        Błonnik: {{myMealProp.fiber | number : '1.2-2'}} g <br>
+        <span>{{ "meal.100g" | translate }}</span> <br>
+        {{ "meal.carbohydrates" | translate }}: {{myMealProp.carbs | number : '1.2-2'}} g <br>
+        {{ "meal.proteins" | translate }}: {{myMealProp.proteins | number : '1.2-2'}} g <br>
+        {{ "meal.fats" | translate }}: {{myMealProp.fats | number : '1.2-2'}} g <br>
+        {{ "meal.salt" | translate }}: {{myMealProp.salt | number : '1.2-2'}} g <br>
+        {{ "meal.fiber" | translate }}: {{myMealProp.fiber | number : '1.2-2'}} g <br>
       </b>
       </p>
 
@@ -28,9 +28,9 @@
       </button>
     </div>
     <div class="modal-body">
-      <p>Ile gram:</p>
+      <p>{{ "meal.grams" | translate }}:</p>
       <input #valueInp type="number">
-      <button class="btn btn-dark" (click)="addProduct(adding, valueInp, myMealProp)">Dodaj</button>
+      <button class="btn btn-dark" (click)="addProduct(adding, valueInp, myMealProp)">{{ "meal.add" | translate }}</button>
     </div>
   </ng-template>
   <!--
@@ -38,26 +38,31 @@
   -->
   <div class="row mealClass">
     <div class="col-12">
-      <h3 class="header">Spersonalizuj {{nameOfMeal}}</h3>
-      <p *ngIf="isThereUser() && meal.length !== 0" class="text-center">Kalorie łącznie: <b>{{arrayWithId.kcal}} kcal</b></p>
+      <h3 class="header">{{ "meal.personalize" | translate }} {{nameOfMeal}}</h3>
+      <p *ngIf="isThereUser() && meal.length !== 0" class="text-center">{{ "meal.kcal_sum" | translate }}: <b>{{arrayWithId.kcal}} kcal</b></p>
     </div>
     <div class="col-12 p-0">
-      <p *ngIf="isThereUser() && meal.length !== 0" class="textTable text-center mt-4 mb-4">Dodane posiłki</p>
+      <p *ngIf="isThereUser() && meal.length !== 0" class="textTable text-center mt-4 mb-4">{{ "meal.added_meals" | translate }}</p>
 
       <table *ngIf="isThereUser() && meal.length !== 0" class="table table-striped text-center">
         <thead>
         <tr>
-          <th scope="col">Ilość</th>
-          <th scope="col">Nazwa</th>
-          <th scope="col">Kalorie</th>
-          <th scope="col">Szczegóły</th>
-          <th scope="col">Opcje</th>
+          <th scope="col">{{ "meal.amount" | translate }}</th>
+          <th scope="col">{{ "meal.name" | translate }}</th>
+          <th scope="col">{{ "meal.calories" | translate }}</th>
+          <th scope="col">{{ "meal.details" | translate }}</th>
+          <th scope="col">{{ "meal.options" | translate }}</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let myMeal of meal; index as i">
           <th scope="row">{{myMeal.amount}} g</th>
-          <td>
+          <td *ngIf="language === 'PL'">
+            <p><b>
+              {{myMeal.namePL}}
+            </b></p>
+          </td>
+          <td *ngIf="language !== 'PL'">
             <p><b>
               {{myMeal.name}}
             </b></p>
@@ -71,52 +76,55 @@
 
           </td>
           <td>
-            <b style="cursor: pointer;" (click)="openSm(content, myMeal)">Wyświetl</b>
+            <b style="cursor: pointer;" (click)="openSm(content, myMeal)">{{ "meal.display" | translate }}</b>
           </td>
           <td>
-            <b style="cursor: pointer;" (click)="deleteUserMeal(myMeal)">Usuń</b>
+            <b style="cursor: pointer;" (click)="deleteUserMeal(myMeal)">{{ "meal.delete" | translate }}</b>
           </td>
         </tr>
         </tbody>
       </table>
       <div *ngIf="meal.length === 0" class="textTable text-center mt-4 mb-4">
-        <em>Brak dodanych posiłków.</em>
+        <em>{{ "meal.no_added" | translate }}</em>
       </div>
     </div>
   </div>
   <div class="col-12 text-center">
-    <button (click)="changeTypeOfDataBase('application')" class="btn btn-outline-dark mr-1 btnFir">Posiłek z <b>bazy</b>
+    <button (click)="changeTypeOfDataBase('application')" class="btn btn-outline-dark mr-1 btnFir">{{ "meal.meal_from_db_fir" | translate }}<b>{{ "meal.meal_from_db_sec" | translate }}</b>
     </button>
-    <button (click)="navigate()" class="btn btn-outline-dark ml-1 btnFir"><b>Powrót</b></button>
+    <button (click)="navigate()" class="btn btn-outline-dark ml-1 btnFir"><b>{{ "meal.back" | translate }}</b></button>
   </div>
   <div *ngIf="typeOfDB!=null" class="col-12 foodDBContainer p-0 mt-5">
     <p class="text-center">
-      <b *ngIf="typeOfDB==='application'">Szukaj z bazy aplikacji</b>
+      <b *ngIf="typeOfDB==='application'">{{ "meal.search_db" | translate }}</b>
     </p>
     <div class="searchProduct d-flex justify-content-around">
       <input #element (input)="searchMeal(element)" class="form-control inputFood" type="text">
-      <button class="btn btn-dark btnSec">Szukaj</button>
+      <button class="btn btn-dark btnSec">{{ "meal.search_button" | translate }}</button>
     </div>
     <div class="col-12 p-0 mt-5 containerForDB">
       <table class="table table-striped text-center">
         <thead>
         <tr>
-          <th scope="col">Nazwa</th>
-          <th scope="col">Kalorie na 100g</th>
-          <th scope="col">Opcje</th>
+          <th scope="col">{{ "meal.name" | translate }}</th>
+          <th scope="col">{{ "meal.kcal_100" | translate }}</th>
+          <th scope="col">{{ "meal.options" | translate }}</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let myMealDB of paginationArray; index as i">
-          <th scope="row">
+          <th *ngIf="language === 'PL'" scope="row">
+            {{myMealDB.namePL}}
+          </th>
+          <th *ngIf="language !== 'PL'" scope="row">
             {{myMealDB.name}}
           </th>
           <td>
             <b>{{myMealDB.kcal | number : '1.2-2'}} kcal</b>
           </td>
           <td>
-            <b style="cursor: pointer;" (click)="openSm(adding, myMealDB)">Dodaj</b>
-            <b style="cursor: pointer; margin-left: 5px;" (click)="openSm(content, myMealDB)">Szczegóły</b>
+            <b style="cursor: pointer;" (click)="openSm(adding, myMealDB)">{{ "meal.add" | translate }}</b>
+            <b style="cursor: pointer; margin-left: 5px;" (click)="openSm(content, myMealDB)">{{ "meal.details" | translate }}</b>
           </td>
         </tr>
         </tbody>
@@ -124,13 +132,13 @@
       <nav aria-label="...">
         <ul class="pagination justify-content-center">
           <li style="cursor: pointer" [ngClass]="{'disabled' : page === 0}" class="page-item">
-            <a (click)="otherPage(false)" class="text-dark page-link" tabindex="-1">Poprzednie</a>
+            <a (click)="otherPage(false)" class="text-dark page-link" tabindex="-1">{{ "meal.previous" | translate }}</a>
           </li>
           <li class="page-item active">
             <a class="page-link" style="background-color: black; border: gray 1px solid">{{page + 1}}</a>
           </li>
           <li style="cursor: pointer" [ngClass]="{'disabled' : !isNext()}" class="page-item">
-            <a (click)="otherPage(true)" class="text-dark page-link">Następne</a>
+            <a (click)="otherPage(true)" class="text-dark page-link">{{ "meal.next" | translate }}</a>
           </li>
         </ul>
       </nav>

@@ -11,19 +11,18 @@
                  x="0px" y="0px" width="30px" height="30px" viewBox="0 0 57.288 122.88"
                  enable-background="new 0 0 57.288 122.88" xml:space="preserve"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M32.499,0c4.436,0,7.926,1.281,10.468,3.819c2.515,2.53,3.785,6.007,3.785,10.481 c0,4.538-2.163,8.572-6.521,12.11c-4.381,3.538-9.463,5.318-15.254,5.318c-4.352,0-7.812-1.218-10.465-3.66 c-2.651-2.47-3.976-5.665-3.976-9.639c0-5.007,2.163-9.322,6.465-12.987C21.301,1.816,26.465,0,32.499,0L32.499,0z M57.288,122.88 H0v-9.64h10.765V54.36H0v-7.674h26.775c6.763,0,13.418-0.812,19.992-2.47v69.024h10.521V122.88L57.288,122.88z"/></g></svg>
           </div>
-          <p class="infoBMI-header text-center"><b>Dowiedz się więcej o budowie oraz pracy Twoich mięśni.</b></p>
+          <p class="infoBMI-header text-center"><b>{{"muscles.titles.0" | translate}}</b></p>
           <div class="dataBMI">
-            Wybierz stronę ciała a następnie kliknij w interesuącą Cię partię mięśniową
-            aby wyświetlić opis.
+            {{"muscles.titles.1" | translate}}
           </div>
         </div>
       <div class="selectPart mt-3 text-center">
-        <h5><b>Wybierz stronę ciała</b></h5>
+        <h5><b>{{"muscles.titles.2" | translate}}</b></h5>
         <div class="correctPart">
               <span [ngStyle]="{'color': isFront ? '#9c0000' : 'black' }" class="front"
-                    (click)="isFront = true">Przód</span> /
+                    (click)="isFront = true">{{"muscles.titles.3" | translate}}</span> /
           <span [ngStyle]="{'color': !isFront ? '#9c0000' : 'black' }" class="back"
-                (click)="isFront = false">Tył</span>
+                (click)="isFront = false">{{"muscles.titles.4" | translate}}</span>
         </div>
       </div>
       <div *ngIf="isFront" class="body" >
@@ -84,16 +83,16 @@
                 l-95 66 -140 28 c-77 15 -149 27 -160 27 -11 0 -81 -13 -155 -28z"/>
           </g>
         </svg>
-        <div (click)="openMuscle('biceps')" class="partOfBody biceps-one"></div>
-        <div (click)="openMuscle('biceps')" class="partOfBody biceps-two"></div>
-        <div (click)="openMuscle('shoulders')" class="partOfBody shoulders-one"></div>
-        <div (click)="openMuscle('shoulders')" class="partOfBody shoulders-two"></div>
-        <div (click)="openMuscle('Przedramie')" class="partOfBody forearm-one"></div>
-        <div (click)="openMuscle('Przedramie')" class="partOfBody forearm-two"></div>
-        <div (click)="openMuscle('Klatka piersiowa')" class="partOfBody chest"></div>
-        <div (click)="openMuscle('abs')" class="partOfBody stomach"></div>
-        <div (click)="openMuscle('Uda')" class="partOfBody quadriceps-one"></div>
-        <div (click)="openMuscle('Uda')" class="partOfBody quadriceps-two"></div>
+        <div (click)="openMuscle('biceps', 'biceps')" class="partOfBody biceps-one"></div>
+        <div (click)="openMuscle('biceps', 'biceps')" class="partOfBody biceps-two"></div>
+        <div (click)="openMuscle('barki', 'shoulders')" class="partOfBody shoulders-one"></div>
+        <div (click)="openMuscle('barki', 'shoulders')" class="partOfBody shoulders-two"></div>
+        <div (click)="openMuscle('przedramie', 'forearm')" class="partOfBody forearm-one"></div>
+        <div (click)="openMuscle('przedramie', 'forearm')" class="partOfBody forearm-two"></div>
+        <div (click)="openMuscle('Klatka piersiowa', 'chest')" class="partOfBody chest"></div>
+        <div (click)="openMuscle('brzuch', 'abs')" class="partOfBody stomach"></div>
+        <div (click)="openMuscle('uda','thighs')" class="partOfBody quadriceps-one"></div>
+        <div (click)="openMuscle('uda','thighs')" class="partOfBody quadriceps-two"></div>
 
       </div>
       <div *ngIf="!isFront" class="body" >
@@ -154,12 +153,10 @@
                 l-95 66 -140 28 c-77 15 -149 27 -160 27 -11 0 -81 -13 -155 -28z"/>
           </g>
         </svg>
-        <div (click)="openMuscle('Plecy')" class="partOfBody back"></div>
-        <div (click)="openMuscle('Pośladki')" class="partOfBody gluteus"></div>
-        <div (click)="openMuscle('Plecy')" class="partOfBody back"></div>
-        <div (click)="openMuscle('Plecy')" class="partOfBody back"></div>
-        <div (click)="openMuscle('Triceps')" class="partOfBody triceps-one"></div>
-        <div (click)="openMuscle('Triceps')" class="partOfBody triceps-two"></div>
+        <div (click)="openMuscle('plecy', 'back')" class="partOfBody back"></div>
+        <div (click)="openMuscle('pośladki', 'gluteus')" class="partOfBody gluteus"></div>
+        <div (click)="openMuscle('triceps', 'triceps')" class="partOfBody triceps-one"></div>
+        <div (click)="openMuscle('triceps', 'triceps')" class="partOfBody triceps-two"></div>
       </div>
       <div class="tileBody">
         {{partOfBody}}
@@ -169,7 +166,7 @@
   <hr>
   <div class="muscle row justify-content-center text-center">
     <div class="titleMuscle col-7">
-      <h5 class="title">Wybrany mięsień - <b>{{titleMuscle}}</b></h5>
+      <h5 class="title">{{"muscles.titles.5" | translate}} - <b>{{titleMuscle}}</b></h5>
     </div>
     <div class="imageMuscle col-7">
       <img src="" alt="">

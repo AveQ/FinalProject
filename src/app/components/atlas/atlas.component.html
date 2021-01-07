@@ -15,7 +15,7 @@
       <div class="panelSport-options">
         <ul class="panelSport-list">
           <li  class="panelSport-pointList">
-            <span class="underlineOption opt font-weight-bold">Ćwiczenia</span>
+            <span class="underlineOption opt font-weight-bold">{{ "atlas.exercises" | translate}}</span>
           </li>
         </ul>
       </div>
@@ -23,7 +23,7 @@
       <div [ngClass]="{'container--close': basicSportMenu[1].on === false}" class="row videos justify-content-center">
         <div class="col-12 exercisesCounter d-flex justify-content-between">
           <span>
-            Znalezione ćwiczenia ({{counterExercises}}):
+            {{ "atlas.exercises_found" | translate}} ({{counterExercises}}):
           </span>
           <div class="filterButton">
             <span (click)="filtersHidden = !filtersHidden">Filters</span>
@@ -44,7 +44,8 @@
                 </div>
                 <div [routerLink]="['/exercise', exercise._id]" class="exercise-muscles">
                   <em>{{exercise.type | uppercase}}</em></div>
-                <div [routerLink]="['/exercise', exercise._id]" class="exercise-name">{{exercise.name | uppercase}}</div>
+                <div *ngIf="language === 'pl'" [routerLink]="['/exercise', exercise._id]" class="exercise-name">{{exercise.namePL | uppercase}}</div>
+                <div *ngIf="language !== 'pl'" [routerLink]="['/exercise', exercise._id]" class="exercise-name">{{exercise.name | uppercase}}</div>
                 <div [routerLink]="['/exercise', exercise._id]" class="lvl-exercise d-flex justify-content-around">
                   <div class="typeOfExer d-inline-block">
                     <i *ngIf="exercise.type === 'cardio'" class="fas fa-running"></i>
@@ -54,7 +55,7 @@
                     <i class="fas fa-film"></i>
                   </div>
                   <div *ngIf="exercise.rate.rate === 0" class="rateOfExer d-inline-block">
-                    <i  class="far fa-star"></i> <em>Brak</em>
+                    <i  class="far fa-star"></i> <em>{{ "atlas.empty" | translate}}</em>
                   </div>
                   <div *ngIf="exercise.rate.rate > 0 " class="rateOfExer d-inline-block">
                     <i  class="far fa-star"></i> {{exercise.rate.rate | number: '1.1-2'}}
@@ -65,9 +66,9 @@
           </div>
           <div class="row contForPagination">
             <ul class="pagination" style="cursor: pointer">
-              <li class="page-item"><a class="page-link" (click)="pagination(false)">Poprzednie</a></li>
+              <li class="page-item"><a class="page-link" (click)="pagination(false)">{{ "atlas.previous" | translate}}</a></li>
               <li class="page-item"><a class="page-link">{{page + 1}}</a></li>
-              <li class="page-item"><a class="page-link" (click)="pagination(true)">Następne</a></li>
+              <li class="page-item"><a class="page-link" (click)="pagination(true)">{{ "atlas.next" | translate}}</a></li>
             </ul>
           </div>
         </div>
@@ -75,30 +76,33 @@
 
           <div [ngClass]="{'filters--open': filtersHidden === false}" class="filters">
             <div class="contForMagnifier">
-              <label for="search">Wyszukaj ćwiczenie:</label>
-              <input #input (input)="changeSortType(input.value, 'name')" type="text" class="form-control magnifier"
+              <label *ngIf="language === 'pl'" for="search">{{ "atlas.search" | translate}}:</label>
+              <input *ngIf="language === 'pl'" #input (input)="changeSortType(input.value, 'name')" type="text" class="form-control magnifier"
                      placeholder="Wyszukaj..." id="search">
+              <label *ngIf="language !== 'pl'" for="searchEn">{{ "atlas.search" | translate}}:</label>
+              <input *ngIf="language !== 'pl'" #input (input)="changeSortType(input.value, 'name')" type="text" class="form-control magnifier"
+                     placeholder="Search..." id="searchEn">
             </div>
             <div class="contForSort">
-              <label for="part">Wybierz partię:</label>
+              <label for="part">{{ "atlas.part" | translate}}:</label>
               <select #sel (change)="changeSortType(sel.value, 'part')" class="form-control" id="part">
-                <option [value]="''">Wszystko</option>
-                <option [value]="'biceps'">Biceps</option>
-                <option [value]="'triceps'">Triceps</option>
-                <option [value]="'chest'">Klatka Piersiowa</option>
-                <option [value]="'legs'">Nogi</option>
-                <option [value]="'back'">Plecy</option>
-                <option [value]="'fav'">Ulubione</option>
+                <option [value]="''">{{ "atlas.part_category.0" | translate}}</option>
+                <option [value]="'biceps'">{{ "atlas.part_category.1" | translate}}</option>
+                <option [value]="'triceps'">{{ "atlas.part_category.2" | translate}}</option>
+                <option [value]="'chest'">{{ "atlas.part_category.3" | translate}}</option>
+                <option [value]="'legs'">{{ "atlas.part_category.4" | translate}}</option>
+                <option [value]="'back'">{{ "atlas.part_category.5" | translate}}</option>
+                <option [value]="'fav'">{{ "atlas.part_category.6" | translate}}</option>
               </select>
             </div>
             <div class="contForSort">
-              <label for="sort">Sortuj:</label>
+              <label for="sort">{{ "atlas.sort" | translate}}:</label>
               <select #sel1 (change)="changeSortType(sel1.value, 'sort')" class="form-control" id="sort">
-                <option [value]="''">Zwyczajnie</option>
-                <option [value]="'popular'">Popularność</option>
-                <option [value]="'rate'">Ocena</option>
-                <option [value]="'a-z'">Alfabetycznie A-Z</option>
-                <option [value]="'z-a'">Alfabetycznie Z-A</option>
+                <option [value]="''">{{ "atlas.sort_category.0" | translate}}</option>
+                <option [value]="'popular'">{{ "atlas.sort_category.1" | translate}}</option>
+                <option [value]="'rate'">{{ "atlas.sort_category.2" | translate}}</option>
+                <option [value]="'a-z'">{{ "atlas.sort_category.3" | translate}}</option>
+                <option [value]="'z-a'">{{ "atlas.sort_category.4" | translate}}</option>
               </select>
             </div>
           </div>

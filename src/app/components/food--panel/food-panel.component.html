@@ -9,8 +9,8 @@
       TEXT BEFORE DATE
     -->
     <div class="row basicInfoFoodPanel">
-      <span class="col-12 basicInfoFoodPanel-text">WYBIERZ DATĘ</span>
-      <span class="col-12 basicInfoFoodPanel-text1">PANEL ODŻYWIANIA</span>
+      <span class="col-12 basicInfoFoodPanel-text">{{ "food_panel.set_date" | translate }}</span>
+      <span class="col-12 basicInfoFoodPanel-text1">{{ "food_panel.main_title" | translate }}</span>
     </div>
     <!--
       DATE
@@ -48,14 +48,13 @@
     <div class="col-12 p-0">
       <ul class="menuFoodPanel">
         <li class="optionFoodPanel"><a [routerLink]="['/food-panel', 'meals']" class="linkFoodPanel"
-                                       [ngStyle]="{'color':activeMenuCategory === 0 ? '#dd0101' : 'black'}">POSIŁKI</a>
+                                       [ngStyle]="{'color':activeMenuCategory === 0 ? '#dd0101' : 'black'}">{{ "food_panel.meals_header" | translate }}</a>
         </li>
         <li class="optionFoodPanel"><a [routerLink]="['/food-panel', 'water']" class="linkFoodPanel"
-                                       [ngStyle]="{'color':activeMenuCategory === 1 ? '#dd0101' : 'black'}">NAWODNIENIE</a>
+                                       [ngStyle]="{'color':activeMenuCategory === 1 ? '#dd0101' : 'black'}">{{ "food_panel.body_hydration" | translate }}</a>
         </li>
         <li class="optionFoodPanel"><a [routerLink]="['/food-panel', 'summary']" class="linkFoodPanel"
-                                       [ngStyle]="{'color':activeMenuCategory === 3 ? '#dd0101' : 'black'}">PODUMOWANIE
-          DNIA</a></li>
+                                       [ngStyle]="{'color':activeMenuCategory === 3 ? '#dd0101' : 'black'}">{{ "food_panel.summary" | translate }}</a></li>
       </ul>
     </div>
     <!--
@@ -69,7 +68,8 @@
         <div class="{{meal.classForMeal}} imageMeal-zoom"></div>
         <div class="beam"></div>
         <div class="infoMeal">
-          <span class="headingMeal">{{meal.name | uppercase}}</span>
+          <span *ngIf="language === 'pl'" class="headingMeal">{{meal.name | uppercase}}</span>
+          <span *ngIf="language === 'en'" class="headingMeal">{{meal.nameEN | uppercase}}</span>
           <div class="basicInfoMeal ">
             <span class="basicInfoMeal-macro basicInfoMeal-kcal">
               <svg height="17" width="17" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"

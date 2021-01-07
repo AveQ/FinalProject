@@ -7,8 +7,10 @@ export interface MuscleResponseData {
     {
       _id: string,
       name: string,
+      namePL: string,
       dbName: string,
-      description: string
+      description: string,
+      descriptionPL: string
     }
   ];
 }

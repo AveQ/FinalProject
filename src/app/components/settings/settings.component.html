@@ -1,11 +1,11 @@
 <div class="containerForSettings">
-  <app-navb [navImage]='"/assets/welcome-page/bg2.jpg"' [category] = '"UŻYTKOWNIK"'></app-navb>
+  <app-navb [navImage]='"/assets/welcome-page/bg2.jpg"' [category]='"UŻYTKOWNIK"'></app-navb>
   <div class=" container-fluid boxSettings">
     <!--
       TEXT BEFORE DATE
     -->
     <div class="row basicInfoSettings">
-      <span class="col-12 basicInfoSettings-text mb-5">USTAWIENIA PERSONALNE</span>
+      <span class="col-12 basicInfoSettings-text mb-5">{{ "settings.personal" | translate}}</span>
     </div>
 
     <div class="row contForCards ">
@@ -18,8 +18,10 @@
                   <i class="{{element.class_icon}} iAnim"></i>
                 </div>
                 <div class="media-body text-right">
-                  <h3 style="font-weight: bold">{{element.name_value}}</h3>
-                  <span style="color: #606060; font-weight: bold">{{element.name}}</span>
+                  <h3 *ngIf="language !== 'pl'" style="font-weight: bold">{{element.name_value_EN}}</h3>
+                  <h3 *ngIf="language === 'pl'" style="font-weight: bold">{{element.name_value}}</h3>
+                  <span *ngIf="language !== 'pl'" style="color: #606060; font-weight: bold">{{element.nameEN}}</span>
+                  <span *ngIf="language === 'pl'" style="color: #606060; font-weight: bold">{{element.name}}</span>
                 </div>
               </div>
             </div>
@@ -29,7 +31,7 @@
     </div>
 
     <div class="row basicInfoSettings">
-      <span class="col-12 basicInfoSettings-text mb-5">INFORMACJE O DIECIE</span>
+      <span class="col-12 basicInfoSettings-text mb-5">{{ "settings.info" | translate}}</span>
     </div>
 
     <div class="row contForCards ">
@@ -42,8 +44,10 @@
                   <i class="{{element.class_icon}}"></i>
                 </div>
                 <div class="media-body text-right">
-                  <h3 style="font-weight: bold">{{element.name_value}}</h3>
-                  <span style="color: #606060; font-weight: bold">{{element.name}}</span>
+                  <h3 *ngIf="language !== 'pl'" style="font-weight: bold">{{element.name_value_EN}}</h3>
+                  <h3 *ngIf="language === 'pl'" style="font-weight: bold">{{element.name_value}}</h3>
+                  <span *ngIf="language !== 'pl'" style="color: #606060; font-weight: bold">{{element.nameEN}}</span>
+                  <span *ngIf="language === 'pl'" style="color: #606060; font-weight: bold">{{element.name}}</span>
                 </div>
               </div>
             </div>
@@ -52,7 +56,7 @@
       </div>
     </div>
     <div class="row basicInfoSettings">
-      <span class="col-12 basicInfoSettings-text mb-5">ABY OSIĄGNĄĆ CEL</span>
+      <span class="col-12 basicInfoSettings-text mb-5">{{ "settings.goal" | translate}}</span>
     </div>
     <div class="row contForCards ">
       <div *ngFor="let goElem of goal;" class="col-xl-3 col-sm-6 col-12">
@@ -64,8 +68,10 @@
                   <i class="{{goElem.class_icon}}"></i>
                 </div>
                 <div class="media-body text-right">
-                  <h3 style="font-weight: bold">{{goElem.name_value}}</h3>
-                  <span style="color: #606060; font-weight: bold">{{goElem.name}}</span>
+                  <h3 *ngIf="language !== 'pl'" style="font-weight: bold">{{goElem.name_value_EN}}</h3>
+                  <h3 *ngIf="language === 'pl'" style="font-weight: bold">{{goElem.name_value}}</h3>
+                  <span *ngIf="language !== 'pl'" style="color: #606060; font-weight: bold">{{goElem.nameEN}}</span>
+                  <span *ngIf="language === 'pl'" style="color: #606060; font-weight: bold">{{goElem.name}}</span>
                 </div>
               </div>
             </div>
@@ -74,21 +80,24 @@
       </div>
     </div>
     <div class="row basicInfoSettings">
-      <span class="col-12 basicInfoSettings-text mb-5">OSIĄGNIĘCIA</span>
+      <span class="col-12 basicInfoSettings-text mb-5">{{ "settings.achievements" | translate}}</span>
     </div>
 
     <div class="row contForCards">
       <div *ngFor="let element of achievements;" class="col-xl-3 col-sm-6 col-12">
         <div class="card">
           <div class="card-content ">
-            <div [ngClass]="{'blocked' : !element.unblock}" class="card-body card-body-extra {{element.color_gradient}}">
+            <div [ngClass]="{'blocked' : !element.unblock}"
+                 class="card-body card-body-extra {{element.color_gradient}}">
               <div class="media d-flex">
                 <div class="align-self-center">
                   <i class="{{element.class_icon}}"></i>
                 </div>
                 <div class="media-body text-right">
-                  <h3 style="font-weight: bold;">{{element.name_value}}</h3>
-                  <span style="color: #606060; font-weight: bold">{{element.name}}</span>
+                  <h3 *ngIf="language !== 'pl'" style="font-weight: bold">{{element.name_valueEN}}</h3>
+                  <h3 *ngIf="language === 'pl'" style="font-weight: bold">{{element.name_value}}</h3>
+                  <span *ngIf="language !== 'pl'" style="color: #606060; font-weight: bold">{{element.nameEN}}</span>
+                  <span *ngIf="language === 'pl'" style="color: #606060; font-weight: bold">{{element.name}}</span>
                 </div>
               </div>
             </div>
@@ -109,47 +118,80 @@
         </div>
       </div>
       <div class="titleModal-big text-center">
-        USTAWIENIA
+        {{ "settings.settings" | translate }}
       </div>
 
-      <div class="titleModal-small text-center">
-        ZMIEŃ {{curElement.name | uppercase}}
+      <div *ngIf="language === 'pl'" class="titleModal-small text-center">
+        {{ "settings.change" | translate }} {{curElement.name | uppercase}}
+      </div>
+      <div *ngIf="language !== 'pl'" class="titleModal-small text-center">
+        {{ "settings.change" | translate }} {{curElement.nameEN | uppercase}}
       </div>
       <!--
-      NICK FORM
+      formularze text
       -->
       <form *ngIf="changeValue === 'text'" [formGroup]="newValue" (ngSubmit)="onSubmit()">
-        <input formControlName="newValue" type="text" class="form-control input-new-value" placeholder="wprowadź nowy nick...">
-        <button type="submit" class="btn btn-dark btn-new-value">ZMIEŃ</button>
+        <input *ngIf="language === 'pl'" formControlName="newValue" type="text" class="form-control input-new-value"
+               placeholder="wprowadź nowy nick...">
+        <input *ngIf="language !== 'pl'" formControlName="newValue" type="text" class="form-control input-new-value"
+               placeholder="enter a nick...">
+        <button type="submit" class="btn btn-dark btn-new-value">{{ "settings.change" | translate }}</button>
       </form>
       <!--
-      WEIGHT FORM
+      formularze number
       -->
       <form *ngIf="changeValue === 'number'" [formGroup]="newValue" (ngSubmit)="onSubmit()">
-        <input formControlName="newValue" type="number" min="20" max="300" class="form-control input-new-value" placeholder="wprowadź {{curElement.name | lowercase}}...">
-        <button type="submit" class="btn btn-dark btn-new-value">ZMIEŃ</button>
+        <input *ngIf="language === 'pl'" formControlName="newValue" type="number" min="20" max="300"
+               class="form-control input-new-value" placeholder="wprowadź {{curElement.name | lowercase}}...">
+        <input *ngIf="language !== 'pl'" formControlName="newValue" type="number" min="20" max="300"
+               class="form-control input-new-value" placeholder="enter a {{curElement.nameEN | lowercase}}...">
+        <button type="submit" class="btn btn-dark btn-new-value">{{ "settings.change" | translate }}</button>
       </form>
-      <!--
-      Select FORM
-      -->
-      <form *ngIf="changeValue === 'select' && curElement.dbName !== 'physicalActivity'" [formGroup]="newValueLanguage" (ngSubmit)="onSubmitSelect(select)">
+      <!--select forms bez aktywnosci fizycznej po polsku-->
+      <form *ngIf="changeValue === 'select' && curElement.dbName !== 'physicalActivity' && language === 'pl'"
+            [formGroup]="newValueLanguage" (ngSubmit)="onSubmitSelect(select)">
         <div class="form-group">
           <label for="exampleFormControlSelect1"></label>
           <select #select class="form-control" id="exampleFormControlSelect1">
             <option *ngFor="let option of curElement.options_value" [value]="option">{{option}}</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-dark btn-new-value">ZMIEŃ</button>
+        <button type="submit" class="btn btn-dark btn-new-value">{{ "settings.change" | translate }}</button>
       </form>
+      <!--select forms bez aktywnosci fizycznej po angielsku-->
 
-      <form *ngIf="changeValue === 'select' && curElement.dbName === 'physicalActivity'" [formGroup]="newValueLanguage" (ngSubmit)="onSubmitSelect(select)">
+      <form *ngIf="changeValue === 'select' && curElement.dbName !== 'physicalActivity' && language !== 'pl'"
+            [formGroup]="newValueLanguage" (ngSubmit)="onSubmitSelect(select)">
         <div class="form-group">
-          <label for="psych"></label>
-          <select #select class="form-control" id="psych">
+          <label for="english"></label>
+          <select #select class="form-control" id="english">
+            <option *ngFor="let option of curElement.options_value_EN" [value]="option">{{option}}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-dark btn-new-value">{{ "settings.change" | translate }}</button>
+      </form>
+      <!--Aktywnosc fizyczna formularze po polsku-->
+
+      <form *ngIf="changeValue === 'select' && curElement.dbName === 'physicalActivity' && language === 'pl'"
+            [formGroup]="newValueLanguage" (ngSubmit)="onSubmitSelect(select)">
+        <div class="form-group">
+          <label for="polish"></label>
+          <select #select class="form-control" id="polish">
             <option *ngFor="let option of curElement.options_value" [value]="option.value">{{option.name}}</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-dark btn-new-value">ZMIEŃ</button>
+        <button type="submit" class="btn btn-dark btn-new-value">{{ "settings.change" | translate }}</button>
+      </form>
+      <!--Aktywnosc fizyczna formularze po angielsku-->
+      <form *ngIf="changeValue === 'select' && curElement.dbName === 'physicalActivity' && language !== 'pl'"
+            [formGroup]="newValueLanguage" (ngSubmit)="onSubmitSelect(select)">
+        <div class="form-group">
+          <label for="psych"></label>
+          <select #select class="form-control" id="psych">
+            <option *ngFor="let option of curElement.options_value_EN" [value]="option.value">{{option.name}}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-dark btn-new-value">{{ "settings.change" | translate }}</button>
       </form>
     </div>
   </div>

@@ -1,18 +1,3 @@
-// nav
-.navigation {
-  height: 100px;
-}
-
-.naviagtion-title {
-  height: 155px;
-  padding-top: 50px;
-  letter-spacing: 2px;
-  width: 100vw;
-  text-align: center;
-  color: white;
-  font-size: 40px;
-  font-weight: bold;
-}
 .containerForAtlas {
   overflow: hidden;
   font-family: 'Roboto Condensed', sans-serif;
@@ -132,16 +117,6 @@
 // medias
 
 @media(max-width: 1250px) {
-  .naviagtion-title {
-    height: 75px;
-    padding-top: 10px;
-    letter-spacing: 1px;
-    width: 100vw;
-    text-align: center;
-    color: white;
-    font-size: 30px;
-    font-weight: bold;
-  }
   .selectedExerciseImage {
     width: 300px;
   }

@@ -46,6 +46,7 @@ export interface MealResponseAllData {
       salt: number;
       fats: number;
       name: string;
+      namePL: string;
       request;
     }
   ];
@@ -64,6 +65,7 @@ export class FoodService {
   private meal = [
     {
       name: 'śniadnie',
+      nameEN: 'Breakfast',
       kcal: 0,
       carb: 0,
       proteins: 0,
@@ -73,6 +75,7 @@ export class FoodService {
     },
     {
       name: 'II śniadanie',
+      nameEN: 'II Breakfast',
       kcal: 0,
       carb: 0,
       proteins: 0,
@@ -82,6 +85,7 @@ export class FoodService {
     },
     {
       name: 'Obiad',
+      nameEN: 'Dinner',
       kcal: 0,
       carb: 0,
       proteins: 0,
@@ -91,6 +95,7 @@ export class FoodService {
     },
     {
       name: 'Podwieczorek',
+      nameEN: 'Snack',
       kcal: 0,
       carb: 0,
       proteins: 0,
@@ -100,6 +105,7 @@ export class FoodService {
     },
     {
       name: 'Kolacja',
+      nameEN: 'Supper',
       kcal: 0,
       carb: 0,
       proteins: 0,
@@ -109,6 +115,7 @@ export class FoodService {
     },
     {
       name: 'Dodatkowe',
+      nameEN: 'Extra meal',
       kcal: 0,
       carb: 0,
       proteins: 0,

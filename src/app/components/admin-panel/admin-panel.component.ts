@@ -32,10 +32,12 @@ export class AdminPanelComponent implements OnInit {
   constructor(private foodService: FoodService,
               private exerciseService: ExerciseService,
               private userService: UserService,
-              private modalService: NgbModal,) {
+              private modalService: NgbModal,
+              private navigateService: NavigationService) {
   }
 
   ngOnInit(): void {
+    this.navigateService.changeNavSubject(7);
     this.loadMeals();
     this.loadExercise();
     this.loadUsers();

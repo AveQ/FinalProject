@@ -8,6 +8,7 @@ import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 import {TimeService} from '../../services/time.service';
 import {MealHistory} from '../../model/mealHistory.model';
 import {UserService} from '../../services/user.service';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
@@ -61,6 +62,7 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   ppm;
   mealPDF = [];
   counterPDF = 1;
+  language = 'pl';
 
   constructor(private navigateService: NavigationService,
               private authService: AuthService,
@@ -68,11 +70,13 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
               private router: Router,
               private route: ActivatedRoute,
               private timeService: TimeService,
-              private  userService: UserService) {
+              private userService: UserService,
+              private translate: TranslateService) {
 
   }
 
   ngOnInit(): void {
+    this.language = this.translate.currentLang;
     this.userService.summ.subscribe(
       data => {
         if (data) {

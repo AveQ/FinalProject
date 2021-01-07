@@ -4,22 +4,12 @@ import {AuthService} from '../../services/auth.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {User} from '../../model/user.model';
 import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navb',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss'],
-  // styles: [
-  //   '.atlas-heading {\n' +
-  //   '  height: 255px;\n' +
-  //   '  font-family: \'Roboto Condensed\', sans-serif;\n' +
-  //   '  background: linear-gradient(\n' +
-  //   '      rgba(0, 0, 0, 0.5),\n' +
-  //   '      rgba(0, 0, 0, 0.5)\n' +
-  //   '  ), url(' + navImage + ') no-repeat top center fixed;\n' +
-  //   '  background-size: cover;\n' +
-  //   '}'
-  // ]
 })
 export class NavComponent implements OnInit {
   @Input() navImage = '';
@@ -39,7 +29,8 @@ export class NavComponent implements OnInit {
   constructor(
     private navigateService: NavigationService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+
   ) {
 
   }

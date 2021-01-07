@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../../../services/auth.service';
+import {TranslateService} from '@ngx-translate/core';
 
 interface Meal {
   carbs: number;
@@ -13,6 +14,7 @@ interface Meal {
   fiber: number;
   kcal: number;
   name: string;
+  namePL: string;
   proteins: number;
   salt: number;
   id: string;
@@ -29,6 +31,7 @@ interface MealDB {
   salt: number;
   fats: number;
   name: string;
+  namePL: string;
   request;
 }
 
@@ -61,9 +64,18 @@ export class MealComponent implements OnInit, OnDestroy {
     'kolacja',
     'dodatkowe'
   ];
+  private arrayMealNameEN = [
+    'breakfast',
+    'II breakfast',
+    'dinner',
+    'snack',
+    'supper',
+    'extra meal'
+  ];
   emptyFlag = true;
   tempArray = [];
   paginationArray = [];
+  language = 'PL';
 
   constructor(
     private modalService: NgbModal,
@@ -71,10 +83,12 @@ export class MealComponent implements OnInit, OnDestroy {
     private foodService: FoodService,
     private router: Router,
     private authService: AuthService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private translate: TranslateService) {
   }
 
   ngOnInit(): void {
+    this.language = this.translate.currentLang;
     this.userSubscription = this.authService.user.subscribe(
       user => {
         if (user) {
@@ -133,7 +147,11 @@ export class MealComponent implements OnInit, OnDestroy {
   }
 
   setMealName(param) {
-    this.nameOfMeal = this.arrayMealName[param];
+    if (this.language === 'PL') {
+      this.nameOfMeal = this.arrayMealName[param];
+    } else {
+      this.nameOfMeal = this.arrayMealNameEN[param];
+    }
   }
 
   isThereUser() {
@@ -173,6 +191,7 @@ export class MealComponent implements OnInit, OnDestroy {
     this.foodService.getAllMeals().subscribe(
       data => {
         this.mealDB = data.meals;
+        console.log(this.mealDB);
       },
       error => {
       },
@@ -198,6 +217,7 @@ export class MealComponent implements OnInit, OnDestroy {
         id: mealObject._id,
         kcal: mealObject.kcal * portion,
         name: mealObject.name,
+        namePL: mealObject.namePL,
         proteins: mealObject.proteins * portion,
         salt: mealObject.salt * portion
       };

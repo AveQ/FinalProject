@@ -19,7 +19,7 @@ import {TimelineExeComponent} from '../components/food--panel/timeline-exe/timel
 import {AtlasComponent} from '../components/atlas/atlas.component';
 import {SettingsComponent} from '../components/settings/settings.component';
 import {AirComponent} from '../components/air/air.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {NFLInterceptorService} from '../services/NFLInterceptorService.service';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
@@ -31,6 +31,8 @@ import {AuthGuardAdmin} from '../services/authGuardAdmin.service';
 import {ModalComponent} from '../components/modal/modal.component';
 import {ExerciseComponent} from '../components/atlas/exercise/exercise.component';
 import {KnowledgeComponent} from '../components/atlas/knowledge/knowledge.component';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +63,13 @@ import {KnowledgeComponent} from '../components/atlas/knowledge/knowledge.compon
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     NavigationService,
@@ -75,4 +84,7 @@ import {KnowledgeComponent} from '../components/atlas/knowledge/knowledge.compon
   bootstrap: [AppComponent]
 })
 export class AppModule {
+}
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
 }

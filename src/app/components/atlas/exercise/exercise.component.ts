@@ -6,6 +6,7 @@ import {AuthService} from '../../../services/auth.service';
 import * as _ from 'lodash';
 import {ExerciseService} from '../../../services/exercise.service';
 import {UserService} from '../../../services/user.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-exercise',
@@ -28,8 +29,10 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   selectedExercise: ExerciseModel = {
     _id: '0',
     name: '0',
+    namePL: '',
     type: '0',
     description: '0',
+    descriptionPL: '',
     rate: {
       counter: 0,
       sum: 0,
@@ -61,15 +64,18 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   isRated = false;
   myRate = 1;
   private allUserHistory;
+  language = 'pl';
 
   constructor(private route: ActivatedRoute,
               private authService: AuthService,
               private exerciseService: ExerciseService,
               private router: Router,
-              private userService: UserService) {
+              private userService: UserService,
+              private translate: TranslateService) {
   }
 
   ngOnInit(): void {
+    this.language = this.translate.currentLang;
     this.authService.user.subscribe(
       user => {
         if (user) {
@@ -178,6 +184,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
           this.selectedExercise = data;
           this.checkIsRated();
           this.patchPopularValue();
+          console.log(this.selectedExercise);
         }
       },
       error => {

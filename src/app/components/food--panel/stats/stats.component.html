@@ -7,26 +7,28 @@
                x="0px" y="0px" width="30px" height="30px" viewBox="0 0 57.288 122.88"
                enable-background="new 0 0 57.288 122.88" xml:space="preserve"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M32.499,0c4.436,0,7.926,1.281,10.468,3.819c2.515,2.53,3.785,6.007,3.785,10.481 c0,4.538-2.163,8.572-6.521,12.11c-4.381,3.538-9.463,5.318-15.254,5.318c-4.352,0-7.812-1.218-10.465-3.66 c-2.651-2.47-3.976-5.665-3.976-9.639c0-5.007,2.163-9.322,6.465-12.987C21.301,1.816,26.465,0,32.499,0L32.499,0z M57.288,122.88 H0v-9.64h10.765V54.36H0v-7.674h26.775c6.763,0,13.418-0.812,19.992-2.47v69.024h10.521V122.88L57.288,122.88z"/></g></svg>
         </div>
-        <p *ngIf="this.bars[0].value<=this.bars[0].max" class="text-center"><b>Utrzymując taki poziom jak tego dnia Twoja waga
-          bedzie się zmniejszać!</b></p>
-        <p *ngIf="this.bars[0].value>this.bars[0].max" class="text-center"><b>Utrzymując taki poziom jak tego dnia Twoja waga
-          bedzie się zwiększać!</b></p>
-        <p class="text-center">Przyjęte kalorie z odliczeniem treningu:
+        <p *ngIf="this.bars[0].value<=this.bars[0].max" class="text-center"><b>{{ "summary.info_first_option" | translate }}</b></p>
+        <p *ngIf="this.bars[0].value>this.bars[0].max" class="text-center"><b>{{ "summary.info_second_option" | translate }}</b></p>
+        <p class="text-center">{{ "summary.info_minus" | translate }}
           <b>{{ this.summ[0].today - exercisesKcal | number: '1.2-2' }} kcal</b></p>
-        <p class="text-center">Przyjęte kalorie bez treningu: <b>{{ this.summ[0].today | number: '1.2-2' }} kcal</b></p>
+        <p class="text-center">{{ "summary.info_plus" | translate }}<b>{{ this.summ[0].today | number: '1.2-2' }} kcal</b></p>
       </div>
     </div>
     <div class="col-12 m-2 dataInfo">
-      <p class="text-center"><b>Przedstawienie danych:</b></p>
-      <p class="text-center m-0">Liczba wykonanych ćwiczeń: <b>{{exercisesCounter}}</b></p>
-      <p class="text-center m-0">Długość ćwiczeń: <b>{{exercisesTime}} min</b></p>
-      <p class="text-center mb-4">Nawodnienie: <b>{{waterData}} ml</b></p>
+      <p class="text-center"><b>{{ "summary.visualization" | translate }}</b></p>
+      <p class="text-center m-0">{{ "summary.counter_exercises" | translate }}<b>{{exercisesCounter}}</b></p>
+      <p class="text-center m-0">{{ "summary.time_exercises" | translate }}<b>{{exercisesTime}} min</b></p>
+      <p class="text-center mb-4">{{ "summary.body_hydration" | translate }}<b>{{waterData}} ml</b></p>
       <div *ngFor="let bar of bars" class="part">
-        <ng-template #popContent>Zjedzono: <b>{{bar.value | number: '1.2-2'}}g</b><br>
-          Maksimum: <b>{{bar.max | number: '1.2-2'}}g</b>
+        <ng-template #popContent>{{ "summary.eat" | translate }}: <b>{{bar.value | number: '1.2-2'}}g</b><br>
+          {{ "summary.max" | translate }}: <b>{{bar.max | number: '1.2-2'}}g</b>
         </ng-template>
         <div [ngbPopover]="popContent" triggers="mouseenter:mouseleave">
-          <span class="barName">{{bar.name}} [{{bar.value | number: '1.2-2'}}
+          <span *ngIf="language==='PL'" class="barName">{{bar.name}} [{{bar.value | number: '1.2-2'}}
+            <span *ngIf="bar.name.toLowerCase() !== 'kalorie'">g</span>
+            <span *ngIf="bar.name.toLowerCase() === 'kalorie'">kcal</span>
+            / {{bar.max | number: '1.2-2'}}g]</span>
+          <span *ngIf="language!=='PL'" class="barName">{{bar.nameEn}} [{{bar.value | number: '1.2-2'}}
             <span *ngIf="bar.name.toLowerCase() !== 'kalorie'">g</span>
             <span *ngIf="bar.name.toLowerCase() === 'kalorie'">kcal</span>
             / {{bar.max | number: '1.2-2'}}g]</span>
@@ -36,13 +38,13 @@
       </div>
     </div>
     <div class="col-12 optionStats">
-      <p><b>Generwoanie jadłospisu:</b></p>
+      <p><b>{{ "summary.pdf" | translate }}</b></p>
       <div class="button-group d-flex justify-content-around">
-        <button class="btn btn-dark" (click)="generatePDF()">Generuj</button>
+        <button class="btn btn-dark" (click)="generatePDF()">{{ "summary.pdf_button" | translate }}</button>
       </div>
     </div>
   </div>
   <div *ngIf="wrongData" class="wrongData">
-    <h4 routerLink="/settings">UZUPEŁNIJ DANE PROFILOWE</h4>
+    <h4 routerLink="/settings">{{ "summary.empty_data" | translate }}</h4>
   </div>
 </div>
