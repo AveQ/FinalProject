@@ -139,9 +139,6 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
     this.initComponent();
   }
 
-  navigateToExercises() {
-    this.route.navigate(['./atlas']);
-  }
 
   loadUserAllHistory() {
     this.allUserHistory = [];

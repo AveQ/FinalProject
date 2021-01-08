@@ -259,5 +259,9 @@
     "nutrition": "NUTRITION",
     "log": "ACTIVITY LOG",
     "user": "USER"
-  }
+  },
+  "admin": {
+
+  },
+  "hydration": "Your hydration today:"
 }

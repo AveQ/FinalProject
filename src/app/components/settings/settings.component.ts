@@ -116,10 +116,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.settings[1][languageNameValue] = user.user.weight + ' kg';
     this.settings[2][languageNameValue] = user.user.height + ' cm';
     if (this.language === 'pl') {
-      this.settings[3][languageNameValue] = user.user.gender.toLowerCase() === 'male' ? 'Mężczyzna' : 'Kobieta';
+      this.settings[3][languageNameValue] = (user.user.gender.toLowerCase() === 'male' || user.user.gender.toLowerCase() === 'mezczyzna') ? 'Mezczyzna' : 'Kobieta';
     } else {
       console.log('tpo: ' + user.user.gender.toLowerCase());
-      this.settings[3][languageNameValue] = user.user.gender.toLowerCase() === 'male' ? 'Male' : 'Female';
+      this.settings[3][languageNameValue] = (user.user.gender.toLowerCase() === 'male' || user.user.gender.toLowerCase() === 'mezczyzna') ? 'Male' : 'Female';
     }
     this.settings[4][languageNameValue] = user.user.weeklyChange + ' kg';
     let physName = 0;

@@ -149,7 +149,7 @@ export class MealComponent implements OnInit, OnDestroy {
   }
 
   setMealName(param) {
-    if (this.language === 'PL') {
+    if (this.language.toUpperCase() === 'PL') {
       this.nameOfMeal = this.arrayMealName[param];
     } else {
       this.nameOfMeal = this.arrayMealNameEN[param];

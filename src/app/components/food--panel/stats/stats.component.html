@@ -24,11 +24,11 @@
           {{ "summary.max" | translate }}: <b>{{bar.max | number: '1.2-2'}}g</b>
         </ng-template>
         <div [ngbPopover]="popContent" triggers="mouseenter:mouseleave">
-          <span *ngIf="language==='PL'" class="barName">{{bar.name}} [{{bar.value | number: '1.2-2'}}
+          <span *ngIf="language.toUpperCase()==='PL'" class="barName">{{bar.name}} [{{bar.value | number: '1.2-2'}}
             <span *ngIf="bar.name.toLowerCase() !== 'kalorie'">g</span>
             <span *ngIf="bar.name.toLowerCase() === 'kalorie'">kcal</span>
             / {{bar.max | number: '1.2-2'}}g]</span>
-          <span *ngIf="language!=='PL'" class="barName">{{bar.nameEn}} [{{bar.value | number: '1.2-2'}}
+          <span *ngIf="language.toUpperCase()!=='PL'" class="barName">{{bar.nameEn}} [{{bar.value | number: '1.2-2'}}
             <span *ngIf="bar.name.toLowerCase() !== 'kalorie'">g</span>
             <span *ngIf="bar.name.toLowerCase() === 'kalorie'">kcal</span>
             / {{bar.max | number: '1.2-2'}}g]</span>

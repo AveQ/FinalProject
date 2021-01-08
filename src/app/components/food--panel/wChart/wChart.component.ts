@@ -3,6 +3,7 @@ import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 import {Label, MultiDataSet} from 'ng2-charts';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FoodService} from '../../../services/food.service';
+import {TranslateService} from '@ngx-translate/core';
 
 class Day {
   name: string;
@@ -35,7 +36,7 @@ export class WChartComponent implements OnInit, DoCheck {
   public doughnutChartOptions = {
     responsive: false,
   };
-  public doughnutChartLabels: Label[] = ['Nawodnienie', 'Brakuje'];
+  public doughnutChartLabels: Label[] = ['Hydration', 'Missing'];
   public doughnutChartData: MultiDataSet = [
     [this.waterData, this.recom]
   ];
@@ -90,7 +91,8 @@ export class WChartComponent implements OnInit, DoCheck {
   }
 
   constructor(private modalService: NgbModal,
-              private foodService: FoodService) {
+              private foodService: FoodService,
+              private translate: TranslateService) {
   }
 
   changeInputValue(val) {
@@ -101,9 +103,6 @@ export class WChartComponent implements OnInit, DoCheck {
 
   }
 
-  // TODO:
-  // ZMIENIC KONIECZNIE BO CALY CZAS SIE WYSWIETLA!!
-  // reagowanie na input i zmienianie dynamicznie danych na wykresie
   ngDoCheck(): void {
     this.recom = 2500 - this.waterData;
     this.doughnutChartData = [
