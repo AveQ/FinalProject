@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthResponseData, AuthService} from '../../services/auth.service';
 import {Observable} from 'rxjs';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-auth',
@@ -27,11 +28,13 @@ export class AuthComponent implements OnInit {
     private ele: ElementRef,
     private ren: Renderer2,
     private router: Router,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private titleService: Title) {
   }
 
 
   ngOnInit(): void {
+    this.titleService.setTitle('Auth | NFL-Center');
     this.signinForm = new FormGroup(
       {
         email: new FormControl(null, [Validators.required, Validators.email]),

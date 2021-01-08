@@ -2,16 +2,16 @@
 <div class="boxForAuth">
   <div class="auth-cont">
     <div class="title">
-      <h2 class="title-text">Panel <img height="42px" src="assets/logo/aa.png" alt=" "> logowania</h2>
+      <h2 class="title-text">{{ "auth.panel" | translate }} <img height="42px" src="assets/logo/aa.png" alt=" "> {{ "auth.login" | translate }}</h2>
     </div>
     <div class="change__mode">
       <span
         (click)="signup = false"
         [ngStyle]="{'color' : !signup ? '#9c0000' : 'white'}"
-        class="change__mode-login">LOGOWANIE</span>/<span
+        class="change__mode-login">{{ "auth.log" | translate }}</span>/<span
       (click)="signup = true"
       [ngStyle]="{'color' : signup ? '#9c0000' : 'white'}"
-      class="change__mode-reg">REJESTRACJA</span>
+      class="change__mode-reg">{{ "auth.reg" | translate }}</span>
     </div>
     <form autocomplete="off" [formGroup]='signinForm' (ngSubmit)="onSubmit()" class="auth__box">
       <div class="form-group">
@@ -47,14 +47,14 @@
           type="submit"
           class="btn btn-light login"
           [disabled]="signinForm.invalid"
-        >{{signup ? 'Zarejestruj' : 'Zaloguj'}}</button>
+        >{{signup ? ("auth.signup" | translate) : ("auth.signin" | translate) }}</button>
       </div>
     </form>
     <p class="text-center">
       <span *ngIf="((this.signinForm.get('email').invalid && this.signinForm.get('email').touched) ||
-      (this.signinForm.get('password').invalid && this.signinForm.get('password').touched ) ) " class="form__info mr-1">Invalid email or password!</span>
+      (this.signinForm.get('password').invalid && this.signinForm.get('password').touched ) ) " class="form__info mr-1">{{ "auth.invalid_1" | translate }}</span>
       <span *ngIf="authFailed" class="form__info">
-      Auth failed
+      {{ "auth.invalid_2" | translate }}
     </span>
     </p>
     <div class="info">

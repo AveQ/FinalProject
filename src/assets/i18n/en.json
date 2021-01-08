@@ -29,7 +29,8 @@
     "muscles": "MUSCLES",
     "login": "START",
     "logout": "LOGOUT",
-    "exit": "EXIT"
+    "exit": "EXIT",
+    "language": "LANGUAGE"
   },
   "food_panel": {
     "set_date": "SELECT A DATE",
@@ -239,5 +240,23 @@
       "Back",
       "Selected muscle"
     ]
+  },
+  "auth": {
+    "panel": "Login",
+    "login": "panel",
+    "signin": "Sign in",
+    "signup": "Sign up",
+    "log": "LOGIN",
+    "reg": "REGISTRATION",
+    "invalid_1": "Invalid email or password!",
+    "invalid_2": "Auth failed"
+  },
+  "nav_titles": {
+    "air": "POLLUTIONS",
+    "muscles": "MUSCLES",
+    "exercise" : "EXERCISE",
+    "nutrition": "NUTRITION",
+    "log": "ACTIVITY LOG",
+    "user": "USER"
   }
 }

@@ -1,6 +1,6 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {NavigationService} from '../../services/navigation.service';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {DomSanitizer, SafeResourceUrl, Title} from '@angular/platform-browser';
 import {ExerciseService} from '../../services/exercise.service';
 import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
@@ -38,7 +38,8 @@ export class AtlasComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
-    private translate: TranslateService) {
+    private translate: TranslateService,
+    private titleService: Title) {
   }
 
 // wyszukana historia
@@ -75,6 +76,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.titleService.setTitle('Atlas | NFL-Center');
     this.language = this.translate.currentLang;
     this.setRoute();
     // pobierz dane o użytkowniku

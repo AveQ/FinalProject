@@ -9,6 +9,7 @@ import {FoodService} from '../../services/food.service';
 import {TranslateService} from '@ngx-translate/core';
 import {TranslationService} from '../../services/translation.service';
 import {Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
 
 
 @Component({
@@ -50,7 +51,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
               private userService: UserService,
               private translation: TranslateService,
               private translate: TranslationService,
-              private router: Router) {
+              private router: Router,
+              private titleService: Title) {
     this.newValue = new FormGroup({
       newValue: new FormControl(),
     });
@@ -69,6 +71,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('User | NFL-Center');
     this.language = this.translation.currentLang;
     this.settings = this.userService.settings;
     this.dietInfo = this.userService.dietInfo;
@@ -162,8 +165,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
     if (value.value === 'Mezczyzna' || value.value === 'Kobieta') {
       patchValue = value.value === 'Mezczyzna' ? 'male' : 'female';
     }
-    if (value.value === 'EN' || value.value === 'PL') {
+    if (value.value.toLowerCase() === 'en' || value.value.toLowerCase() === 'pl') {
       this.translate.changeTranslationStatus(value.value);
+      localStorage.setItem('language', JSON.stringify(value.value));
       this.router.navigate(['../']);
     }
     this.userService.patchUserFavExercises(this.userId, this.curElement.dbName, patchValue).subscribe();

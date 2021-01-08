@@ -2,7 +2,7 @@
       NAV AND TITLE
     -->
 <div class="containerForTimeline">
-  <app-navb [navImage]='"/assets/welcome-page/bg4.jpg"' [category]='"DZIENNIK"'></app-navb>
+  <app-navb [navImage]='"/assets/welcome-page/bg4.jpg"' [category]='"nav_titles.log" | translate'></app-navb>
   <div *ngIf="!updateMeal" class=" container-fluid">
     <!--
       TEXT BEFORE DATE

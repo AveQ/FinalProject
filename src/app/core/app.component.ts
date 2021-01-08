@@ -20,8 +20,15 @@ export class AppComponent implements OnInit {
     // sprawdzaj przypisany język i podczas zmiany zmien na inny
     this.authService.user.subscribe(
       data => {
+        // gdy uzytkownik zalogowany czytaj wartosc przypisana do bazy danych
         if (data) {
           this.translate.use(data.user.language.toLowerCase());
+        } else {
+          // gdy wylogowany czytaj z localstorage
+          const language = JSON.parse(localStorage.getItem('language'));
+          if (language) {
+            this.translate.use(language.toLowerCase());
+          }
         }
       }
     );
@@ -30,7 +37,7 @@ export class AppComponent implements OnInit {
     // modale informujace o akcji - zalogowania/wylogowania/zarejestrowania
     this.authService.modalMessage.subscribe(
       data => {
-          this.modalStatus = data;
+        this.modalStatus = data;
       }
     );
   }

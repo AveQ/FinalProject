@@ -4,6 +4,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {AirPollutionService} from '../../services/airPollution.service';
 import * as _ from 'lodash';
 import {TranslateService} from '@ngx-translate/core';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-bmi',
@@ -30,10 +31,14 @@ export class AirComponent implements OnInit, OnDestroy {
   // wyzeruj tablice jak string === ''
   emptyFlag = true;
 
-  constructor(private navigateService: NavigationService, private translate: TranslateService, private airPollutionService: AirPollutionService) {
+  constructor(private navigateService: NavigationService,
+              private translate: TranslateService,
+              private airPollutionService: AirPollutionService,
+              private titleService: Title) {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Air | NFL-Center');
     this.navigateService.changeNavSubject(4);
     this.airForm = new FormGroup({
       city: new FormControl(),

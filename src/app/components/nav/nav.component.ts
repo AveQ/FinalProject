@@ -30,7 +30,7 @@ export class NavComponent implements OnInit {
     private navigateService: NavigationService,
     private authService: AuthService,
     private router: Router,
-
+    private translate: TranslateService
   ) {
 
   }
@@ -51,7 +51,6 @@ export class NavComponent implements OnInit {
       }
     );
   }
-
   getClassImg() {
     return {
       height: '255px',

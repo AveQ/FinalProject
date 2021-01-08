@@ -10,6 +10,7 @@ import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 import {AtlasComponent} from '../../atlas/atlas.component';
 import {TranslateService} from '@ngx-translate/core';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-timeline',
@@ -60,7 +61,8 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
               private exercise: ExerciseService,
               private authService: AuthService,
               private route: Router,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private titleService: Title) {
   }
 
   setFilter(value, index) {
@@ -109,6 +111,7 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('History | NFL-Center');
     this.language = this.translate.currentLang;
     this.userSubscription = this.authService.user.subscribe(
       user => {

@@ -29,7 +29,8 @@
     "muscles": "MIĘŚNIE",
     "login": "DOŁĄCZ",
     "logout": "WYLOGUJ",
-    "exit": "ZWIŃ"
+    "exit": "ZWIŃ",
+    "language": "JĘZYK"
   },
   "food_panel": {
     "set_date": "WYBIERZ DATĘ",
@@ -239,5 +240,23 @@
       "Tył",
       "Wybrany mięsień"
     ]
+  },
+  "auth": {
+    "panel": "Panel",
+    "login": "logowania",
+    "signin": "Zaloguj",
+    "signup": "Zarejestruj",
+    "log": "LOGOWANIE",
+    "reg": "REJESTRACJA",
+    "invalid_1": "Nieprawidłowe dane!",
+    "invalid_2": "Błędna autoryzacja!"
+  },
+  "nav_titles": {
+    "air": "ZANIECZYSZCZENIA",
+    "muscles": "MIĘŚNIE",
+    "exercise" : "ĆWICZENIE",
+    "nutrition": "ODŻYWIANIE",
+    "log": "DZIENNIK",
+    "user": "UŻYTKOWNIK"
   }
 }

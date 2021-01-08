@@ -9,6 +9,7 @@ import {ExerciseService} from '../../services/exercise.service';
 import {UserService} from '../../services/user.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-admin',
@@ -33,10 +34,12 @@ export class AdminPanelComponent implements OnInit {
               private exerciseService: ExerciseService,
               private userService: UserService,
               private modalService: NgbModal,
-              private navigateService: NavigationService) {
+              private navigateService: NavigationService,
+              private titleService: Title) {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Admin | NFL-Center');
     this.navigateService.changeNavSubject(7);
     this.loadMeals();
     this.loadExercise();

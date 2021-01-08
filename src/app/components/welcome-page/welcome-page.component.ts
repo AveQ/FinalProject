@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavigationService} from '../../services/navigation.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-welcome-page',
@@ -11,10 +12,12 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
   idInterval;
   progressBarActive = false;
 
-  constructor(private navigateService: NavigationService) {
+  constructor(private navigateService: NavigationService,
+              private titleService: Title) {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Home | NFL-Center');
     this.progressBarActive = true;
     this.bgInterval();
     this.navigateService.changeNavSubject(0);

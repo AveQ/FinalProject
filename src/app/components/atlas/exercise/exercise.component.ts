@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import {ExerciseService} from '../../../services/exercise.service';
 import {UserService} from '../../../services/user.service';
 import {TranslateService} from '@ngx-translate/core';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-exercise',
@@ -71,10 +72,12 @@ export class ExerciseComponent implements OnInit, OnDestroy {
               private exerciseService: ExerciseService,
               private router: Router,
               private userService: UserService,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private titleService: Title) {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Exercise | NFL-Center');
     this.language = this.translate.currentLang;
     this.authService.user.subscribe(
       user => {

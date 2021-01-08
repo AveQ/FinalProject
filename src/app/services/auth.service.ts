@@ -101,7 +101,7 @@ export class AuthService {
   logout() {
     this.modalMessage.next('logout');
     this.user.next(null);
-    localStorage.clear();
+    localStorage.removeItem('userData');
   }
   closeModal() {
     this.modalMessage.next(null);

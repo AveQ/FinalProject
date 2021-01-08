@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavigationService} from '../../services/navigation.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
+import {Title} from '@angular/platform-browser';
 
 
 @Component({
@@ -18,10 +19,12 @@ export class BMIComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
               private navigateService: NavigationService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private titleService: Title) {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('BMI | NFL-Center');
     this.authService.user.subscribe(
       data => {
         if (data) {

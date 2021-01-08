@@ -9,6 +9,7 @@ import {TimeService} from '../../services/time.service';
 import {MealHistory} from '../../model/mealHistory.model';
 import {UserService} from '../../services/user.service';
 import {TranslateService} from '@ngx-translate/core';
+import {Title} from '@angular/platform-browser';
 
 
 @Component({
@@ -71,11 +72,13 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private timeService: TimeService,
               private userService: UserService,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private titleService: Title) {
 
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Meal | NFL-Center');
     this.language = this.translate.currentLang;
     this.userService.summ.subscribe(
       data => {
