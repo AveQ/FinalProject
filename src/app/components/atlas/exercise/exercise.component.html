@@ -55,7 +55,7 @@
         <p style="text-align: center">
           <span
             class="theScaleOfDifficulty-name">{{ "exercise.main_muscle" | translate}}: <b>{{this.selectedExercise.musclePart}}</b></span>
-          <small class="d-block">({{ "exercise.more" | translate}})</small>
+          <small *ngIf="this.selectedExercise.musclePart !== 'cardio'" style="cursor: pointer; outline: 0" [routerLink]="['/atlas/knowledge']" [queryParams]="{muscle: selectedExercise.musclePart.toLowerCase()}" class="d-block">({{ "exercise.more" | translate}})</small>
         </p>
       </div>
       <div class="col-12">
@@ -135,6 +135,7 @@
                 (click)="sendComment()">{{ "exercise.rate_button" | translate}}
         </button>
       </div>
+      <button [routerLink]="['/atlas/exercises', 1]" class="btn btn-outline-dark">Back</button>
     </div>
 
   </div>

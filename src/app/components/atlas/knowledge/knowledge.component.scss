@@ -1,3 +1,5 @@
+$counter: 1;
+
 .containerForAtlas {
   overflow: hidden;
   font-family: 'Roboto Condensed', sans-serif;
@@ -37,6 +39,7 @@
   position: absolute;
   cursor: pointer;
 
+
   &:after {
   }
 
@@ -51,17 +54,14 @@
     height: 100%;
     border-radius: 20px;
     width: 100%;
+    counter-increment: sekcja;
+    animation: zoomPartOne linear forwards infinite 2s;
   }
 
   &:hover:after {
     background-color: #7c0000;
   }
-
-  &:hover:before {
-    animation: zoomPart linear forwards 0.4s;
-  }
 }
-
 
 .biceps-one, .biceps-two {
   width: 25px;
@@ -151,7 +151,6 @@
 }
 
 
-
 .back {
   width: 50px;
   height: 81px;
@@ -174,11 +173,14 @@
 }
 
 // animations
-@keyframes zoomPart {
+@keyframes zoomPartOne {
   0% {
     opacity: 0;
   }
-  100% {
+  50% {
     opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

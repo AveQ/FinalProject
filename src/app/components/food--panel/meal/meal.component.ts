@@ -114,9 +114,11 @@ export class MealComponent implements OnInit, OnDestroy {
   }
 
   searchMeal(name) {
+    let search;
+    this.language.toUpperCase() === 'PL' ? search = 'namePL' : search = 'name';
     this.page = 0;
     this.tempArray = this.mealDB.filter(mel => {
-      if (mel.name.toUpperCase().includes(name.value.toUpperCase())) {
+      if (mel[search].toUpperCase().includes(name.value.toUpperCase())) {
         return mel;
       }
     });

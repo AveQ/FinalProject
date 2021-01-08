@@ -74,7 +74,7 @@
     "added_meals": "Dodane posiłki",
     "amount": "Ilość",
     "calories": "Kalorie",
-    "display": "Wyświetl,",
+    "display": "Wyświetl",
     "delete": "Usuń",
     "no_added": "Brak dodanych posiłków.",
     "meal_from_db_fir": "Posiłek z ",
@@ -113,7 +113,8 @@
       "Klatka Piersiowa",
       "Nogi",
       "Plecy",
-      "Ulubione"
+      "Ulubione",
+      "Brzuch"
     ],
     "sort": "Sortuj",
     "sort_category": [
@@ -138,7 +139,7 @@
     "select": "Wybierz",
     "date": "date",
     "min": "Ustaw",
-    "min_1": "date",
+    "min_1": "czas",
     "min_2": "treningu",
     "error_value": "Błędna wartość",
     "add_button": "DODAJ",

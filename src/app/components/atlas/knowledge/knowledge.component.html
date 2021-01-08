@@ -83,16 +83,16 @@
                 l-95 66 -140 28 c-77 15 -149 27 -160 27 -11 0 -81 -13 -155 -28z"/>
           </g>
         </svg>
-        <div (click)="openMuscle('biceps', 'biceps')" class="partOfBody biceps-one"></div>
-        <div (click)="openMuscle('biceps', 'biceps')" class="partOfBody biceps-two"></div>
-        <div (click)="openMuscle('barki', 'shoulders')" class="partOfBody shoulders-one"></div>
-        <div (click)="openMuscle('barki', 'shoulders')" class="partOfBody shoulders-two"></div>
-        <div (click)="openMuscle('przedramie', 'forearm')" class="partOfBody forearm-one"></div>
-        <div (click)="openMuscle('przedramie', 'forearm')" class="partOfBody forearm-two"></div>
-        <div (click)="openMuscle('Klatka piersiowa', 'chest')" class="partOfBody chest"></div>
-        <div (click)="openMuscle('brzuch', 'abs')" class="partOfBody stomach"></div>
-        <div (click)="openMuscle('uda','thighs')" class="partOfBody quadriceps-one"></div>
-        <div (click)="openMuscle('uda','thighs')" class="partOfBody quadriceps-two"></div>
+        <div (click)="openMuscle( 'biceps')" class="partOfBody biceps-one"></div>
+        <div (click)="openMuscle( 'biceps')" class="partOfBody biceps-two"></div>
+        <div (click)="openMuscle('shoulders')" class="partOfBody shoulders-one"></div>
+        <div (click)="openMuscle('shoulders')" class="partOfBody shoulders-two"></div>
+        <div (click)="openMuscle('forearm')" class="partOfBody forearm-one"></div>
+        <div (click)="openMuscle('forearm')" class="partOfBody forearm-two"></div>
+        <div (click)="openMuscle( 'chest')" class="partOfBody chest"></div>
+        <div (click)="openMuscle( 'abs')" class="partOfBody stomach"></div>
+        <div (click)="openMuscle('legs')" class="partOfBody quadriceps-one"></div>
+        <div (click)="openMuscle('legs')" class="partOfBody quadriceps-two"></div>
 
       </div>
       <div *ngIf="!isFront" class="body" >
@@ -153,10 +153,9 @@
                 l-95 66 -140 28 c-77 15 -149 27 -160 27 -11 0 -81 -13 -155 -28z"/>
           </g>
         </svg>
-        <div (click)="openMuscle('plecy', 'back')" class="partOfBody back"></div>
-        <div (click)="openMuscle('pośladki', 'gluteus')" class="partOfBody gluteus"></div>
-        <div (click)="openMuscle('triceps', 'triceps')" class="partOfBody triceps-one"></div>
-        <div (click)="openMuscle('triceps', 'triceps')" class="partOfBody triceps-two"></div>
+        <div (click)="openMuscle('back')" class="partOfBody back"></div>
+        <div (click)="openMuscle( 'triceps')" class="partOfBody triceps-one"></div>
+        <div (click)="openMuscle( 'triceps')" class="partOfBody triceps-two"></div>
       </div>
       <div class="tileBody">
         {{partOfBody}}

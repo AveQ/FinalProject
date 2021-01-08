@@ -22,7 +22,9 @@ nav {
   height: 60px;
   float: left;
 }
-
+.image-wrapper:focus {
+  outline: 0;
+}
 .image {
   width: 60px;
   height: 60px;

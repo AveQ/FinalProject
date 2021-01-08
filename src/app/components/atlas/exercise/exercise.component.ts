@@ -93,6 +93,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       }
     );
     this.loadExercise();
+    console.log(this.selectedExercise.musclePart);
   }
 
   createArrayForYellowStars(n: number): any[] {

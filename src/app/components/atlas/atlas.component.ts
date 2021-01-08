@@ -95,9 +95,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
     );
     // pobierz cwiczenia
     this.getExercises();
-    // if (this.exerciseId !== undefined && this.exerciseId !== '0') {
-    //   this.loadExercise();
-    // }
     this.navigationService.changeNavSubject(3);
     if (this.user) {
       this.loadUserAllHistory();
@@ -106,7 +103,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
 
   // sprawdz params i ustaw podstronke. jezeli inna od dozwolonych przekieruj na glowna
   setRoute() {
-    console.log(this.route.snapshot.params.active);
     this.route.params.subscribe(
       (params: Params) => {
         if (params) {
@@ -128,13 +124,15 @@ export class AtlasComponent implements OnInit, OnDestroy {
   // znajdz cwiczenie zgodnie z filtrami
   searchAndSortExercises() {
     // chwilowa tablica do edycji
+    let sort;
+    this.language.toUpperCase() === 'PL' ? sort = 'namePL' : sort = 'name';
     let tempArray = [];
     // po nazwie
     if (this.filters.name.length > 0) {
       for (const exercise in this.allExercisesDb) {
         // jezeli substring znajduje sie w nazwie cwiczenia poprostu dodaj do tmpArray
         if (this.allExercisesDb.hasOwnProperty(exercise) &&
-          this.allExercisesDb[exercise].name.toLowerCase().includes((this.filters.name).toLowerCase())) {
+          this.allExercisesDb[exercise][sort].toLowerCase().includes((this.filters.name).toLowerCase())) {
           tempArray.push(this.allExercisesDb[exercise]);
         }
       }
@@ -166,21 +164,25 @@ export class AtlasComponent implements OnInit, OnDestroy {
 
     // sortuj tablice
     let sortArray = [];
+    let sortName = 'name';
+    if (this.language.toUpperCase() === 'PL'){
+      sortName = 'namePL';
+    }
     switch (this.filters.sort) {
       case '': {
         sortArray = partArray;
         break;
       }
       case 'a-z': {
-        sortArray = _.orderBy(partArray, ['name'], ['asc']);
+        sortArray = _.orderBy(partArray, [sortName], ['asc']);
         break;
       }
       case 'z-a': {
-        sortArray = _.orderBy(partArray, ['name'], ['desc']);
+        sortArray = _.orderBy(partArray, [sortName], ['desc']);
         break;
       }
       case 'rate': {
-        sortArray = _.orderBy(partArray, ['rate'], ['desc']);
+        sortArray = _.orderBy(partArray, ['rate.rate'], ['desc']);
         break;
       }
       case 'popular': {
