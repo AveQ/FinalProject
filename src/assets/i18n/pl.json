@@ -258,5 +258,8 @@
     "nutrition": "ODŻYWIANIE",
     "log": "DZIENNIK",
     "user": "UŻYTKOWNIK"
+  },
+  "admin": {
+
   }
 }

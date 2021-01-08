@@ -24,9 +24,9 @@ const routes: Routes = [
       {path: ':part', canActivate: [AuthGuard], component: KnowledgeComponent}
     ] },
   {path: 'exercise/:active', canActivate: [AuthGuard], component: ExerciseComponent},
-  {path: 'settings', component: SettingsComponent},
-  {path: 'bmi', component: BMIComponent},
-  {path: 'air', component: AirComponent},
+  {path: 'settings', canActivate: [AuthGuard], component: SettingsComponent},
+  {path: 'bmi', canActivate: [AuthGuard], component: BMIComponent},
+  {path: 'air', canActivate: [AuthGuard], component: AirComponent},
   {path: 'timeline-exercise', canActivate: [AuthGuard], component: TimelineExeComponent},
   {path: 'admin-panel', canActivate: [AuthGuardAdmin], component: AdminPanelComponent},
   {path: '', component: WelcomePageComponent},

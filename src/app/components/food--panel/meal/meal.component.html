@@ -113,10 +113,10 @@
         </thead>
         <tbody>
         <tr *ngFor="let myMealDB of paginationArray; index as i">
-          <th *ngIf="language === 'PL'" scope="row">
+          <th *ngIf="language.toLowerCase() === 'pl'" scope="row">
             {{myMealDB.namePL}}
           </th>
-          <th *ngIf="language !== 'PL'" scope="row">
+          <th *ngIf="language.toLowerCase() !== 'pl'" scope="row">
             {{myMealDB.name}}
           </th>
           <td>

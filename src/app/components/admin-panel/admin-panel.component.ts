@@ -46,6 +46,7 @@ export class AdminPanelComponent implements OnInit {
     this.loadUsers();
     this.mealForm = new FormGroup(
       {
+        namePL: new FormControl(null, Validators.required),
         name: new FormControl(null, Validators.required),
         oneServing: new FormControl(null, Validators.required),
         kcal: new FormControl(null, Validators.required),
@@ -59,8 +60,10 @@ export class AdminPanelComponent implements OnInit {
     this.exerciseForm = new FormGroup(
       {
         name: new FormControl(null, Validators.required),
+        namePL: new FormControl(null, Validators.required),
         type: new FormControl(null, Validators.required),
         description: new FormControl(null, Validators.required),
+        descriptionPL: new FormControl(null, Validators.required),
         musclePart: new FormControl(null, Validators.required),
         image: new FormControl(null, Validators.required),
         difficult: new FormControl(null, Validators.required),
@@ -129,8 +132,10 @@ export class AdminPanelComponent implements OnInit {
     console.log(this.exerciseForm.value);
     const uploadData = new FormData();
     uploadData.append('name', this.exerciseForm.get('name').value);
+    uploadData.append('namePL', this.exerciseForm.get('namePL').value);
     uploadData.append('type', this.exerciseForm.get('type').value);
     uploadData.append('description', this.exerciseForm.get('description').value);
+    uploadData.append('descriptionPL', this.exerciseForm.get('descriptionPL').value);
     uploadData.append('musclePart', this.exerciseForm.get('musclePart').value);
     uploadData.append('difficult', this.exerciseForm.get('difficult').value);
     uploadData.append('kcalRatio', this.exerciseForm.get('kcalRatio').value);

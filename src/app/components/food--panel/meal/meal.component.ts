@@ -126,14 +126,14 @@ export class MealComponent implements OnInit, OnDestroy {
 
   createTable() {
     this.paginationArray = [];
-    const firstElement = this.page * 2;
+    const firstElement = this.page * 5;
     if (firstElement < this.tempArray.length) {
-      this.paginationArray = this.tempArray.slice(this.page * 2, this.page * 2 + 2);
+      this.paginationArray = this.tempArray.slice(this.page * 5, this.page * 5 + 5);
     }
   }
 
   isNext() {
-    return (this.page * 2 + 3) <= this.tempArray.length;
+    return (this.page * 5 + 6) <= this.tempArray.length;
   }
 
   otherPage(value) {

@@ -9,8 +9,12 @@
     <div class="modal-body">
       <form [formGroup]='exerciseForm' (ngSubmit)="onSubmitExercise()">
         <div class="form-group">
-          <label for="nameExercise" >Nazwa</label>
+          <label for="nameExercise" >Nazwa (EN)</label>
           <input type="text" class="form-control" id="nameExercise" formControlName="name">
+        </div>
+        <div class="form-group">
+          <label for="nameExercisePl" >Nazwa (PL)</label>
+          <input type="text" class="form-control" id="nameExercisePl" formControlName="namePL">
         </div>
         <div class="form-group">
           <label for="type">Typ ćwiczenia</label>
@@ -20,8 +24,12 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="description" >Opis ćwiczenia:</label>
+          <label for="description" >Opis ćwiczenia (EN):</label>
           <textarea name="description" id="description" formControlName="description" cols="30" rows="2"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="descriptionPl" >Opis ćwiczenia (PL):</label>
+          <textarea name="description" id="descriptionPl" formControlName="descriptionPL" cols="30" rows="2"></textarea>
         </div>
         <div class="form-group">
           <label for="musclePart">Typ ćwiczenia</label>
@@ -67,8 +75,12 @@
     <div class="modal-body">
       <form [formGroup]='mealForm' (ngSubmit)="onSubmitMeal()">
         <div class="form-group">
-          <label for="name" >Nazwa</label>
-          <input type="text" class="form-control" id="name" formControlName="name">
+          <label for="name" >Nazwa (PL)</label>
+          <input type="text" class="form-control" id="name" formControlName="namePL">
+        </div>
+        <div class="form-group">
+          <label for="nameEN" >Nazwa (EN)</label>
+          <input type="text" class="form-control" id="nameEN" formControlName="name">
         </div>
         <div class="form-group">
           <label for="oneServing" >Dane dla porcji:</label>
