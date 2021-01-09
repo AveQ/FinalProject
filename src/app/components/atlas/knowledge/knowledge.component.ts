@@ -55,7 +55,6 @@ export class KnowledgeComponent implements OnInit, OnDestroy {
     this.paramsSubscription = this.route.queryParams.subscribe(
       (params: Params) => {
         if (params) {
-          console.log(params);
           this.openMuscle(params.muscle);
         }
       }
@@ -78,7 +77,6 @@ export class KnowledgeComponent implements OnInit, OnDestroy {
         desc = 'description';
         name = 'name';
       }
-      console.log(this.muscles[index]);
       this.partOfBody = this.muscles[index][name].toUpperCase();
       this.titleMuscle = this.muscles[index][name].toUpperCase();
       this.descriptionMuscle = this.muscles[index][desc];

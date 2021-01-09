@@ -65,7 +65,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   // ustaw achievement
   checkCounterLogin() {
     for (let i = 1; i < 5; i++) {
-      console.log(this.achievements[i - 1].unblock);
       this.achievements[i - 1].unblock = i * 5 <= this.counterUserHistory;
     }
   }
@@ -104,7 +103,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   setLanguage(user) {
     let languageNameValue;
     let languageOptionValue;
-    console.log(this.settings);
     if (this.language === 'pl') {
       languageNameValue = 'name_value';
       languageOptionValue = 'options_value';
@@ -118,7 +116,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     if (this.language === 'pl') {
       this.settings[3][languageNameValue] = (user.user.gender.toLowerCase() === 'male' || user.user.gender.toLowerCase() === 'mezczyzna') ? 'Mezczyzna' : 'Kobieta';
     } else {
-      console.log('tpo: ' + user.user.gender.toLowerCase());
       this.settings[3][languageNameValue] = (user.user.gender.toLowerCase() === 'male' || user.user.gender.toLowerCase() === 'mezczyzna') ? 'Male' : 'Female';
     }
     this.settings[4][languageNameValue] = user.user.weeklyChange + ' kg';
@@ -132,15 +129,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.settings[6][languageNameValue] = user.user.age + '';
     this.settings[7][languageNameValue] = user.user.language;
     this.settings[8][languageNameValue] = user.user.finalWeight + ' kg';
-    this.dietInfo[0][languageNameValue] = user.user.forecast;
     const ppm = this.userService.setPPM(user.user.gender, user.user.weight, user.user.height, user.user.age);
-    this.dietInfo[1][languageNameValue] = ppm === 0 ? 'Złe Dane' : ppm.toPrecision(5) + ' kcal';
+    this.dietInfo[0][languageNameValue] = ppm === 0 ? 'Złe Dane' : ppm.toPrecision(5) + ' kcal';
     const cpm = this.userService.setCPM(user.user.physicalActivity, ppm);
-    this.dietInfo[2][languageNameValue] = cpm === 0 ? 'Złe Dane' : cpm.toPrecision(5) + ' kcal';
+    this.dietInfo[1][languageNameValue] = cpm === 0 ? 'Złe Dane' : cpm.toPrecision(5) + ' kcal';
     const mac = this.userService.returnMacro(cpm);
-    this.dietInfo[3][languageNameValue] = mac[0] === 0 ? 'Złe Dane' : mac[0].toPrecision(4) + ' g';
-    this.dietInfo[4][languageNameValue] = mac[1] === 0 ? 'Złe Dane' : mac[1].toPrecision(4) + ' g';
-    this.dietInfo[5][languageNameValue] = mac[2] === 0 ? 'Złe Dane' : mac[2].toPrecision(4) + ' g';
+    this.dietInfo[2][languageNameValue] = mac[0] === 0 ? 'Złe Dane' : mac[0].toPrecision(4) + ' g';
+    this.dietInfo[3][languageNameValue] = mac[1] === 0 ? 'Złe Dane' : mac[1].toPrecision(4) + ' g';
+    this.dietInfo[4][languageNameValue] = mac[2] === 0 ? 'Złe Dane' : mac[2].toPrecision(4) + ' g';
     this.goal[0][languageNameValue] = (cpm + (user.user.weeklyChange * 1000)).toPrecision(5) + 'kg';
     const goalMac = this.userService.returnMacro((cpm + (user.user.weeklyChange * 1000)));
     this.goal[1][languageNameValue] = goalMac[0] === 0 ? 'Złe Dane' : goalMac[0].toPrecision(4) + ' g';
@@ -151,7 +147,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.changeValue);
     this.userService.patchUserFavExercises(this.userId, this.curElement.dbName, this.newValue.value.newValue).subscribe();
     const userNew = this.user;
     userNew.user[this.curElement.dbName] = this.newValue.value.newValue;
@@ -181,7 +176,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   openModal(value) {
     this.modalOpen = true;
     this.changeValue = value.formInfo;
-    console.log(value);
     this.curElement = value;
   }
 

@@ -70,7 +70,6 @@ export class AuthComponent implements OnInit {
           this.authService.modalMessage.next('login');
         }
         this.router.navigate(['../']);
-        console.log('xd');
       }
     );
   }

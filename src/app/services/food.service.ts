@@ -158,7 +158,6 @@ export class FoodService {
   isDecrease(idUser) {
     this.http.get(this.urlLocal + '/api/mealsHistory/users/' + idUser).subscribe(
       data => {
-        console.log(data);
       }, error => {
       },
       () => {
@@ -202,4 +201,9 @@ export class FoodService {
     }
     return meal;
   }
+
+  // sumowanie wszystkich posilkow
+
+
+
 }

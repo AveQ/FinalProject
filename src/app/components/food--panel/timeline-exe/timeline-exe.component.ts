@@ -69,7 +69,6 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
     this.finalExerciseArray = [];
     if (value === 'all') {
       this.finalExerciseArray = this.exercises;
-      console.log(this.finalExerciseArray)
     } else {
       this.exercises.find(element => {
         if (element.kind === value) {
@@ -174,7 +173,6 @@ export class TimelineExeComponent implements OnInit, OnDestroy {
         error => {
         },
         () => {
-          console.log('create new hisotry');
           this.loadUserAllHistory();
         }
       );

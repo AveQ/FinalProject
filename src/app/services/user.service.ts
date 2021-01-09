@@ -113,13 +113,6 @@ export class UserService {
   ];
   dietInfo = [
     {
-      name: 'Prognoza wagi',
-      nameEN: 'Weight forecast',
-      name_value: 'Spadek',
-      name_value_EN: 'Decrease',
-      class_icon: 'fas fa-chart-line fa-3x account-green'
-    },
-    {
       name: 'PPM',
       nameEN: 'BM',
       name_value: '0 kcal',

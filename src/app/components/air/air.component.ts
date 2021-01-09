@@ -61,7 +61,6 @@ export class AirComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.airForm.value);
   }
 
   // znajdź miasto, które posiada substring podany przez użytkownika

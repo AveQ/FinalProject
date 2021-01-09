@@ -120,7 +120,6 @@ export class StatsComponent implements OnInit, DoCheck {
   }
 
   sumKcalAndTime(exercises) {
-    console.log(exercises);
     let kcal = 0;
     let time = 0;
     let counter = 0;

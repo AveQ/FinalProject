@@ -93,7 +93,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       }
     );
     this.loadExercise();
-    console.log(this.selectedExercise.musclePart);
   }
 
   createArrayForYellowStars(n: number): any[] {
@@ -131,7 +130,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         error => {
         },
         () => {
-          console.log('new history');
           this.loadUserAllHistory();
           this.setSelectedHistory(day, month, year);
         }
@@ -188,7 +186,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
           this.selectedExercise = data;
           this.checkIsRated();
           this.patchPopularValue();
-          console.log(this.selectedExercise);
         }
       },
       error => {
@@ -267,7 +264,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
           error => {
           },
           () => {
-            console.log('Patch successful');
 
             this.router.navigate(['./timeline-exercise']);
           }

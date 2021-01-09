@@ -14,7 +14,6 @@ export class TranslationService {
     return this.translation.getValue();
   }
   changeTranslationStatus(value) {
-    console.log(value);
     this.translation.next(value);
   }
 }

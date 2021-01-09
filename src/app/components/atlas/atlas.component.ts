@@ -293,7 +293,6 @@ export class AtlasComponent implements OnInit, OnDestroy {
       x.on = false;
     });
     this.basicSportMenu[index].on = true;
-    console.log(this.basicSportMenu[index].route);
     if (index === 1) {
       this.page = 0;
       this.getExercises();

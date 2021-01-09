@@ -77,7 +77,6 @@ export class AdminPanelComponent implements OnInit {
   }
 
   openSm(content) {
-    console.log('xd');
     this.modalService.open(content, {size: 'sm'});
     // this.myMealProp = value;
   }
@@ -102,7 +101,6 @@ export class AdminPanelComponent implements OnInit {
     this.userService.getAllUsers().subscribe(
       data => {
         this.allUsers = data.users;
-        console.log(this.allUsers);
       },
       error => {
       },
@@ -129,7 +127,6 @@ export class AdminPanelComponent implements OnInit {
   }
 
   onSubmitExercise() {
-    console.log(this.exerciseForm.value);
     const uploadData = new FormData();
     uploadData.append('name', this.exerciseForm.get('name').value);
     uploadData.append('namePL', this.exerciseForm.get('namePL').value);
@@ -140,23 +137,19 @@ export class AdminPanelComponent implements OnInit {
     uploadData.append('difficult', this.exerciseForm.get('difficult').value);
     uploadData.append('kcalRatio', this.exerciseForm.get('kcalRatio').value);
     uploadData.append('image', this.selectedFile, this.selectedFile.name);
-    console.log(uploadData);
     this.exerciseService.postExercise(uploadData).subscribe(
       data => {
       },
       error => {
       },
       () => {
-        console.log('done');
       }
     );
   }
 
   onSubmitMeal() {
-    console.log(this.mealForm.value);
     this.foodService.postMeal(this.mealForm.value).subscribe(
       data => {
-        console.log(data);
       },
       error => {
       },

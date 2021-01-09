@@ -193,7 +193,6 @@ export class MealComponent implements OnInit, OnDestroy {
     this.foodService.getAllMeals().subscribe(
       data => {
         this.mealDB = data.meals;
-        console.log(this.mealDB);
       },
       error => {
       },
@@ -208,9 +207,7 @@ export class MealComponent implements OnInit, OnDestroy {
   addProduct(modal, value, mealObject) {
     const portion = +value.value / 100;
     if (portion !== null && portion >= 0) {
-      console.log(mealObject._id);
       const name = 'meal_' + (this.objectFromParent.index + 1);
-      console.log(mealObject);
       const tempMeal: Meal = {
         amount: value.value + '',
         carbs: mealObject.carbs * portion,
@@ -224,7 +221,6 @@ export class MealComponent implements OnInit, OnDestroy {
         salt: mealObject.salt * portion
       };
       this.meal.push(tempMeal);
-      console.log(this.meal);
       let tempEditMeal;
       this.foodService.loadDataHistoryMeal(this.objectFromParent.id).subscribe(
         data => {
@@ -241,7 +237,6 @@ export class MealComponent implements OnInit, OnDestroy {
         }
       );
     } else {
-      console.log('Incorrect input value');
     }
     this.modalService.dismissAll();
   }
@@ -249,7 +244,6 @@ export class MealComponent implements OnInit, OnDestroy {
   editUserMeal(name, newValue) {
     this.foodService.patchWaterData(this.objectFromParent.id, name, newValue).subscribe(
       data => {
-        console.log(data);
       },
       error => {
       },
@@ -273,13 +267,11 @@ export class MealComponent implements OnInit, OnDestroy {
         const indexMealArray = _.findLastIndex(this.meal, {
           id: objectMeal.id, amount: objectMeal.amount
         });
-        console.log(indexMealArray);
         this.meal = this.meal.slice(0, indexMealArray).concat(this.meal.slice(indexMealArray + 1));
         tempMeal = tempMeal.slice(0, index).concat(tempMeal.slice(index + 1));
         this.editUserMeal(name, tempMeal);
       }
     );
-    console.log(objectMeal);
   }
 
   ngOnDestroy(): void {
