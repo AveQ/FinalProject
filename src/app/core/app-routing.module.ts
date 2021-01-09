@@ -13,6 +13,7 @@ import {AuthGuardAdmin} from '../services/authGuardAdmin.service';
 import {AdminPanelComponent} from '../components/admin-panel/admin-panel.component';
 import {ExerciseComponent} from '../components/atlas/exercise/exercise.component';
 import {KnowledgeComponent} from '../components/atlas/knowledge/knowledge.component';
+import {PageNotFoundComponent} from '../components/page-not-found/page-not-found.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,8 @@ const routes: Routes = [
   {path: 'timeline-exercise', canActivate: [AuthGuard], component: TimelineExeComponent},
   {path: 'admin-panel', canActivate: [AuthGuardAdmin], component: AdminPanelComponent},
   {path: '', component: WelcomePageComponent},
+  {path: 'not-found', component: PageNotFoundComponent},
+  {path: '**', redirectTo: '/not-found'}
 ];
 
 @NgModule({

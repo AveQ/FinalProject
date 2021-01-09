@@ -33,6 +33,7 @@ import {ExerciseComponent} from '../components/atlas/exercise/exercise.component
 import {KnowledgeComponent} from '../components/atlas/knowledge/knowledge.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {PageNotFoundComponent} from '../components/page-not-found/page-not-found.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +54,8 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
     AdminPanelComponent,
     ModalComponent,
     ExerciseComponent,
-    KnowledgeComponent
+    KnowledgeComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
