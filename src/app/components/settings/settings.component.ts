@@ -137,7 +137,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.dietInfo[2][languageNameValue] = mac[0] === 0 ? 'Złe Dane' : mac[0].toPrecision(4) + ' g';
     this.dietInfo[3][languageNameValue] = mac[1] === 0 ? 'Złe Dane' : mac[1].toPrecision(4) + ' g';
     this.dietInfo[4][languageNameValue] = mac[2] === 0 ? 'Złe Dane' : mac[2].toPrecision(4) + ' g';
-    this.goal[0][languageNameValue] = (cpm + (user.user.weeklyChange * 1000)).toPrecision(5) + 'kg';
+    this.goal[0][languageNameValue] = (cpm + (user.user.weeklyChange * 1000)).toPrecision(5) + 'kcal';
     const goalMac = this.userService.returnMacro((cpm + (user.user.weeklyChange * 1000)));
     this.goal[1][languageNameValue] = goalMac[0] === 0 ? 'Złe Dane' : goalMac[0].toPrecision(4) + ' g';
     this.goal[2][languageNameValue] = goalMac[1] === 0 ? 'Złe Dane' : goalMac[1].toPrecision(4) + ' g';

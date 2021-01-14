@@ -63,6 +63,7 @@
                 </div>
               </div>
             </div>
+              <h5 *ngIf="exercises.length === 0" style="width: 100%; text-align: center">Brak ćwiczeń</h5>
           </div>
           <div class="row contForPagination">
             <ul class="pagination" style="cursor: pointer">
@@ -91,6 +92,7 @@
                 <option [value]="'triceps'">{{ "atlas.part_category.2" | translate}}</option>
                 <option [value]="'chest'">{{ "atlas.part_category.3" | translate}}</option>
                 <option [value]="'legs'">{{ "atlas.part_category.4" | translate}}</option>
+                <option [value]="'cardio'">Cardio</option>
                 <option [value]="'back'">{{ "atlas.part_category.5" | translate}}</option>
                 <option [value]="'abs'">{{ "atlas.part_category.7" | translate}}</option>
                 <option [value]="'fav'">{{ "atlas.part_category.6" | translate}}</option>

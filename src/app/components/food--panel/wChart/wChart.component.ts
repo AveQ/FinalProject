@@ -68,13 +68,15 @@ export class WChartComponent implements OnInit, DoCheck {
     if (!value) {
       this.statusWater *= -1;
     }
-    if (this.waterData + this.statusWater >= 0 && this.waterData + this.statusWater <= 2500) {
+    if (+this.waterData + +this.statusWater >= 0 && +this.waterData + +this.statusWater <= 2500) {
       this.recom += this.statusWater * -1;
-      this.waterData += this.statusWater;
+      this.waterData = +this.waterData + +this.statusWater;
     } else if (this.waterData + this.statusWater < 0) {
       this.waterData = 0;
       this.recom = 2500;
-    } else if (this.waterData + this.statusWater > 2500) {
+
+    } else if (+this.waterData + +this.statusWater > 2500) {
+
       this.waterData = 2500;
       this.recom = 0;
     }

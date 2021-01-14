@@ -263,5 +263,6 @@
   "admin": {
 
   },
-  "hydration": "Your hydration today:"
+  "hydration": "Your hydration today:",
+  "button_back": "Powrót"
 }

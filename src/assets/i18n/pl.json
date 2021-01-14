@@ -263,5 +263,6 @@
   "admin": {
 
   },
-  "hydration": "Twoje dzisiejsze nawodnienie:"
+  "hydration": "Twoje dzisiejsze nawodnienie:",
+  "button_back": "Powrót"
 }

@@ -146,7 +146,7 @@ export class AtlasComponent implements OnInit, OnDestroy {
         // jezeli musclePart jest taki jak zaznacozny przez uzytkownika dodaj do tmep array
         if (tempArray.hasOwnProperty(exercise) &&
           (tempArray[exercise].musclePart === this.filters.part)) {
-          partArray.push(this.allExercisesDb[exercise]);
+          partArray.push(tempArray[exercise]);
         }
       }
     } else if (this.filters.part === 'fav') {

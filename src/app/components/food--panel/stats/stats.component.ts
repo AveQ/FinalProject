@@ -213,7 +213,7 @@ export class StatsComponent implements OnInit, DoCheck {
         spaceY = spaceY + 10;
       }
     }
-    if (counter === 1) {
+    if (counter === 0) {
       counter++;
       textWidth = pdf.getStringUnitWidth('Brak cwiczen') * pdf.getFontSize() / pdf.internal.scaleFactor;
       textOffset = (pdf.internal.pageSize.width - textWidth) / 2;

@@ -30,6 +30,7 @@ export interface MealResponseData {
   salt: number;
   fats: number;
   name: string;
+  namePL: string;
   request;
 }
 
@@ -186,6 +187,7 @@ export class FoodService {
               fiber: data.fiber * amountTemp,
               kcal: data.kcal * amountTemp,
               name: data.name,
+              namePL: data.namePL,
               proteins: data.proteins * amountTemp,
               salt: data.salt * amountTemp,
               id: data._id,

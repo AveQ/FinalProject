@@ -1,7 +1,8 @@
 <div class="container">
   <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title"><em>{{myMealProp.name}}</em></h4>
+      <h4 *ngIf="language.toLowerCase() ==='pl'" class="modal-title">{{myMealProp.namePL}}</h4>
+      <h4 *ngIf="language.toLowerCase() !=='pl'" class="modal-title">{{myMealProp.name}}</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -22,7 +23,8 @@
   <!--  dodawanie posilku -->
   <ng-template #adding let-modal>
     <div class="modal-header">
-      <h4 class="modal-title">{{myMealProp.name}}</h4>
+      <h4 *ngIf="language.toLowerCase() ==='pl'" class="modal-title">{{myMealProp.namePL}}</h4>
+      <h4 *ngIf="language.toLowerCase() !=='pl'" class="modal-title">{{myMealProp.name}}</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -57,12 +59,12 @@
         <tbody>
         <tr *ngFor="let myMeal of meal; index as i">
           <th scope="row">{{myMeal.amount}} g</th>
-          <td *ngIf="language === 'PL'">
+          <td *ngIf="language.toLowerCase() === 'pl'">
             <p><b>
               {{myMeal.namePL}}
             </b></p>
           </td>
-          <td *ngIf="language !== 'PL'">
+          <td *ngIf="language.toLowerCase() !== 'pl'">
             <p><b>
               {{myMeal.name}}
             </b></p>
