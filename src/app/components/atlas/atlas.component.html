@@ -63,7 +63,7 @@
                 </div>
               </div>
             </div>
-              <h5 *ngIf="exercises.length === 0" style="width: 100%; text-align: center">Brak ćwiczeń</h5>
+              <h5 *ngIf="exercises && exercises.length === 0" style="width: 100%; text-align: center">Brak ćwiczeń</h5>
           </div>
           <div class="row contForPagination">
             <ul class="pagination" style="cursor: pointer">

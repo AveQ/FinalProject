@@ -18,7 +18,7 @@
       <p class="text-center"><b>{{ "summary.visualization" | translate }}</b></p>
       <p class="text-center m-0">{{ "summary.counter_exercises" | translate }}<b>{{exercisesCounter}}</b></p>
       <p class="text-center m-0">{{ "summary.time_exercises" | translate }}<b>{{exercisesTime}} min</b></p>
-      <p class="text-center mb-4">{{ "summary.body_hydration" | translate }}<b>{{waterData}} ml</b></p>
+      <p class="text-center mb-4">{{ "summary.body_hydration" | translate }}<b>500 ml</b></p>
       <div *ngFor="let bar of bars" class="part">
         <ng-template #popContent>{{ "summary.eat" | translate }}: <b>{{bar.value | number: '1.2-2'}}g</b><br>
           {{ "summary.max" | translate }}: <b>{{bar.max | number: '1.2-2'}}g</b>

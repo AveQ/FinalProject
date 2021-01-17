@@ -264,12 +264,9 @@ export class FoodPanelNewComponent implements OnInit, OnDestroy {
   }
 
   loadToPDF(id, amount) {
-    this.counterPDF = 1;
     // load pdf
     this.foodService.getInfoMeal(id).subscribe(info => {
-        this.mealPDF.push(this.counterPDF + '. ' +
-          info.name + ', ilosc: ' + (amount * 100).toFixed(0) + 'g');
-        this.counterPDF++;
+        this.mealPDF.push(info.name + ', ilosc: ' + (amount * 100).toFixed(0) + 'g');
       }, error => {
       },
       () => {

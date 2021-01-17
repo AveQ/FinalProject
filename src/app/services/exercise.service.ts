@@ -29,7 +29,7 @@ export class ExerciseService {
   }
 
   postUserHistory(newUserHistory) {
-    return this.http.post(this.urlLocal + '/api/userExercisesHistory', newUserHistory);
+    return this.http.post<{message: string, createdExercise}>(this.urlLocal + '/api/userExercisesHistory', newUserHistory);
   }
 
   patchUserHistory(id, toChange, newValue) {

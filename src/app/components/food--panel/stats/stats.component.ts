@@ -13,7 +13,7 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.scss']
 })
-export class StatsComponent implements OnInit, DoCheck {
+export class StatsComponent implements OnInit {
   @Input() currentDay;
   @Input() waterData;
   @Input() meals;
@@ -107,6 +107,7 @@ export class StatsComponent implements OnInit, DoCheck {
             if (data.hasOwnProperty(element) &&
               new Date(this.currentDay.time).getDate() === new Date(data[element].date).getDate() &&
               new Date(this.currentDay.time).getMonth() === new Date(data[element].date).getMonth()) {
+              console.log(new Date(data[element].date).getMonth())
               this.sumKcalAndTime(data[element].exercises);
             }
           }
@@ -147,6 +148,7 @@ export class StatsComponent implements OnInit, DoCheck {
     this.exercisesTime = time;
     this.exercisesKcal = kcal;
     this.exercisesCounter = counter;
+    console.log(this.exercisesCounter)
   }
 
   async generatePDF() {
@@ -245,9 +247,6 @@ export class StatsComponent implements OnInit, DoCheck {
   }
 
 
-  ngDoCheck(): void {
-
-  }
 
 
 }

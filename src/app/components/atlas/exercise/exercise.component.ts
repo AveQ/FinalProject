@@ -47,7 +47,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     kcalRatio: 0
   };
   hideForm = false;
-  hideRate = false
+  hideRate = false;
   model: NgbDateStruct = {
     year: 0,
     month: 0,
@@ -112,9 +112,26 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     }
   }
 
+  loadUserAllHistory() {
+    if (this.user) {
+      this.exerciseService.loadUserAllHistory(this.userId).subscribe(
+        data => {
+          this.allUserHistory = data;
+        },
+        error => {
+        },
+        () => {
+        }
+      );
+    }
+  }
+
   setSelectedHistory(day, month, year) {
+    console.log(this.allUserHistory);
     this.historyExercise = _.find(this.allUserHistory, data => {
-      // ustaw posilki
+      console.log((day === new Date(data.date).getDate() &&
+        month === new Date(data.date).getMonth() &&
+        year === new Date(data.date).getFullYear()));
       if (day === new Date(data.date).getDate() &&
         month === new Date(data.date).getMonth() &&
         year === new Date(data.date).getFullYear()) {
@@ -122,21 +139,55 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       }
     });
     if (_.isEmpty(this.historyExercise)) {
+      console.log('true');
       this.newUserHistory.date = new Date(year, month, day).getTime();
       this.newUserHistory.idUser = this.userId;
       this.exerciseService.postUserHistory(this.newUserHistory).subscribe(
-        history => {
-        },
-        error => {
-        },
-        () => {
-          this.loadUserAllHistory();
-          this.setSelectedHistory(day, month, year);
-        }
-      );
+        data => {
+          console.log(data.createdExercise);
+          this.historyExercise = data.createdExercise;
+        }, error => {
+
+        }, () => {
+          this.patchNewExe();
+        });
     } else {
       this.patchNewExe();
     }
+  }
+
+  patchNewExe() {
+    let kcalRatio = 0;
+    let kcal = 0;
+    const tempArray = this.historyExercise.exercises;
+    const newExercise = {
+      kcal: 0,
+      time: -1,
+      idExercise: ''
+    };
+    const weight = this.user.user.weight;
+    this.exerciseService.getExercise(this.exerciseId).subscribe(data => {
+      kcalRatio = data.kcalRatio;
+      kcal = kcalRatio * this.timeModel * weight;
+      newExercise.kcal = +kcal.toFixed(2);
+      newExercise.time = this.timeModel;
+      newExercise.idExercise = this.exerciseId;
+      // sprawdz czy juz taki rodzaj cwiczenia wystepuje w historii jak tak to ja update
+      const indexTemp = _.findIndex(tempArray, ['idExercise', this.exerciseId]);
+      if (indexTemp !== -1) {
+        tempArray[indexTemp] = newExercise;
+      } else {
+        tempArray.push(newExercise);
+      }
+    }, err => {
+
+    }, () => {
+      this.exerciseService.patchUserHistory(this.historyExercise._id, 'exercises', tempArray).subscribe( () => {
+          this.router.navigate(['./timeline-exercise']);
+        }
+      );
+    });
+
   }
 
   sendDateToPatch() {
@@ -194,6 +245,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       () => {
         this.checkDifficulty();
         this.isLoading = false;
+        this.loadUserAllHistory();
       }
     );
 
@@ -231,47 +283,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
 
-  patchNewExe() {
-    let kcalRatio = 0;
-    let kcal = 0;
-    const tempArray = this.historyExercise.exercises;
-    const newExercise = {
-      kcal: 0,
-      time: -1,
-      idExercise: ''
-    };
-    const weight = this.user.user.weight;
-    this.exerciseService.getExercise(this.exerciseId).subscribe(
-      data => {
-        kcalRatio = data.kcalRatio;
-      }, error => {
-      },
-      () => {
-        kcal = kcalRatio * this.timeModel * weight;
-        newExercise.kcal = +kcal.toFixed(2);
-        newExercise.time = this.timeModel;
-        newExercise.idExercise = this.exerciseId;
-        // sprawdz czy juz taki rodzaj cwiczenia wystepuje w historii jak tak to ja update
-        const indexTemp = _.findIndex(tempArray, ['idExercise', this.exerciseId]);
-        if (indexTemp !== -1) {
-          tempArray[indexTemp] = newExercise;
-        } else {
-          tempArray.push(newExercise);
-        }
-        this.exerciseService.patchUserHistory(this.historyExercise._id, 'exercises', tempArray).subscribe(
-          data => {
-          },
-          error => {
-          },
-          () => {
-
-            this.router.navigate(['./timeline-exercise']);
-          }
-        );
-      }
-    );
-  }
-
   // sprawdź czy id cwiczenia znajduje sie w liscie ocenionych id przez uzytkownika
   checkIsRated() {
     // ustaw flage jezeli wystepuje w tablicy
@@ -280,19 +291,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     }) !== -1);
   }
 
-  loadUserAllHistory() {
-    if (this.user) {
-      this.exerciseService.loadUserAllHistory(this.userId).subscribe(
-        data => {
-          this.allUserHistory = data;
-        },
-        error => {
-        },
-        () => {
-        }
-      );
-    }
-  }
 
   ngOnDestroy(): void {
   }
