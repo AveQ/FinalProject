@@ -30,7 +30,7 @@
     "express": "^4.17.1",
     "jspdf": "^2.2.0",
     "jspdf-autotable": "^3.5.13",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "ng2-charts": "^2.4.2",
     "rxjs": "~6.5.4",
     "tslib": "^1.14.1",
