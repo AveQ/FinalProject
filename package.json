@@ -27,7 +27,7 @@
     "angularx-social-login": "^3.5.4",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jspdf": "^2.2.0",
     "jspdf-autotable": "^3.5.13",
     "lodash": "^4.17.20",
